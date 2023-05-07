@@ -1,10 +1,14 @@
 <?php
 namespace App\Controllers;
 
+use App\Core\View;
+
 class Main {
 
     public function home(){
-        echo "default";
+        $pseudo = 'John Wick';
+        $view = new View('Main/home', 'front');
+        $view->assign('pseudo', $pseudo);
     }
 
 }

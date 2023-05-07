@@ -1,21 +1,23 @@
 <?php
 namespace App\Controllers;
 
+use App\Core\View;
+
 class Auth{
 
     public function login(): void
     {
-        echo "Login";
+        $view = new View('Auth/login', 'back');
     }
 
     public function logout(): void
     {
-        echo "Logout";
+        $view = new View('Auth/logout', 'back');
     }
 
     public function register(): void
     {
-        echo "register";
+        $view = new View('Auth/register', 'back');
     }
 
 }
