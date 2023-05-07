@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Ma super page</title>
+    <title><?= $title ?? 'Blue bird' ?></title>
     <meta name="description" content="Ceci est ma super page">
 </head>
 <body>

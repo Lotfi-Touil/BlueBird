@@ -2,7 +2,10 @@
 
 namespace App;
 
+use App\Errors\ErrorHandler;
 use \Exception;
+
+require 'config/constants.php';
 
 spl_autoload_register(function ($class) {
     $file = str_replace(["App\\", "\\"], ["", "/"], $class).".php";
@@ -22,17 +25,17 @@ try {
     }
 
     if (!file_exists('routes.yml')){
-        throw new Exception("Le fichier n'éxiste pas.", 500);
+        throw new Exception("Le fichier n'éxiste pas.", HTTP_INTERNAL_SERVER_ERROR);
     }
 
     $routes = yaml_parse_file('routes.yml');
 
     if (empty($routes[$uri])){
-        throw new Exception('404 Not Found', 404);
+        throw new Exception('404 Not Found', HTTP_NOT_FOUND);
     }
 
     if (empty($routes[$uri]['controller']) || empty($routes[$uri]['action'])){
-        throw new Exception("La route n'est pas complète.", 500);
+        throw new Exception("La route n'est pas complète.", HTTP_INTERNAL_SERVER_ERROR);
     }
 
     $controller = $routes[$uri]['controller'];
@@ -41,14 +44,14 @@ try {
     $controllerFilePath = 'Controllers/'.$controller.'.php';
     
     if (!file_exists($controllerFilePath)){
-        throw new Exception("Le fichier controller ($controllerFilePath) n'éxiste pas.", 500);
+        throw new Exception("Le fichier controller ($controllerFilePath) n'éxiste pas.", HTTP_INTERNAL_SERVER_ERROR);
     } else {
         include $controllerFilePath;
 
         $controller = "\\App\\Controllers\\".$controller;
         if (!class_exists($controller))
         {
-            throw new Exception("La classe du controller ($controllerFilePath) n'éxiste pas.", 500);
+            throw new Exception("La classe du controller ($controllerFilePath) n'éxiste pas.", HTTP_INTERNAL_SERVER_ERROR);
         }
 
         $objController = new $controller();
@@ -56,11 +59,10 @@ try {
         if (method_exists($objController, $action)) {
             $objController->$action();
         } else {
-            throw new Exception("La méthode ($action) n'éxiste pas dans le controller ($controller).", 500);
+            throw new Exception("La méthode ($action) n'éxiste pas dans le controller ($controller).", HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
 } catch (Exception $e) {
-    http_response_code($e->getCode());
-    echo "Erreur {$e->getCode()}";
+    ErrorHandler::handle($e->getCode());
 }
