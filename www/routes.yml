@@ -13,3 +13,7 @@ logout:
 register:
   controller: Auth
   action: register
+
+dashboard:
+  controller: Stat
+  action: dashboard

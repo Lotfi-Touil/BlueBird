@@ -7,6 +7,7 @@ class View {
     private String $view;
     private String $template;
     private Array $data = [];
+    private Array $scripts = [];
 
     public function __construct(String $view, String $template = "back") {
         $this->setView($view);
@@ -16,6 +17,15 @@ class View {
     public function assign(String $key, String $value): void
     {
         $this->data[$key] = $value;
+    }
+
+    public function addScript(String $scriptPath): void
+    {
+        if (file_exists($scriptPath)) {
+            $this->scripts[] = $scriptPath;
+        } else {
+            die("La script ".$scriptPath." n'éxiste pas");
+        }
     }
 
     /**
