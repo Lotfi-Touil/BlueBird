@@ -8,9 +8,14 @@
     <?php include PARTIALS_PATH.'/assets.partial.php'; ?>
 </head>
 <body>
-    <h1>Template Front</h1>
+    <?php include PARTIALS_PATH.'/front/topbar.partial.php'; ?>
 
-    <?php include $this->view; ?>
+    <!-- Contenu de la page -->
+    <div class="container mt-5">
+        <?php include $this->view; ?>
+    </div>
+
+    <?php include PARTIALS_PATH.'/front/footer.partial.php'; ?>
 
     <!-- Inclusion des scripts -->
     <?php include PARTIALS_PATH.'/scripts.partial.php'; ?>
