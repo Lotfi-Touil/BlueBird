@@ -17,3 +17,4 @@ register:
 dashboard:
   controller: Stat
   action: dashboard
+

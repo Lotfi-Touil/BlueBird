@@ -5,19 +5,19 @@
     <title><?= $title ?? 'Blue bird' ?></title>
     <meta name="description" content="<?= $description ?? 'Découvrez Blue Bird, une plateforme géniale !' ?>">
     <!-- Inclusion des assets -->
-    <?php include PARTIALS_PATH.'/assets.partial.php'; ?>
+    <?php $this->partial('assets'); ?>
 </head>
 <body>
-    <?php include PARTIALS_PATH.'/front/topbar.partial.php'; ?>
+    <?php $this->partial('front/topbar'); ?>
 
     <!-- Contenu de la page -->
     <div class="container mt-5">
         <?php include $this->view; ?>
     </div>
 
-    <?php include PARTIALS_PATH.'/front/footer.partial.php'; ?>
+    <?php $this->partial('front/footer'); ?>
 
     <!-- Inclusion des scripts -->
-    <?php include PARTIALS_PATH.'/scripts.partial.php'; ?>
+    <?php $this->partial('scripts'); ?>
 </body>
 </html>
