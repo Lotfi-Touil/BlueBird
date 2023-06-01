@@ -3,7 +3,7 @@
     <!-- Main Content -->
     <div id="content">
 
-        <?php include PARTIALS_PATH.'back/topbar.partial.php'; ?>
+        <?php $this->partial('back/topbar'); ?>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -151,7 +151,7 @@
     </div>
     <!-- End of Main Content -->
 
-    <?php include PARTIALS_PATH.'back/footer.partial.php'; ?>
+    <?php $this->partial('back/footer'); ?>
 </div>
 
-<?php include PARTIALS_PATH.'back/dashboard/logout-modal.partial.php'; ?>
+<?php $this->partial('back/dashboard/logout-modal'); ?>

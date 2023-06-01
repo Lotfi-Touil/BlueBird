@@ -8,9 +8,14 @@ use \Exception;
 require 'config/constants.php';
 
 spl_autoload_register(function ($class) {
-    $file = str_replace(["App\\", "\\"], ["", "/"], $class).".php";
+    $file     = str_replace(["App\\", "\\"], ["", "/"], $class);
+    $fileForm = $file.".form.php";
+    $file     = $file.".php";
+
     if (file_exists($file)) {
         include $file;
+    } else if (file_exists($fileForm)) {
+        include $fileForm;
     }
 });
 

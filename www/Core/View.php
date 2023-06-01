@@ -14,7 +14,7 @@ class View {
         $this->setTemplate($template);
     }
 
-    public function assign(String $key, String $value): void
+    public function assign(String $key, $value): void
     {
         $this->data[$key] = $value;
     }
@@ -50,6 +50,13 @@ class View {
         if (!file_exists($this->view)) {
             die("Le template ".$this->view." n'éxiste pas");
         }
+    }
+
+    public function partial(String $name, array $config = [], $errors = []) {
+        if (!file_exists(PARTIALS_PATH.$name.PARTIALS_EXT)) {
+            die("Le partial ".$name." n'éxiste pas");
+        }
+        include PARTIALS_PATH.$name.PARTIALS_EXT;
     }
 
     public function __destruct()
