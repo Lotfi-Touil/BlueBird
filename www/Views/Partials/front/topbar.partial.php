@@ -15,9 +15,9 @@
                 </li>
             </ul>
         </div>
-        <a class="nav-link" href="/register">
-            <i class="fas fa-lg fa-user text-gray-400"></i>
-        </a>
+
+        <?= $this->partial('profile') ?>
+
     </div>
 </nav>
 <!-- End of Topbar -->

@@ -17,6 +17,8 @@
 
     <?php $this->partial('front/footer'); ?>
 
+    <?php $this->partial('logout-modal'); ?>
+
     <!-- Inclusion des scripts -->
     <?php $this->partial('scripts'); ?>
 </body>

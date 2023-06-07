@@ -15,6 +15,42 @@ class User extends SQL {
     protected $date_inserted;
     protected $date_updated;
 
+    public function getOneByEmail(string $email, bool $onlyActif = false): ?User
+    {
+        if (!$email)
+            return null;
+
+        $sql = "SELECT * FROM {$this->getTable()} WHERE email = :email";
+        if ($onlyActif)
+            $sql .= " AND status = 1";
+
+        $queryPrepared = $this->getPdo()->prepare($sql);
+        $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
+        $queryPrepared->execute(['email'  => $email]);
+
+        $user = $queryPrepared->fetch();
+        if ($user) {
+            if ($this->bindValuesFromRow($user))
+                return $this;
+        }
+
+        return null;
+    }
+
+    public function bindValuesFromRow(object $row): bool
+    {
+        if (!$row)
+            return false;
+
+        foreach ($row as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+
+        return true;
+    }
+    
     /**
      * @return int
      */
@@ -109,6 +145,22 @@ class User extends SQL {
     public function setStatus(int $status): void
     {
         $this->status = $status;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function setDateInserted($dateInserted)
+    {
+        return $this->date_inserted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function setDateUpdated($dateUpdated)
+    {
+        return $this->date_updated;
     }
 
     /**

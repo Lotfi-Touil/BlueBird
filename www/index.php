@@ -7,6 +7,8 @@ use \Exception;
 
 require 'config/constants.php';
 
+session_start();
+
 spl_autoload_register(function ($class) {
     $file     = str_replace(["App\\", "\\"], ["", "/"], $class);
     $fileForm = $file.".form.php";
@@ -47,20 +49,20 @@ try {
     $action = $routes[$uri]['action'];
 
     $controllerFilePath = 'Controllers/'.$controller.'.php';
-    
+
     if (!file_exists($controllerFilePath)){
         throw new Exception("Le fichier controller ($controllerFilePath) n'éxiste pas.", HTTP_INTERNAL_SERVER_ERROR);
     } else {
         include $controllerFilePath;
 
         $controller = "\\App\\Controllers\\".$controller;
+
         if (!class_exists($controller))
         {
             throw new Exception("La classe du controller ($controllerFilePath) n'éxiste pas.", HTTP_INTERNAL_SERVER_ERROR);
         }
 
         $objController = new $controller();
-
         if (method_exists($objController, $action)) {
             $objController->$action();
         } else {
@@ -69,5 +71,6 @@ try {
 
     }
 } catch (Exception $e) {
+    // TODO Lotfi : revoir la gestion des erreur SQL
     ErrorHandler::handle($e->getCode());
 }
