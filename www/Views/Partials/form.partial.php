@@ -1,7 +1,3 @@
-<?php if(!empty($errors)): ?>
-    <?php print_r($errors);?>
-<?php endif;?>
-
 <form method="<?= $config["config"]["method"] ?>"
       action="<?= $config["config"]["action"] ?>"
       enctype="<?= $config["config"]["enctype"] ?>"
@@ -21,7 +17,14 @@
 
     <?php endforeach;?>
 
-    <input type="submit" name="submit" value="<?= $config["config"]["submit"] ?>">
-    <input type="reset" value="<?= $config["config"]["reset"] ?>">
+    <!-- Errors -->
+    <?php foreach ($errors as $error): ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $error ?>
+        </div>
+    <?php endforeach;?>
+    <!-- End Errors -->
 
+    <input type="submit" class="btn btn-primary btn-user btn-block"
+           name="submit" value="<?= $config["config"]["submit"] ?>">
 </form>

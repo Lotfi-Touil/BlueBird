@@ -53,7 +53,6 @@ abstract class SQL{
         $columnsToExclude = get_class_vars(get_class());
         $columns = array_diff_key($columns, $columnsToExclude);
 
-
         if(is_numeric($this->getId()) && $this->getId()>0) {
             // Update case
             $sqlUpdate = [];
@@ -82,5 +81,15 @@ abstract class SQL{
         } catch (PDOException $p) {
             die("Erreur SQL : " . $p->getCode() ." => ". $p->getMessage());
         }
+    }
+
+    protected function getPdo()
+    {
+        return $this->pdo;
+    }
+
+    protected function getTable()
+    {
+        return $this->table;
     }
 }

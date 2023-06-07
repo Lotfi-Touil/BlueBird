@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Request;
+use App\Core\View;
 
 class Controller
 {
@@ -16,5 +17,10 @@ class Controller
     protected function getRequest()
     {
         return $this->request;
+    }
+
+    protected function redirectHome() : void
+    {
+        new View('Main/home', 'front');
     }
 }
