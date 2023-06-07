@@ -153,5 +153,3 @@
 
     <?php $this->partial('back/footer'); ?>
 </div>
-
-<?php $this->partial('back/dashboard/logout-modal'); ?>

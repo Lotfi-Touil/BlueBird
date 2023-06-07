@@ -52,7 +52,7 @@ class View {
         }
     }
 
-    public function partial(String $name, array $config = [], $errors = []) {
+    public function partial(String $name, array $config = [], array $errors = []) {
         if (!file_exists(PARTIALS_PATH.$name.PARTIALS_EXT)) {
             die("Le partial ".$name." n'éxiste pas");
         }

@@ -15,7 +15,9 @@
 
             <?php include $this->view; ?>
         </div>
-        
+
+        <?php $this->partial('logout-modal'); ?>
+
         <!-- Inclusion des scripts -->
         <?php $this->partial('scripts'); ?>
     </body>

@@ -18,26 +18,26 @@ class Validator
 
     public function isValid(): bool
     {
-        if($_SERVER["REQUEST_METHOD"] != $this->method){
-            die("Tentative de Hack");
+        if($_SERVER['REQUEST_METHOD'] != $this->method){
+            die('Tentative de Hack');
+        }
+        // TODO : revoir les tentative de hack lors de l'inscription.
+        if(count($this->config['inputs'])+1 != count($this->data)){
+            die('Tentative de Hack');
         }
 
-        if(count($this->config["inputs"])+1 != count($this->data)){
-            die("Tentative de Hack");
-        }
-
-        foreach ($this->config["inputs"] as $name=>$configInput){
+        foreach ($this->config['inputs'] as $name=>$configInput){
             if(!isset($this->data[$name])){
-                die("Tentative de Hack");
+                die('Tentative de Hack');
             }
-            if(isset($configInput["required"]) && self::isEmpty($this->data[$name])){
-                die("Tentative de Hack");
+            if(isset($configInput['required']) && self::isEmpty($this->data[$name])){
+                die('Tentative de Hack');
             }
-            if(isset($configInput["min"]) && !self::isMinLength($this->data[$name], $configInput["min"])){
-                $this->errors[]=$configInput["error"];
+            if(isset($configInput['min']) && !self::isMinLength($this->data[$name], $configInput['min'])){
+                $this->errors[]=$configInput['error'];
             }
-            if(isset($configInput["max"]) && !self::isMaxLength($this->data[$name], $configInput["max"])){
-                $this->errors[]=$configInput["error"];
+            if(isset($configInput['max']) && !self::isMaxLength($this->data[$name], $configInput['max'])){
+                $this->errors[]=$configInput['error'];
             }
         }
 

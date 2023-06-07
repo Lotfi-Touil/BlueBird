@@ -2,13 +2,13 @@
 namespace App\Controllers;
 
 use App\Core\View;
+use App\Utils\Auth as UtilsAuth;
 
-class Main {
+class Main extends Controller{
 
     public function home(){
-        $pseudo = 'John Wick';
         $view = new View('Main/home', 'front');
-        $view->assign('pseudo', $pseudo);
+        $view->assign('isConnected', UtilsAuth::isConnected());
     }
 
 }
