@@ -8,6 +8,7 @@ class Register extends Validator
 {
     public $method = "POST";
     protected array $config = [];
+    public array $errors = [];
 
     public function getConfig() : array
     {
@@ -69,5 +70,20 @@ class Register extends Validator
             ]
         ];
         return $this->config;
+    }
+
+    public function isValid(): bool
+    {
+        if (!$this->checkValidity() || !$this->isSubmited()) {
+            return false;
+        }
+
+        $this->data = ($this->method == "POST")?$_POST:$_GET;
+
+        if ($this->data['password'] !== $this->data['passwordConfirm']) {
+            $this->errors[]=$this->config['inputs']['passwordConfirm']['error'];
+        }
+
+        return (bool)empty($this->errors);
     }
 }
