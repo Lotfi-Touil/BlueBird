@@ -11,14 +11,14 @@
                 <button class="btn btn-primary" type="button">
                     <i class="fas fa-search fa-sm"></i>
                 </button>
+                <h1> <?= $firstname ?></h1>
             </div>
         </div>
     </form>
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
-        <?= $this->partial('profile') ?>
+        <?= $this->partial('profile', ['firstname' => $firstname]) ?>
     </ul>
-
 </nav>
 <!-- End of Topbar -->

@@ -8,8 +8,11 @@
     <?php $this->partial('assets'); ?>
 </head>
 <body>
-    <?php $this->partial('front/topbar'); ?>
-
+<!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+        <?= $this->partial('front/topbar', ['firstname' => $firstname]) ?>
+    </ul>
+    <h1> <?= $firstname ?></h1>
     <!-- Contenu de la page -->
     <div class="container mt-5">
         <?php include $this->view; ?>
