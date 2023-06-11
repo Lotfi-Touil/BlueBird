@@ -78,4 +78,19 @@ class Register extends Validator
         ];
         return $this->config;
     }
+
+    public function isValid(): bool
+    {
+        if (!$this->checkValidity() || !$this->isSubmited()) {
+            return false;
+        }
+
+        $this->data = ($this->method == "POST")?$_POST:$_GET;
+
+        if ($this->data['password'] !== $this->data['passwordConfirm']) {
+            $this->errors[]=$configInput['error'];
+        }
+
+        return (bool)empty($this->errors);
+    }
 }

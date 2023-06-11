@@ -41,4 +41,13 @@ class Login extends Validator
         ];
         return $this->config;
     }
+
+    public function isValid(): bool
+    {
+        if (!$this->checkValidity()) {
+            return false;
+        }
+
+        return true;
+    }
 }
