@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title><?= $title .'s'?? 'Blue bird' ?></title>
+        <title><?= $title ?? 'Blue bird' ?></title>
         <meta name="description" content="<?= $description ?? 'Découvrez Blue Bird, une plateforme géniale !' ?>">
         <!-- Inclusion des assets -->
         <?php $this->partial('assets'); ?>
