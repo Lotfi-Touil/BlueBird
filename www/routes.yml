@@ -17,3 +17,11 @@ register:
 dashboard:
   controller: Stat
   action: dashboard
+
+profile:
+  controller: Account
+  action: profile
+
+other:
+  controller: Account
+  action: other
