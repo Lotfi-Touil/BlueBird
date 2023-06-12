@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -56,7 +56,7 @@
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="/user-list">
             <i class="fas fa-fw fa-user"></i>
             <span>Comptes</span>
         </a>

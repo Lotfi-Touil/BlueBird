@@ -15,6 +15,16 @@ class User extends SQL {
     protected $date_inserted;
     protected $date_updated;
 
+    public function getAll(): array
+    {
+        $sql = "SELECT * FROM {$this->getTable()}";
+        $queryPrepared = $this->getPdo()->prepare($sql);
+        $queryPrepared->execute();
+
+        $rowsUser = $queryPrepared->fetchAll();
+        return $rowsUser;
+    }
+
     public function getOneByEmail(string $email, bool $onlyActif = false): ?User
     {
         if (!$email)

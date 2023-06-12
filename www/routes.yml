@@ -25,3 +25,7 @@ profile:
 other:
   controller: Account
   action: other
+
+user-list:
+  controller: User
+  action: userList
