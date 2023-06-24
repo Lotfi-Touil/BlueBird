@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Core\SQL;
 
-class User extends SQL {
-
+class User extends SQL
+{
     protected Int $id = 0;
     protected String $firstname;
     protected String $lastname;
@@ -18,11 +18,15 @@ class User extends SQL {
     public function getAll(): array
     {
         $sql = "SELECT * FROM {$this->getTable()}";
-        $queryPrepared = $this->getPdo()->prepare($sql);
-        $queryPrepared->execute();
 
-        $rowsUser = $queryPrepared->fetchAll();
-        return $rowsUser;
+        try {
+            $queryPrepared = $this->getPdo()->prepare($sql);
+            $queryPrepared->execute();
+            $rowsUser = $queryPrepared->fetchAll();
+            return $rowsUser;
+        } catch (\PDOException $e) {
+            throw new \App\Exceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     public function getOneByEmail(string $email, bool $onlyActif = false): ?User
@@ -45,6 +49,24 @@ class User extends SQL {
         }
 
         return null;
+    }
+
+    public function getIdByEmail($email): int
+    {
+        if (!$email)
+            return null;
+
+        $sql = "SELECT id FROM {$this->getTable()} WHERE email = :email";
+
+        try {
+            $queryPrepared = $this->getPdo()->prepare($sql);
+            $queryPrepared->execute(['email'  => $email]);
+
+            $id_user = $queryPrepared->fetchColumn();
+            return ($id_user !== false) ? (int) $id_user : null;
+        } catch (\PDOException $e) {
+            throw new \App\Exceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     public function bindValuesFromRow(object $row): bool

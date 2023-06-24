@@ -2,30 +2,51 @@
 namespace App\Errors;
 
 use App\Core\View;
+use App\Exceptions\DatabaseException;
+use App\Exceptions\FileNotFoundException;
+use App\Exceptions\HttpException;
+use App\Exceptions\IncompleteRouteException;
 
 class ErrorHandler
 {
-    public static function handle($errorCode)
+    public static function handle($exception)
     {
-        http_response_code($errorCode);
-
+        $param = [];
         $viewPath = '';
-        switch ($errorCode) {
-            case HTTP_NOT_FOUND:
-                $viewPath = 'Error/not-found';
-                $title = 'Page non trouvée';
+        switch (true) {
+            case $exception instanceof DatabaseException:
+                http_response_code($exception->getCode());
+                $params['title'] = 'Erreur interne du serveur';
+                if (APP_DEBUG) {
+                    $viewPath = 'Error/database';
+                    $params['pdoError'] = $exception->getMessage(); 
+                }
                 break;
-            case HTTP_INTERNAL_SERVER_ERROR:
-                $viewPath = 'Error/internal-server-error';
-                $title = 'Erreur interne du serveur';
+            case $exception instanceof FileNotFoundException:
+                http_response_code($exception->getCode());
+                $params['title'] = $exception->getMessage();
+                break;
+            case $exception instanceof IncompleteRouteException:
+                http_response_code($exception->getCode());
+                $params['title'] = $exception->getMessage();
+                break;
+            case $exception instanceof HttpException:
+                http_response_code($exception->getCode());
+                if ($exception->getCode() == HTTP_NOT_FOUND)
+                    $viewPath = 'Error/not-found';
+                $params['title'] = $exception->getMessage();
                 break;
             default:
-                $viewPath = 'Error/unknown-error';
-                $title = 'Erreur inconnue';
+                http_response_code(HTTP_INTERNAL_SERVER_ERROR);
+                $params['title'] = 'Erreur interne du serveur';
                 break;
         }
 
-        $view = new View($viewPath, 'front');
-        $view->assign('title', $title);
+        $view = new View($viewPath ?? 'Error/internal-server-error', 'front');
+
+        foreach ($params as $name => $param) {
+            $view->assign($name, $param);
+        }
     }
+
 }

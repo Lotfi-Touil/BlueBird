@@ -10,4 +10,6 @@ define('HTTP_NOT_FOUND', 404);
 define('HTTP_METHOD_NOT_ALLOWED', 405);
 define('HTTP_INTERNAL_SERVER_ERROR', 500);
 
-include('sql_config.php');
+define('PUBLIC_ROUTES_FILENAME', 'routes_public.yml');
+define('USER_ROUTES_FILENAME', 'routes_user.yml');
+define('ADMIN_ROUTES_FILENAME', 'routes_admin.yml');

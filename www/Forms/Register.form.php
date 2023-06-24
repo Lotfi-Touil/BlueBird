@@ -41,14 +41,6 @@ class Register extends Validator
                     "max"         => 120,
                     "required"    => true
                 ],
-                "country"      => [
-                    "id"          => "register-form-country",
-                    "class"       => "form-input form-control form-control-user",
-                    "placeholder" => "Votre pays",
-                    "type"        => "text",
-                    "error"       => "Le pays est incorrect",
-                    "required"    => false
-                ],
                 "email"      => [
                     "id"          => "register-form-email",
                     "class"       => "form-input form-control form-control-user",

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Request;
-use App\Core\View;
+use App\Utils\Auth;
 
 class Controller
 {
@@ -21,6 +21,13 @@ class Controller
 
     protected function redirectHome() : void
     {
-        new View('Main/home', 'front');
+        header("Location: /");
+        exit();
     }
+
+    protected function shouldRedirectHome(): bool
+    {
+        return Auth::isConnected();
+    }
+
 }

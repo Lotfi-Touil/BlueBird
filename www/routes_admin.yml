@@ -1,0 +1,11 @@
+admin/dashboard:
+  controller: Stat
+  action: dashboard
+  requires_auth: true
+  role: admin
+
+admin/user-list:
+  controller: User
+  action: userList
+  requires_auth: true
+  role: admin

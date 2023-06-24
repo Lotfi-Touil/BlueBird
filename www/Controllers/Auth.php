@@ -23,6 +23,9 @@ class Auth extends Controller{
 
     public function login(): void
     {
+        if ($this->shouldRedirectHome())
+            $this->redirectHome();
+
         $form = new Login();
 
         $view = new View('Auth/login', 'front');
@@ -41,7 +44,7 @@ class Auth extends Controller{
     {
         if (!$post)
             return null;
-        
+
         $user = $this->getUserByEmail($post->email);
 
         if ($user && password_verify($post->password, $user->getPassword())) {
@@ -63,10 +66,14 @@ class Auth extends Controller{
     {
         session_destroy();
         header("Location: /");
+        exit();
     }
 
     public function register(): void
     {
+        if ($this->shouldRedirectHome())
+            $this->redirectHome();
+
         $form = new Register();
 
         $view = new View('Auth/register', 'front');

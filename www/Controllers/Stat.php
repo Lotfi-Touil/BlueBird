@@ -6,7 +6,7 @@ use App\Utils\Auth as UtilsAuth;
 
 class Stat extends Controller
 {
-    
+
     public function dashboard()
     {
         $view = new View('Stat/dashboard', 'back');

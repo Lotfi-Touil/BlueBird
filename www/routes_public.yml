@@ -1,0 +1,16 @@
+default:
+  controller: Main
+  action: home
+
+login:
+  controller: Auth
+  action: login
+
+logout:
+  controller: Auth
+  action: logout
+
+register:
+  controller: Auth
+  action: register
+

@@ -24,28 +24,55 @@ abstract class SQL{
         }
 
         $classExploded = explode("\\", get_called_class());
-        $this->table = DB_PREFIX.end($classExploded);
+        $this->table = DB_PREFIX.cameltoSnakeCase(end($classExploded));
     }
 
     public static function populate(Int $id): object
     {
         $class = get_called_class();
         $objet = new $class();
-        return $objet->getOneWhere(["id"=>$id]);
+        return $objet->getOneBy(["id"=>$id]);
     }
 
-    public function getOneWhere(array $where): object
+    public function getOneBy(array $where, array $select = ['*'])
     {
         $sqlWhere = [];
-        foreach ($where as $column=>$value) {
-            $sqlWhere[] = $column."=:".$column;
+        foreach ($where as $column => $value) {
+            $sqlWhere[] = $column.'=:'.$column;
         }
-        $queryPrepared = $this->pdo->prepare("SELECT * FROM ".$this->table." WHERE ".implode(" AND ", $sqlWhere));
-        $queryPrepared->setFetchMode( \PDO::FETCH_CLASS, get_called_class());
-        $queryPrepared->execute($where);
-        return $queryPrepared->fetch();
+
+        $sqlWhere = implode(' AND ', $sqlWhere);
+        $select = implode(', ', $select);
+
+        try {
+            $queryPrepared = $this->pdo->prepare("SELECT {$select} FROM {$this->table} WHERE {$sqlWhere}");
+
+            $queryPrepared->execute($where);
+            return $queryPrepared->fetch();
+        } catch (\PDOException $e) {
+            throw new \App\Exceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
+    public function getAllBy(array $where, array $select = ['*'])
+    {
+        $sqlWhere = [];
+        foreach ($where as $column => $value) {
+            $sqlWhere[] = $column.'=:'.$column;
+        }
+
+        $sqlWhere = implode(' AND ', $sqlWhere);
+        $select = implode(', ', $select);
+
+        try {
+            $queryPrepared = $this->pdo->prepare("SELECT {$select} FROM {$this->table} WHERE {$sqlWhere}");
+            $queryPrepared->execute($where);
+
+            return $queryPrepared->fetchAll();
+        } catch (\PDOException $e) {
+            throw new \App\Exceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
 
     public function save(): void
     {
@@ -62,8 +89,6 @@ abstract class SQL{
             $sql = "UPDATE {$this->table} 
                        SET ".implode(",", $sqlUpdate)."
                      WHERE id=".$this->getId();
-
-            $queryPrepared = $this->pdo->prepare($sql);
         } else {
             // Insert case
             unset($columns['id']);
@@ -73,13 +98,13 @@ abstract class SQL{
             $sql = "INSERT INTO {$this->table} 
                                 (".implode("," , array_keys($columns) ).") 
                          VALUES (:".implode(",:" , array_keys($columns) ).") ";
-            $queryPrepared = $this->pdo->prepare($sql);
         }
 
         try {
-            $queryPrepared->execute($columns);    
-        } catch (PDOException $p) {
-            die("Erreur SQL : " . $p->getCode() ." => ". $p->getMessage());
+            $queryPrepared = $this->pdo->prepare($sql);
+            $queryPrepared->execute($columns);
+        } catch (\PDOException $e) {
+            throw new \App\Exceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
