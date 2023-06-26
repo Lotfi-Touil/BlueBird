@@ -70,11 +70,18 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="/admin/message/list">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Contact</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-fw fa-comment"></i>
             <span>Commentaires</span>
         </a>
     </li>
-    
+
 </ul>
 <!-- End of Sidebar -->
