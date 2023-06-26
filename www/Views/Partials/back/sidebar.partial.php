@@ -56,11 +56,19 @@
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="/user-list">
+        <a class="nav-link" href="/admin/user-list">
             <i class="fas fa-fw fa-user"></i>
             <span>Comptes</span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/contact-list">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Contact</span>
+        </a>
+    </li>
+
 
     <li class="nav-item">
         <a class="nav-link" href="#">
@@ -68,6 +76,6 @@
             <span>Commentaires</span>
         </a>
     </li>
-    
+
 </ul>
 <!-- End of Sidebar -->

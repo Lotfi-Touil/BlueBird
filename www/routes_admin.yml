@@ -9,3 +9,15 @@ admin/user-list:
   action: userList
   requires_auth: true
   role: admin
+
+admin/contact-list:
+  controller: Main
+  action: contactList
+  requires_auth: true
+  role: admin
+
+admin/contact-details:
+  controller: Main
+  action: contactDetails
+  requires_auth: true
+  role: admin
