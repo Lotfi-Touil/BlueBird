@@ -11,7 +11,7 @@
                     <a class="nav-link text-dark" aria-current="page" href="#">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Contact</a>
+                    <a class="nav-link text-dark" href="message">Contact</a>
                 </li>
             </ul>
         </div>

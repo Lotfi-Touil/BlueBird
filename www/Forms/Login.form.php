@@ -26,16 +26,20 @@ class Login extends Validator
                     "class"       => "form-input form-control form-control-user",
                     "placeholder" => "Votre email",
                     "type"        => "text",
+                    "tag"         => "input",
                     "error"       => "Votre email est incorrect",
-                    "required"    => true
+                    "required"    => true,
+                    "disabled"    => false
                 ],
                 "password" => [
                     "id"          => "login-form-pwd",
                     "class"       => "form-input form-control form-control-user",
                     "placeholder" => "Votre mot de passe",
                     "type"        => "password",
+                    "tag"         => "input",
                     "error"       => "Votre mot de passe est incorrect",
-                    "required"    => true
+                    "required"    => true,
+                    "disabled"    => false
                 ]
             ]
         ];

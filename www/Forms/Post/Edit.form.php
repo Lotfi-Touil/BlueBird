@@ -26,16 +26,20 @@ class Edit extends Validator
                     "class" => "form-control",
                     "placeholder" => "Titre",
                     "type" => "text",
+                    "tag" => "input",
                     "error" => "",
-                    "required" => true
+                    "required" => true,
+                    "disabled" => false
                 ],
                 "content" => [
                     "id" => "post-form-content",
                     "class" => "form-control summernote",
                     "placeholder" => "Contenu",
                     "type" => "textarea",
+                    "tag" => "textarea",
                     "error" => "",
-                    "required" => true
+                    "required" => true,
+                    "disabled" => false
                 ]
             ]
         ];
