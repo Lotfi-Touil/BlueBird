@@ -1,0 +1,129 @@
+<?php
+
+namespace App\Controllers\Back;
+
+use App\Controllers\Controller;
+use App\Core\QueryBuilder;
+use App\Core\View;
+use \App\Models\Message;
+use \App\Models\CategorieMessage;
+use App\Requests\MessageRequest;
+
+
+class MessageController extends Controller
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function listAction(): void
+    {
+        view('message/back/list', 'back', [
+            'messages' => Message::all()
+        ]);
+    }
+
+    public function createAction(): void
+    {
+        $categories = CategorieMessage::all();
+
+        view('message/back/create', 'back', [
+            'categories' => $categories
+        ]);
+    }
+
+    public function storeAction(): void
+    {
+        $request = new MessageRequest();
+
+        if (!$request->createMessage()) {
+            view('message/back/create', 'back', [
+                'categories' => CategorieMessage::all(),
+                'errors' => $request->getErrors(),
+                'old'    => $request->getOld()
+            ]);
+        }
+
+        $this->redirectToList();
+    }
+
+    public function showAction($id): void
+    {
+        $message = QueryBuilder::table('message')
+            ->select(
+                'message.id AS message_id',
+                'message.*',
+                'categorie_message.id AS categorie_message_id',
+                'categorie_message.*',
+            )
+            ->join("categorie_message", "message.id_categorie_message", "=", "categorie_message.id")
+            ->where("message.id", $id)
+            ->first();
+
+        if (!$message)
+            $this->redirectToList();
+
+        view('message/back/show', 'back', [
+            'message' => $message
+        ]);
+    }
+
+    public function editAction($id): void
+    {
+        $categories = CategorieMessage::all();
+
+        $message = Message::find($id);
+
+
+        if (!$message)
+            $this->redirectToList();
+
+        view('message/back/edit', 'back', [
+            'message' => $message,
+            'categories'   => $categories
+        ]);
+    }
+
+    public function deleteAction($id): void
+    {
+        $message = Message::find($id);
+
+        if ($message) {
+            $message->delete();
+        }
+
+        $this->redirectToList();
+    }
+
+    public function updateAction($id): void
+    {
+        $categories = CategorieMessage::all();
+
+        $message = Message::find($id);
+
+        if (!$message) {
+            $this->redirectToList();
+        }
+
+        $request = new MessageRequest();
+
+        if (!$request->updateMessage($message)) {
+            view('message/back/edit', 'back', [
+                'message' => $message,
+                'categories'   => $categories,
+                'errors'    => $request->getErrors(),
+                'old'       => $request->getOld()
+            ]);
+        }
+
+        $this->redirectToList();
+    }
+
+    private function redirectToList(): void
+    {
+        header('Location: /admin/message/list');
+        exit();
+    }
+}
