@@ -42,6 +42,15 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+html,body{
+  height : 100%;
+}
+
+body{
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
