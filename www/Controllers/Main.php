@@ -7,7 +7,7 @@ use App\Utils\Auth as UtilsAuth;
 class Main extends Controller{
 
     public function home(){
-        $view = new View('Main/home', 'front');
+        $view = new View('Main/home', 'home');
         $view->assign('isConnected', UtilsAuth::isConnected());
     }
 

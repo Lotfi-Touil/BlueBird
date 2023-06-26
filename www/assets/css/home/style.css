@@ -1,0 +1,79 @@
+:root{
+    --bs-border-radius: 0.375rem;
+    --bs-border-radius-xl: 1rem;
+}
+
+a{
+    cursor: pointer;
+}
+
+a:hover span{
+    background-color: #2653d4 !important;
+}
+
+.gap-1{
+    gap : 0.5rem;
+}
+
+.gap-2{
+    gap: 1rem;
+}
+
+.gap-3{
+    gap:1.5rem;
+}
+
+.gap-4{
+    gap:2rem;
+}
+
+.rounded-2 {
+    border-radius: var(--bs-border-radius);
+}
+
+.rounded-4 {
+    border-radius: var(--bs-border-radius-xl)
+}
+
+.miniature-film{
+    min-height: 20vh;
+    min-width: 11vw;
+}
+
+.miniature-studio{
+    min-height: 20vh;
+    min-width: 5vw;
+}
+
+.miniature-actors{
+    min-height: 30vh;
+    min-width: 3vw;
+}
+
+.miniature-easy-search{
+    min-height: 16vh;
+    min-width: 9vw;
+}
+
+a:hover .hover-translate-ltr{
+    transition: all .3s ease-in-out;
+    transform: translateX(1rem);
+}
+
+.miniature-top{
+    position: relative;
+}
+
+.miniature-top span{
+    position: absolute;
+    transform: translate(5px, 5px);
+    padding: .75rem;
+    line-height: 1rem;
+    border-radius: 50%;
+    background: #2653d4!important;
+}
+
+.mx-separator{
+    margin-top: 4rem;
+    margin-bottom : 4rem;
+}
