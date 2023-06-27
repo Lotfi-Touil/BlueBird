@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title><?= $title ?? 'Blue bird' ?></title>
     <meta name="description" content="<?= $description ?? 'Découvrez Blue Bird, une plateforme géniale !' ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Inclusion des assets -->
     <?php $this->partial('assets'); ?>
 </head>

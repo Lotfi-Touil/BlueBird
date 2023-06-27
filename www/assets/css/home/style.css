@@ -35,45 +35,62 @@ a:hover span{
     border-radius: var(--bs-border-radius-xl)
 }
 
-.miniature-film{
-    min-height: 20vh;
-    min-width: 11vw;
+.mx-separator{
+    margin-top: 6rem;
+    margin-bottom: 6rem;
 }
 
-.miniature-studio{
-    min-height: 20vh;
-    min-width: 5vw;
+a{
+    transition: all .3s ease-in-out;
 }
 
-.miniature-actors{
-    min-height: 30vh;
-    min-width: 3vw;
-}
-
-.miniature-easy-search{
-    min-height: 16vh;
-    min-width: 9vw;
-}
 
 a:hover .hover-translate-ltr{
     transition: all .3s ease-in-out;
     transform: translateX(1rem);
 }
 
-.miniature-top{
-    position: relative;
+.card .card-top{
+    top: 0%;
+    left:0%;
+    transform: translate(0,0);
+    border-radius: 0.35rem;
+    line-height: 1;
 }
 
-.miniature-top span{
-    position: absolute;
-    transform: translate(5px, 5px);
-    padding: .75rem;
-    line-height: 1rem;
-    border-radius: 50%;
-    background: #2653d4!important;
+.card .card-text{
+    overflow: hidden;
+    white-space: wrap;
+    text-overflow: ellipsis;
+    max-width: 90em;
 }
 
-.mx-separator{
-    margin-top: 4rem;
-    margin-bottom : 4rem;
+.scroll-ltr{
+    display: none;
+}
+
+@media screen and (max-width : 992px){
+    .sm-gap-4{
+        gap: 2rem;
+    }
+
+    .tags{
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .md-overflow-scroll{
+        overflow-x: scroll;
+        height: 100%;
+        width: 100%;
+        flex-wrap: nowrap !important;
+        max-width: 800px;
+    }
+
+    .scroll-ltr{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

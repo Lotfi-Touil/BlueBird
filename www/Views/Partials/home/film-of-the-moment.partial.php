@@ -1,22 +1,23 @@
 <!-- START OF FILM OF THE MOMENT -->
 <section class="film-of-the-moment py-2">
     <h2 class="mb-4">Le film du moment</h2>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <!--MINIATURE-->
-            <div class="bg-secondary w-100 h-100 rounded-4"></div>
+    <div class="row sm-gap-4">
+        <div class="col-lg-6">
+            <div class="">
+                <img src="https://wallpaperaccess.com/full/8652624.jpg" alt="" class="ratio ratio-16x9 w-100 h-100 rounded-4 object-fit-cover">
+            </div>
         </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="d-flex flex-column gap-1">
+        <div class="col-lg-6 w-100 h-100">
+            <div class="d-flex flex-column justify-content-between gap-2">
                 <h3>Titre du film</h3>
                 <div class="d-flex gap-2 flex-column">
-                    <div class="d-flex gap-2 flex-wrap align-items-center">
-                        <span>Tags :</span>
+                    <div class="tags d-flex gap-2 align-items-center overflow-auto" style="white-space: nowrap;">
+                        <a class="px-2 py-1 text-primary text-decoration-none">Tags : </a>
                         <!--SELECT RANDOM TAGS-->
-                        <a href="#" class="px-2 py-1 bg-primary text-white rounded-2 text-decoration-none">Marvel</a>
-                        <a href="#" class="px-2 py-1 bg-primary text-white rounded-2 text-decoration-none">Action</a>
-                        <a href="#" class="px-2 py-1 bg-primary text-white rounded-2 text-decoration-none">Spider-Man</a>
-                        <a href="#" class="px-2 py-1 bg-primary text-white rounded-2 text-decoration-none">MCU</a>
+                        <a href="#" class="tag px-2 py-1 bg-primary text-white rounded-2 text-decoration-none">Marvel</a>
+                        <a href="#" class="tag px-2 py-1 bg-primary text-white rounded-2 text-decoration-none">Action</a>
+                        <a href="#" class="tag px-2 py-1 bg-primary text-white rounded-2 text-decoration-none">Spider-Man</a>
+                        <a href="#" class="tag px-2 py-1 bg-primary text-white rounded-2 text-decoration-none">MCU</a>
                     </div> 
                 </div>
                 <div class="">
