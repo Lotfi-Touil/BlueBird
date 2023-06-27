@@ -14,3 +14,6 @@ register:
   controller: Auth
   action: register
 
+movie:
+  controller: Movie
+  action: movieDetail
