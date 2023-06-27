@@ -5,7 +5,7 @@ namespace App;
 use App\Core\Router;
 use App\Errors\ErrorHandler;
 
-include 'includes/functions.php';
+require 'includes/functions.php';
 require 'config/config.php';
 
 if (session_status() == PHP_SESSION_NONE) {
