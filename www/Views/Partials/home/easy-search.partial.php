@@ -1,5 +1,5 @@
 <!-- START OF EASY SEARCH -->
-<section class="easy-search py-2">
+<section class="easy-search py-2 d-none d-lg-block">
     <div class="container-items">
         <ul class="row items md-overflow-scroll gap-4 justify-content-between">
             <!--6 max -->
@@ -186,4 +186,5 @@
         </ul>
     </div>
 </section>
+<hr class="d-none d-lg-block border border-primary border-2 opacity-50 mx-separator">
 <!-- END OF EASY SEARCH -->
