@@ -9,3 +9,9 @@ admin/user-list:
   action: userList
   requires_auth: true
   role: admin
+
+admin/studio-list:
+  controller: Studio
+  action: studioList
+  requires_auth: true
+  role: admin
