@@ -11,9 +11,9 @@
     <?php $this->partial('front/topbar'); ?>
 
     <!-- Contenu de la page -->
-    <div class="container mt-5">
+    <main class="container mt-5">
         <?php include $this->view; ?>
-    </div>
+    </main>
 
     <?php $this->partial('front/footer'); ?>
 

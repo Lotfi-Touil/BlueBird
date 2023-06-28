@@ -14,3 +14,18 @@ register:
   controller: Auth
   action: register
 
+legals : 
+  controller: Main
+  action : legals
+
+cgu : 
+  controller: Main
+  action : cgu
+
+pds : 
+  controller: Main
+  action : pds  
+
+cookies : 
+  controller: Main
+  action : cookies  
