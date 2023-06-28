@@ -11,16 +11,16 @@ class ErrorHandler
 {
     public static function handle($exception)
     {
+        if (APP_DEBUG) {
+            throw $exception; // En preprod, on affiche toutes les erreurs.
+        }
+
         $param = [];
-        $viewPath = '';
+        $viewPath = 'Error/internal-server-error';
         switch (true) {
             case $exception instanceof DatabaseException:
                 http_response_code($exception->getCode());
                 $params['title'] = 'Erreur interne du serveur';
-                if (APP_DEBUG) {
-                    $viewPath = 'Error/database';
-                    $params['pdoError'] = $exception->getMessage(); 
-                }
                 break;
             case $exception instanceof FileNotFoundException:
                 http_response_code($exception->getCode());
@@ -42,11 +42,13 @@ class ErrorHandler
                 break;
         }
 
-        $view = new View($viewPath ?? 'Error/internal-server-error', 'front');
+        $view = new View($viewPath, 'front');
 
         foreach ($params as $name => $param) {
             $view->assign($name, $param);
         }
+
+        $view->render();
     }
 
 }

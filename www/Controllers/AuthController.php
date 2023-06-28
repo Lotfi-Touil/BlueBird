@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Core\View;
@@ -7,7 +8,7 @@ use \App\Models\User;
 use \App\Forms\Register;
 use App\Utils\Auth as UtilsAuth;
 
-class Auth extends Controller{
+class AuthController extends Controller{
 
     private array $errors;
  
@@ -21,10 +22,10 @@ class Auth extends Controller{
         return $this->errors ?? [];
     }
 
-    public function login(): void
+    public function loginAction(): void
     {
-        if ($this->shouldRedirectHome())
-            $this->redirectHome();
+        if (UtilsAuth::isConnected())
+            redirectHome();
 
         $form = new Login();
 
@@ -38,6 +39,8 @@ class Auth extends Controller{
             if (!$this->connect($post))
                 $view->assign('formErrors', $this->getErrors());
         }
+
+        $view->render();
     }
 
     public function connect($post)
@@ -62,17 +65,17 @@ class Auth extends Controller{
         return $user->getOneByEmail($email, $onlyActif);
     }
 
-    public function logout(): void
+    public function logoutAction(): void
     {
         session_destroy();
         header("Location: /");
         exit();
     }
 
-    public function register(): void
+    public function registerAction(): void
     {
-        if ($this->shouldRedirectHome())
-            $this->redirectHome();
+        if (UtilsAuth::isConnected())
+            redirectHome();
 
         $form = new Register();
 
@@ -94,6 +97,7 @@ class Auth extends Controller{
         }
 
         $view->assign("formErrors", $form->errors);
+        $view->render();
     }
 
 }

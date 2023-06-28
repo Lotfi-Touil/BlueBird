@@ -34,8 +34,12 @@ try {
         throw new \App\Exceptions\FileNotFoundException("Le fichier n'éxiste pas.");
     }
 
-    $router = new Router([PUBLIC_ROUTES_FILENAME, USER_ROUTES_FILENAME, ADMIN_ROUTES_FILENAME]);
-    $router->route($uri);
+    $router = Router::getInstance();
+
+    require 'routes/web.php';
+    require 'routes/api.php';
+
+    $router->resolve();
 
 } catch (\Exception $e) {
     ErrorHandler::handle($e);

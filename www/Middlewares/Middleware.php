@@ -17,4 +17,5 @@ abstract class Middleware extends SQL
     {
         return $_SESSION['login'];
     }
+
 }

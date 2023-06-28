@@ -59,7 +59,7 @@ class View {
         include PARTIALS_PATH.$name.PARTIALS_EXT;
     }
 
-    public function __destruct()
+    public function render()
     {
         extract($this->data);
         include $this->template;

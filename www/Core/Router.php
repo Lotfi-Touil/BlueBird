@@ -4,86 +4,121 @@ namespace App\Core;
 
 use App\Exceptions\FileNotFoundException;
 use App\Exceptions\HttpException;
-use App\Middlewares\AuthMiddleware;
-use App\Utils\Auth;
+use App\Middlewares\Middleware;
 
 class Router
 {
-    private $routes;
+    private static ?Router $instance = null;
 
-    public function __construct(array $routesFiles)
+    private array $routes = [];
+    private ?Route $currentRoute = null;
+
+    public static function getInstance(): Router
     {
-        $this->routes = [];
-        foreach ($routesFiles as $file) {
-            $this->routes = array_merge($this->routes, yaml_parse_file($file));
+        if (self::$instance === null) {
+            self::$instance = new Router();
         }
+
+        return self::$instance;
     }
 
-    public function route($uri)
+    public function get(string $uri, string $controller, string $action, array $params = [])
     {
-        $route = $this->findRoute($uri);
+        $this->addRoute($uri, 'GET', $controller, $action, $params);
+        return $this;
+    }
 
-        if ($route && isset($route['requires_auth']) && $route['requires_auth']) {
-            if (!Auth::isConnected()) {
-                header("Location: /login");
-                exit;
+    public function post(string $uri, string $controller, string $action, array $params = [])
+    {
+        $this->addRoute($uri, 'POST', $controller, $action, $params);
+        return $this;
+    }
+
+    public function put(string $uri, string $controller, string $action, array $params = [])
+    {
+        $this->addRoute($uri, 'PUT', $controller, $action, $params);
+        return $this;
+    }
+
+    public function patch(string $uri, string $controller, string $action, array $params = [])
+    {
+        $this->addRoute($uri, 'PATCH', $controller, $action, $params);
+        return $this;
+    }
+
+    public function delete(string $uri, string $controller, string $action, array $params = [])
+    {
+        $this->addRoute($uri, 'DELETE', $controller, $action, $params);
+        return $this;
+    }
+
+    private function addRoute(string $uri, string $method, string $controller, string $action, array $params = []): void
+    {
+        $route = new Route($uri, $method, $controller, $action, $params);
+        $this->routes[] = $route;
+        $this->currentRoute = $route;
+    }
+
+    public function middleware(string $middleware, array $constructorParams = [], array $handleParams = []): Router
+    {
+        if ($this->currentRoute) {
+            $this->currentRoute->addMiddleware($middleware, $constructorParams, $handleParams);
+        }
+        return $this;
+    }
+
+    public function resolve(): void
+    {
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+        foreach ($this->routes as $route) {
+            if ($route->match($requestUri, $requestMethod)) {
+                $params      = $route->getParams();
+                $controller  = $route->getController();
+                $action      = $route->getAction();
+                $middlewares = $route->getMiddlewares();
+
+                $this->checkControllerValidity($controller);
+                $this->runMiddlewares($middlewares);
+
+                $controllerInstance = new $controller();
+                if (!method_exists($controllerInstance, $action)) {
+                    throw new HttpException();
+                }
+                call_user_func_array([$controllerInstance, $action], $params);
+
+                return;
             }
         }
 
-        if ($route && isset($route['role'])) {
-            $requiredRole = $route['role'];
-            $authMiddleware = new AuthMiddleware($requiredRole);
-            $authMiddleware->handle();
-        }
-
-        $this->callAction($route);
+        throw new HttpException('Page Not Found', HTTP_NOT_FOUND);
     }
 
-    private function findRoute($uri)
+    private function runMiddlewares($middlewares): void
     {
-        $uri = explode('?', $uri)[0];
-        $uri = strtolower(trim($uri, '/'));
+        if ($middlewares)
+        foreach ($middlewares as $middleware) {
+            $middlewareClass = $middleware['middleware'];
+            $constructorParams = $middleware['constructorParams'];
+            $handleParams = $middleware['handleParams'];
 
-        if (empty($uri)) {
-            $uri = 'default';
+            $middlewareInstance = new $middlewareClass(...$constructorParams);
+            call_user_func_array([$middlewareInstance, 'handle'], $handleParams);
         }
-
-        if (empty($this->routes[$uri])) {
-            throw new HttpException('La page n\'éxiste pas.', HTTP_NOT_FOUND);
-        }
-
-        if (empty($this->routes[$uri]['controller']) || empty($this->routes[$uri]['action'])) {
-            throw new HttpException();
-        }
-
-        return $this->routes[$uri];
     }
 
-    private function callAction($route)
+    private function checkControllerValidity($controller): void
     {
-        $controller = $route['controller'];
-        $action = $route['action'];
-
-        $controllerFilePath = 'Controllers/' . $controller . '.php';
-
+        $controllerParts = explode('\\', $controller);
+        $controllerFileName = end($controllerParts);
+        $controllerFilePath = 'Controllers/' . $controllerFileName . '.php';
         if (!file_exists($controllerFilePath)) {
             throw new FileNotFoundException();
-        } else {
-            include $controllerFilePath;
-
-            $controller = "\\App\\Controllers\\" . $controller;
-
-            if (!class_exists($controller)) {
-                throw new HttpException();
-            }
-
-            $objController = new $controller();
-            if (method_exists($objController, $action)) {
-                $objController->$action();
-            } else {
-                throw new HttpException();
-            }
         }
 
+        if (!class_exists($controller)) {
+            throw new HttpException();
+        }
     }
 }

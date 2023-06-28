@@ -20,4 +20,5 @@ class Request
 
         return $this->postData;
     }
+
 }

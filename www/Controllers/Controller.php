@@ -25,9 +25,4 @@ class Controller
         exit();
     }
 
-    protected function shouldRedirectHome(): bool
-    {
-        return Auth::isConnected();
-    }
-
 }
