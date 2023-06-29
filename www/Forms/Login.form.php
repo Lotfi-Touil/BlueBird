@@ -6,7 +6,7 @@ use \App\Core\Validator;
 
 class Login extends Validator
 {
-    public $method = "POST";
+    protected $method = "POST";
     protected array $config = [];
 
     public function getConfig(): array

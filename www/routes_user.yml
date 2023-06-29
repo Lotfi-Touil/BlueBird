@@ -1,8 +1,0 @@
-profile:
-  controller: Account
-  action: profile
-  requires_auth: true
-
-other:
-  controller: Account
-  action: other

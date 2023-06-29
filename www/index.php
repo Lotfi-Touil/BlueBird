@@ -30,10 +30,6 @@ try {
     $uri = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL);
     $uri = htmlspecialchars($uri, ENT_QUOTES, 'UTF-8');
 
-    if (!file_exists(PUBLIC_ROUTES_FILENAME) || !file_exists(USER_ROUTES_FILENAME) || !file_exists(ADMIN_ROUTES_FILENAME)){
-        throw new \App\Exceptions\FileNotFoundException("Le fichier n'éxiste pas.");
-    }
-
     $router = Router::getInstance();
 
     require 'routes/web.php';

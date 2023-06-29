@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Europe/Paris');
+
 if (onProd()) {
     include('config.prod.php');
 } else {

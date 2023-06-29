@@ -97,14 +97,15 @@ class Router
 
     private function runMiddlewares($middlewares): void
     {
-        if ($middlewares)
-        foreach ($middlewares as $middleware) {
-            $middlewareClass = $middleware['middleware'];
-            $constructorParams = $middleware['constructorParams'];
-            $handleParams = $middleware['handleParams'];
+        if ($middlewares) {
+            foreach ($middlewares as $middleware) {
+                $middlewareClass = $middleware['middleware'];
+                $constructorParams = $middleware['constructorParams'];
+                $handleParams = $middleware['handleParams'];
 
-            $middlewareInstance = new $middlewareClass(...$constructorParams);
-            call_user_func_array([$middlewareInstance, 'handle'], $handleParams);
+                $middlewareInstance = new $middlewareClass(...$constructorParams);
+                call_user_func_array([$middlewareInstance, 'handle'], $handleParams);
+            }
         }
     }
 
