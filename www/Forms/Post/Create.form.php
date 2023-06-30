@@ -18,7 +18,10 @@ class Create extends Validator
                 "id" => "post-form",
                 "class" => "form",
                 "enctype" => "multipart/form-data",
-                "submit" => "Créer un article"
+                "submit" => "Créer un article",
+                "name" => "Créer un article",
+                "disabled" => false,
+                "type" => "submit"
             ],
             "inputs" => [
                 "title" => [
@@ -27,7 +30,10 @@ class Create extends Validator
                     "placeholder" => "Titre",
                     "type" => "text",
                     "error" => "",
-                    "required" => true
+                    "required" => true,
+                    "label" => "Titre",
+                    "readonly" => false,
+                    "attribut" => "input",
                 ],
                 "content" => [
                     "id" => "post-form-content",
@@ -35,7 +41,10 @@ class Create extends Validator
                     "placeholder" => "Contenu",
                     "type" => "textarea",
                     "error" => "",
-                    "required" => true
+                    "required" => true,
+                    "label" => "Contenu",
+                    "readonly" => false,
+                    "attribut" => "textarea"
                 ]
             ]
         ];

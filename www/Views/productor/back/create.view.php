@@ -1,7 +1,7 @@
 <div class="card w-100 mb-3">
     <div class="card-header d-flex">
-        <h4 class="card-title">Modification de : #<?= $post->getId() ?> - <?= $post->getTitle() ?></h4>
-        <a href="/admin/post/list" class="btn btn-primary ml-auto">
+        <h4 class="card-title">Nouvelle Maison de Production</h4>
+        <a href="/admin/productor/list" class="btn btn-primary ml-auto">
             <span class="icon text-white-50">
                 <i class="fa fa-arrow-left"></i>
             </span>

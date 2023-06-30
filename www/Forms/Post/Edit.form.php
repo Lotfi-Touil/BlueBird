@@ -18,7 +18,10 @@ class Edit extends Validator
                 "id" => "post-form",
                 "class" => "form",
                 "enctype" => "multipart/form-data",
-                "submit" => "Enregistrer"
+                "submit" => "Enregistrer",
+                "type" => "submit",
+                "name" => "Modifier",
+                "disabled" => false
             ],
             "inputs" => [
                 "title" => [
@@ -27,15 +30,21 @@ class Edit extends Validator
                     "placeholder" => "Titre",
                     "type" => "text",
                     "error" => "",
-                    "required" => true
+                    "required" => true,
+                    "label" => "Titre",
+                    "readonly" => false,
+                    "attribut" => "input",
                 ],
                 "content" => [
                     "id" => "post-form-content",
                     "class" => "form-control summernote",
                     "placeholder" => "Contenu",
-                    "type" => "textarea",
+                    "attribut" => "textarea",
+                    "type" => "",
                     "error" => "",
-                    "required" => true
+                    "label" => "Contenu",
+                    "required" => true,
+                    "readonly" => false,
                 ]
             ]
         ];

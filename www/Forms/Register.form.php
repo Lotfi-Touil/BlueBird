@@ -18,7 +18,10 @@ class Register extends Validator
                 "id"      => "register-form",
                 "class"   => "form",
                 "enctype" => "",
-                "submit"  => "Nous rejoindre"
+                "submit"  => "Nous rejoindre",
+                "disabled" => false,
+                "name"    => "Nous rejoindre",
+                "type"    => "submit"
             ],
             "inputs" => [
                 "firstname"  => [
@@ -29,7 +32,9 @@ class Register extends Validator
                     "error"       => "Votre prénom doit faire entre 2 et 60 caractères",
                     "min"         => 2,
                     "max"         => 60,
-                    "required"    => true
+                    "required"    => true,
+                    "readonly"    => false,
+                    "label"       => "Prénom"
                 ],
                 "lastname"   => [
                     "id"          => "register-form-lastname",
@@ -39,7 +44,9 @@ class Register extends Validator
                     "error"       => "Votre nom doit faire entre 2 et 120 caractères",
                     "min"         => 2,
                     "max"         => 120,
-                    "required"    => true
+                    "required"    => true,
+                    "readonly"    => false,
+                    "label"       => "Nom de famille"
                 ],
                 "email"      => [
                     "id"          => "register-form-email",
@@ -47,7 +54,9 @@ class Register extends Validator
                     "placeholder" => "Votre email",
                     "type"        => "text",
                     "error"       => "Votre email est incorrect",
-                    "required"    => true
+                    "required"    => true,
+                    "readonly"    => false,
+                    "label"       => "Email"
                 ],
                 "password"        => [
                     "id"          => "register-form-pwf",
@@ -55,7 +64,9 @@ class Register extends Validator
                     "placeholder" => "Votre mot de passe",
                     "type"        => "password",
                     "error"       => "Votre mot de passe doit faire au minimum 8 caractères avec au minimum une majuscule, une minuscule et un chiffre",
-                    "required"    => true
+                    "required"    => true,
+                    "readonly"    => false,
+                    "label"       => "Mot de passe"
                 ],
                 "passwordConfirm" => [
                     "id"          => "register-form-pwd-confirm",
@@ -64,7 +75,9 @@ class Register extends Validator
                     "type"        => "password",
                     "error"       => "Le mot de passe ne correspond pas",
                     "required"    => true,
-                    "submit"      => "pwd"
+                    "submit"      => "pwd",
+                    "readonly" => false,
+                    "label"       => "Confirmer"
                 ]
             ]
         ];

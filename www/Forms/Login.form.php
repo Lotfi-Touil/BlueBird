@@ -18,7 +18,10 @@ class Login extends Validator
                 "id"      => "login-form",
                 "class"   => "form",
                 "enctype" => "",
-                "submit"  => "Se connecter"
+                "submit"  => "Se connecter",
+                "disabled" => false,
+                "name" => "Se connecter",
+                "type" => "submit"
             ],
             "inputs" => [
                 "email"    => [
@@ -27,7 +30,9 @@ class Login extends Validator
                     "placeholder" => "Votre email",
                     "type"        => "text",
                     "error"       => "Votre email est incorrect",
-                    "required"    => true
+                    "required"    => true,
+                    "readonly"    => false,
+                    "label"       =>  "Identifiant"
                 ],
                 "password" => [
                     "id"          => "login-form-pwd",
@@ -35,7 +40,9 @@ class Login extends Validator
                     "placeholder" => "Votre mot de passe",
                     "type"        => "password",
                     "error"       => "Votre mot de passe est incorrect",
-                    "required"    => true
+                    "required"    => true,
+                    "readonly"     => false,
+                    "label"       =>  "Mot de passe"
                 ]
             ]
         ];
