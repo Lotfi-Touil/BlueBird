@@ -61,9 +61,13 @@ abstract class Model
     protected function fill(array $data)
     {
         foreach ($data as $key => $value) {
+            // TODO
+            /* désactivation pour investiguation : peut-être une source de problème
             if (in_array($key, static::$fillable)) {
                 $this->{$key} = $value;
-            }
+            }*/
+            $this->{$key} = $value;
+
             if ($key === 'id') {
                 $this->id = $value;
             }
