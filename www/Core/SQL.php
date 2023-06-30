@@ -92,8 +92,8 @@ abstract class SQL{
         } else {
             // Insert case
             unset($columns['id']);
-            unset($columns['date_inserted']);
-            unset($columns['date_updated']);
+            unset($columns['created_at']);
+            unset($columns['updated_at']);
 
             $sql = "INSERT INTO {$this->table} 
                                 (".implode("," , array_keys($columns) ).") 

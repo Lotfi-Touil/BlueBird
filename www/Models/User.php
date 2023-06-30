@@ -2,87 +2,29 @@
 
 namespace App\Models;
 
-use App\Core\SQL;
+use App\Core\Model;
 
-class User extends SQL
+class User extends Model
 {
-    protected Int $id = 0;
-    protected String $firstname;
-    protected String $lastname;
-    protected String $email;
-    protected String $password;
-    protected Int $status = 0;
-    protected $date_inserted;
-    protected $date_updated;
+    protected static $table = DB_PREFIX . 'user';
+    protected static $fillable = [
+        'firstname',
+        'lastname',
+        'email',
+        'password',
+        'status'
+    ];
 
-    public function getAll(): array
-    {
-        $sql = "SELECT * FROM {$this->getTable()}";
+    protected $id;
 
-        try {
-            $queryPrepared = $this->getPdo()->prepare($sql);
-            $queryPrepared->execute();
-            $rowsUser = $queryPrepared->fetchAll();
-            return $rowsUser;
-        } catch (\PDOException $e) {
-            throw new \App\Exceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
-        }
-    }
+    protected $firstname;
+    protected $lastname;
+    protected $email;
+    protected $password;
+    protected $status;
+    protected $created_at;
+    protected $updated_at;
 
-    public function getOneByEmail(string $email, bool $onlyActif = false): ?User
-    {
-        if (!$email)
-            return null;
-
-        $sql = "SELECT * FROM {$this->getTable()} WHERE email = :email";
-        if ($onlyActif)
-            $sql .= " AND status = 1";
-
-        $queryPrepared = $this->getPdo()->prepare($sql);
-        $queryPrepared->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
-        $queryPrepared->execute(['email'  => $email]);
-
-        $user = $queryPrepared->fetch();
-        if ($user) {
-            if ($this->bindValuesFromRow($user))
-                return $this;
-        }
-
-        return null;
-    }
-
-    public function getIdByEmail($email): int
-    {
-        if (!$email)
-            return null;
-
-        $sql = "SELECT id FROM {$this->getTable()} WHERE email = :email";
-
-        try {
-            $queryPrepared = $this->getPdo()->prepare($sql);
-            $queryPrepared->execute(['email'  => $email]);
-
-            $id_user = $queryPrepared->fetchColumn();
-            return ($id_user !== false) ? (int) $id_user : null;
-        } catch (\PDOException $e) {
-            throw new \App\Exceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
-        }
-    }
-
-    public function bindValuesFromRow(object $row): bool
-    {
-        if (!$row)
-            return false;
-
-        foreach ($row as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            }
-        }
-
-        return true;
-    }
-    
     /**
      * @return int
      */
@@ -178,37 +120,29 @@ class User extends SQL
     {
         $this->status = $status;
     }
-    
+
     /**
      * @return mixed
      */
-    public function setDateInserted($dateInserted)
+    public function setUpdatedAt($updatedAt)
     {
-        return $this->date_inserted;
+        $this->updated_at = $updatedAt;
     }
 
     /**
      * @return mixed
      */
-    public function setDateUpdated($dateUpdated)
+    public function getCreatedAt()
     {
-        return $this->date_updated;
+        return $this->created_at;
     }
 
     /**
      * @return mixed
      */
-    public function getDateInserted()
+    public function getUpdatedAt()
     {
-        return $this->date_inserted;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDateUpdated()
-    {
-        return $this->date_updated;
+        return $this->updated_at;
     }
 
 }

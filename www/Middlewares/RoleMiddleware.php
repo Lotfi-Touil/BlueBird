@@ -2,10 +2,7 @@
 
 namespace App\Middlewares;
 
-use App\Exceptions\HttpException;
-use App\Models\Role;
-use App\Models\User;
-use App\Models\UserRole;
+use App\Core\QueryBuilder;
 
 class RoleMiddleware extends Middleware
 {
@@ -26,18 +23,17 @@ class RoleMiddleware extends Middleware
 
     private function hasRequiredRole(): bool
     {
-        $userModel = new User();
-        // TODO Lotfi : il faudra récupérer via un token et non un mail
-        $id_user = $userModel->getOneBy(['email' => $this->getTokenLogin()], ['id']);
-        if (!$id_user)
-            return false;
+        // TODO : utiliser un vrai token au lieu d'un mail
+        $userId = QueryBuilder::table('user')->select('id')->where('email', $this->getTokenLogin())->get();
 
-        $Role = new Role();
-        $requiredRoleId = $Role->getRoleIdByName($this->requiredRole);
+        $isUserHasRequiredRole = QueryBuilder::table('user_role')
+            ->select('user_role.id')
+            ->join('user', 'user_role.id_user', '=', 'user.id')
+            ->join('role', 'user_role.id_role', '=', 'role.id')
+            ->where('user.id', $userId)
+            ->where('role.name', $this->requiredRole)
+            ->exists();
 
-        $UserRole = new UserRole();
-        $idUserRole = $UserRole->getOneBy(['id_user' => $id_user[0], 'id_role' => $requiredRoleId], ['id']);
-
-        return $idUserRole ? true : false;
+        return $isUserHasRequiredRole;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\QueryBuilder;
 use App\Core\View;
 use App\Forms\Login;
 use \App\Models\User;
@@ -48,28 +49,24 @@ class AuthController extends Controller{
         if (!$post)
             return null;
 
-        $user = $this->getUserByEmail($post->email);
+        $user = QueryBuilder::table('user')
+            ->select()
+            ->where('email', $post->email)
+            ->first();
 
-        if ($user && password_verify($post->password, $user->getPassword())) {
-            $_SESSION['login'] = $user->getEmail();
-            header('Location: /');
+        if ($user && password_verify($post->password, $user['password'])) {
+            $_SESSION['login'] = $user['email'];
+            redirectHome();
         } else {
             $this->errors[] = 'Identifiants incorrects';
             return false;
         }
     }
 
-    private function getUserByEmail(string $email, bool $onlyActif = false): ?User
-    {
-        $user = new User();
-        return $user->getOneByEmail($email, $onlyActif);
-    }
-
     public function logoutAction(): void
     {
         session_destroy();
-        header("Location: /");
-        exit();
+        redirectHome();
     }
 
     public function registerAction(): void

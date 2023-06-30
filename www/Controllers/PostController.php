@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\QueryBuilder;
 use App\Core\View;
 use App\Models\Post;
 use App\Forms\Post\Create;

@@ -12,6 +12,7 @@ class ErrorHandler
     public static function handle($exception)
     {
         if (APP_DEBUG) {
+            echo '<pre>';
             throw $exception; // En preprod, on affiche toutes les erreurs.
         }
 

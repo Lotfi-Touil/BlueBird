@@ -3,17 +3,14 @@
 namespace App\Controllers;
 
 use App\Core\View;
-use App\Models\User as UserModel;
+use App\Models\User;
 
 class UserController extends Controller
 {
-    public function userListAction()
+    public function listAction()
     {
-        $userModel = new UserModel();
-        $users = $userModel->getAll();
-
-        $view = new View('User/list', 'back');
-        $view->assign('rowsUser', $users);
+        $view = new View('user/back/list', 'back');
+        $view->assign('users', User::all());
         $view->render();
     }
 }
