@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Middlewares;
+namespace App\Core;
 
-use App\Core\SQL;
+use App\Core\Model;
 
-abstract class Middleware extends SQL
+abstract class Middleware extends Model
 {
-    public function __construct() {
-        parent::__construct();
-    }
-
     abstract public function handle();
 
     // TODO : il faut utiliser les tokens au lieu d'un login

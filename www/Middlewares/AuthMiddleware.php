@@ -2,6 +2,8 @@
 
 namespace App\Middlewares;
 
+use App\Core\Middleware;
+
 class AuthMiddleware extends Middleware
 {
     public function handle()
@@ -14,9 +16,6 @@ class AuthMiddleware extends Middleware
 
     private function isUserAuthenticated(): bool
     {
-        // TODO: Implémenter la logique d'authentification ici
-        // Vous pouvez utiliser des tokens, des sessions ou tout autre mécanisme d'authentification de votre choix
-
         return isset($_SESSION['login']);
     }
 }

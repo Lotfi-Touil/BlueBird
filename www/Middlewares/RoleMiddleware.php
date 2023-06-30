@@ -2,6 +2,7 @@
 
 namespace App\Middlewares;
 
+use App\Core\Middleware;
 use App\Core\QueryBuilder;
 
 class RoleMiddleware extends Middleware
@@ -11,7 +12,6 @@ class RoleMiddleware extends Middleware
     public function __construct($requiredRole)
     {
         $this->requiredRole = $requiredRole;
-        parent::__construct();
     }
 
     public function handle()

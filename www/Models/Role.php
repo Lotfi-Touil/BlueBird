@@ -2,27 +2,20 @@
 
 namespace App\Models;
 
-use App\Core\SQL;
+use App\Core\Model;
 
-class Role extends SQL
+class Role extends Model
 {
-    protected $id;
-    protected $name;
+    protected static $table = DB_PREFIX . 'role';
+    protected static $fillable = ['name'];
 
-    public function getRoleIdByName($name)
-    {
-        $role = $this->getOneBy(['name' => $name], ['id']);
-        return $role ? $role['id'] : null;
-    }
+    protected $id;
+
+    protected $name;
 
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     public function getName()

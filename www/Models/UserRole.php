@@ -2,22 +2,21 @@
 
 namespace App\Models;
 
-use App\Core\SQL;
+use App\Core\Model;
 
-class UserRole extends SQL
+class UserRole extends Model
 {
+    protected static $table = DB_PREFIX . 'user_role';
+    protected static $fillable = ['id_user', 'id_role'];
+
     protected $id;
+
     protected $id_user;
     protected $id_role;
 
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     public function getIdUser()
