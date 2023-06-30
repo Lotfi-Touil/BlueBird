@@ -23,6 +23,11 @@ class QueryBuilder
     protected $limit = null;
     protected $orWheres = [];
     protected $andWheres = [];
+    protected $havings = [];
+    protected $orderBy = [];
+    protected $groupBy = [];
+    protected $offset = null;
+
 
     /**
      * @param string $table
@@ -206,6 +211,68 @@ class QueryBuilder
     }
 
     /**
+     * Ajouter une clause HAVING au Query Builder.
+     * 
+     * @param $field
+     * @param $operator
+     * @param $value
+     * @return self
+     */
+    public function having($field, $operator, $value = null): self
+    {
+        if (func_num_args() === 2) {
+            $value = $operator;
+            $operator = '=';
+        }
+
+        $field = $this->prefixColumnName($field);
+        $this->havings[] = compact('field', 'operator', 'value');
+
+        return $this;
+    }
+
+    /**
+     * Ajouter une clause ORDER BY au Query Builder.
+     * 
+     * @param string $field
+     * @param string $direction
+     * @return self
+     */
+    public function orderBy(string $field, string $direction = 'ASC'): self
+    {
+        $field = $this->prefixColumnName($field);
+        $this->orderBy[] = compact('field', 'direction');
+
+        return $this;
+    }
+
+    /**
+     * Ajouter une clause GROUP BY au Query Builder.
+     * 
+     * @param string $field
+     * @return self
+     */
+    public function groupBy(string $field): self
+    {
+        $field = $this->prefixColumnName($field);
+        $this->groupBy[] = $field;
+
+        return $this;
+    }
+
+    /**
+     * Ajouter une clause OFFSET au Query Builder.
+     * 
+     * @param integer $offset
+     * @return self
+     */
+    public function offset(int $offset): self
+    {
+        $this->offset = $offset;
+        return $this;
+    }
+
+    /**
      * get() est une fonction appelée en dernier (après les joins, wheres, select, etc) afin de récupérer le(s) résultat(s).
      * 
      * @return mixed
@@ -248,8 +315,31 @@ class QueryBuilder
                 }, $this->andWheres));
             }
 
+            if ($this->groupBy) {
+                $sql .= ' GROUP BY ';
+                $sql .= implode(', ', $this->groupBy);
+            }
+
+            if ($this->havings) {
+                $sql .= ' HAVING ';
+                $sql .= implode(' AND ', array_map(function ($having) {
+                    return $having['field'] . ' ' . $having['operator'] . ' ?';
+                }, $this->havings));
+            }
+
+            if ($this->orderBy) {
+                $sql .= ' ORDER BY ';
+                $sql .= implode(', ', array_map(function ($order) {
+                    return $order['field'] . ' ' . $order['direction'];
+                }, $this->orderBy));
+            }
+
             if ($this->limit) {
                 $sql .= ' LIMIT ' . $this->limit;
+            }
+
+            if ($this->offset) {
+                $sql .= ' OFFSET ' . $this->offset;
             }
 
             $stmt = self::getPDO()->prepare($sql);
@@ -267,6 +357,10 @@ class QueryBuilder
                 $values[] = $where['value'];
             }
 
+            foreach ($this->havings as $having) {
+                $values[] = $having['value'];
+            }
+
             $stmt->execute($values);
 
             if (count($this->selects) === 1) {
@@ -275,9 +369,10 @@ class QueryBuilder
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (PDOException $e) {
-            throw new \App\Exceptions\DatabaseException((string)$e->getMessage(), (int)$e->getCode(), $e);
+            throw new \App\Exceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
         }
     }
+
 
     /**
      * Savoir si la requete qui a été construite avec le Query Builder retourne quelque chose.
