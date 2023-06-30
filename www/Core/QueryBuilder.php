@@ -316,7 +316,7 @@ class QueryBuilder
     /**
      * Tout comme la fonction get(), first() doit être appelée en dernier. Cette fonction retourne uniquement le premier résultat.
      * 
-     * @return void
+     * @return mixed
      */
     public function first()
     {
@@ -324,7 +324,7 @@ class QueryBuilder
             $this->limit(1);
             $result = $this->get();
 
-            if ($result !== null && is_array($result)) {
+            if ($result && is_array($result)) {
                 return $result[0];
             }
 
