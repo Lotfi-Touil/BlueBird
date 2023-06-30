@@ -1,8 +1,8 @@
 <?php
 
-require 'includes/functions.php';
-require 'config/config.php';
-require 'Generators/ModelGenerator.php';
+require __DIR__ . '/Helpers/functions.php';
+require __DIR__ . '/config/config.php';
+require __DIR__ . '/Generators/ModelGenerator.php';
 
 use App\Generators\ModelGenerator;
 

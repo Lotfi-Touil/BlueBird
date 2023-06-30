@@ -9,7 +9,17 @@ class Create extends Validator
     protected $method = "POST";
     protected array $config = [];
 
-    public function getConfig(): array
+    public function __construct()
+    {
+        $this->initConfig();
+    }
+
+    public function getConfig() : array
+    {
+        return $this->config;
+    }
+
+    public function initConfig(): void
     {
         $this->config = [
             "config" => [
@@ -39,6 +49,5 @@ class Create extends Validator
                 ]
             ]
         ];
-        return $this->config;
     }
 }

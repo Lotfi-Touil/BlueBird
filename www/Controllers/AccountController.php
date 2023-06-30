@@ -12,15 +12,15 @@ class AccountController extends Controller{
 
     public function profile(): void
     {
-        $view = new View('Account/profile', 'account-settings');
-        $view->assign('title', 'Mon compte');
-        $view->render();
+        view('Account/profile', 'account-settings', [
+            'title' => 'Mon compte'
+        ]);
     }
 
     public function other(): void
     {
-        $view = new View('Account/other', 'account-settings');
-        $view->assign('title', 'Mon compte');
-        $view->render();
+        view('Account/other', 'account-settings', [
+            'title' => 'Mon compte'
+        ]);
     }
 }

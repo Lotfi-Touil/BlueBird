@@ -5,8 +5,8 @@ namespace App;
 use App\Core\Router;
 use App\Errors\ErrorHandler;
 
-require 'includes/functions.php';
-require 'config/config.php';
+require __DIR__ . '/Helpers/functions.php';
+require __DIR__ . '/config/config.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();

@@ -3,24 +3,18 @@
 namespace App\Controllers;
 
 use App\Core\QueryBuilder;
-use App\Core\View;
-use App\Forms\Login;
+use App\Forms\Auth\Login;
+use \App\Forms\Auth\Register;
 use \App\Models\User;
-use \App\Forms\Register;
 use App\Utils\Auth as UtilsAuth;
 
 class AuthController extends Controller{
 
-    private array $errors;
+    private array $errors = [];
  
     public function __construct()
     {
         parent::__construct();
-    }
-
-    public function getErrors(): array
-    {
-        return $this->errors ?? [];
     }
 
     public function loginAction(): void
@@ -30,18 +24,16 @@ class AuthController extends Controller{
 
         $form = new Login();
 
-        $view = new View('Auth/login', 'front');
-        $view->assign('form', $form->getConfig());
-        $view->assign('isConnected', UtilsAuth::isConnected());
-        $view->assign('title', 'Blue Bird | Connexion');
-
         if ($form->isSubmited() && $form->isValid()) {
             $post = $this->getRequest()->getPost();
-            if (!$this->connect($post))
-                $view->assign('formErrors', $this->getErrors());
+            $this->connect($post);
         }
 
-        $view->render();
+        view('Auth/login', 'front', [
+            'title'       => 'Blue Bird | Connexion',
+            'form'        => $form->getConfig(),
+            'formErrors'  => $this->errors
+        ]);
     }
 
     public function connect($post)
@@ -76,10 +68,6 @@ class AuthController extends Controller{
 
         $form = new Register();
 
-        $view = new View('Auth/register', 'front');
-        $view->assign('form', $form->getConfig());
-        $view->assign('title', 'Blue Bird | Inscription');
-
         if ($form->isSubmited() && $form->isValid()) {
             $post = $this->getRequest()->getPost();
             $user = new User();
@@ -88,13 +76,16 @@ class AuthController extends Controller{
             $user->setEmail($post->email);
             $user->setPassword($post->password);
             $user->setStatus(1); // TODO Lotfi : pour l'instant à 1
-            $user->save();
+            $user->create();
 
             $this->connect($post);
         }
 
-        $view->assign("formErrors", $form->errors);
-        $view->render();
+        view('Auth/register', 'front', [
+            'title'       => 'Blue Bird | Inscription',
+            'form'        => $form->getConfig(),
+            'formErrors'  => $this->errors
+        ]);
     }
 
 }

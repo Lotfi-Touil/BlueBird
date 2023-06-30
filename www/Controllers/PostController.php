@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Core\QueryBuilder;
-use App\Core\View;
 use App\Models\Post;
 use App\Forms\Post\Create;
 use App\Forms\Post\Edit;
@@ -17,17 +15,17 @@ class PostController extends Controller{
 
     public function listAction(): void
     {
-        $view = new View('post/list', 'back');
-        $view->assign('posts', Post::all());
-        $view->render();
+        view('post/list', 'back', [
+            'posts', Post::all()
+        ]);
     }
 
     public function createAction(): void
     {
-        $view = new View('post/create', 'back');
         $form = new Create();
-        $view->assign('form', $form->getConfig());
-        $view->render();
+        view('post/create', 'back', [
+            'form', $form->getConfig()
+        ]);
     }
 
     public function showAction(): void
@@ -42,7 +40,7 @@ class PostController extends Controller{
         $postModel = new Post();
         $postModel->setTitle($post->title);
         $postModel->setContent($post->content);
-        $postModel->save();
+        $postModel->create();
 
         header('Location: /admin/post/list');
         exit();
@@ -62,11 +60,11 @@ class PostController extends Controller{
 
     public function editAction($id): void
     {
-        $view = new View('post/edit', 'back');
-        $view->assign('post', Post::find($id));
         $form = new Edit();
-        $view->assign('form', $form->getConfig());
-        $view->render();
+        view('post/edit', 'back', [
+            'post' => Post::find($id),
+            'form', $form->getConfig()
+        ]);
     }
 
     public function updateAction(): void

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Forms;
+namespace App\Forms\Auth;
 
 use \App\Core\Validator;
 
@@ -9,7 +9,17 @@ class Login extends Validator
     protected $method = "POST";
     protected array $config = [];
 
+    public function __construct()
+    {
+        $this->initConfig();
+    }
+
     public function getConfig(): array
+    {
+        return $this->config;
+    }
+
+    private function initConfig(): void
     {
         $this->config = [
             "config" => [
@@ -39,6 +49,5 @@ class Login extends Validator
                 ]
             ]
         ];
-        return $this->config;
     }
 }

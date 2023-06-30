@@ -5,6 +5,7 @@ namespace App\Generators;
 use \PDO;
 use \PDOException;
 
+// TODO : Refaire le générateur pour s'adapter au nouveau format lié a l'ORM
 class ModelGenerator
 {
     private $pdo;

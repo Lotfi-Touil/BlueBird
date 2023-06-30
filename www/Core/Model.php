@@ -74,7 +74,7 @@ abstract class Model
         }
     }
 
-    public function save()
+    public function create()
     {
         $pdo = self::getPDO();
         $fields = [];
