@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Forms\Post;
+namespace App\Forms\Productor;
 
 use \App\Core\Validator;
 
-class Edit extends Validator
+class Create extends Validator
 {
     protected $method = "POST";
     protected array $config = [];
@@ -24,37 +24,37 @@ class Edit extends Validator
         $this->config = [
             "config" => [
                 "method" => $this->method,
-                "action" => "update",
-                "id" => "post-form",
+                "action" => "store",
+                "id" => "productor-form",
                 "class" => "form",
                 "enctype" => "multipart/form-data",
-                "submit" => "Enregistrer",
-                "type" => "submit",
-                "name" => "Modifier",
-                "disabled" => false
+                "submit" => "Ajouter",
+                "name" => "Ajouter",
+                "disabled" => false,
+                "type" => "submit"
             ],
             "inputs" => [
-                "title" => [
-                    "id" => "post-form-title",
+                "name" => [
+                    "id" => "productor-form-title",
                     "class" => "form-control",
-                    "placeholder" => "Titre",
+                    "placeholder" => "Nom",
                     "type" => "text",
                     "error" => "",
                     "required" => true,
-                    "label" => "Titre",
+                    "label" => "Nom",
                     "readonly" => false,
                     "attribut" => "input",
                 ],
-                "content" => [
-                    "id" => "post-form-content",
+                "description" => [
+                    "id" => "productor-form-description",
                     "class" => "form-control summernote",
-                    "placeholder" => "Contenu",
-                    "attribut" => "textarea",
-                    "type" => "",
+                    "placeholder" => "Description",
+                    "type" => "textarea",
                     "error" => "",
-                    "label" => "Contenu",
                     "required" => true,
+                    "label" => "Description",
                     "readonly" => false,
+                    "attribut" => "textarea"
                 ]
             ]
         ];

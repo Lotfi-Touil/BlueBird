@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Forms\Post;
+namespace App\Forms\Productor;
 
 use \App\Core\Validator;
 
@@ -34,25 +34,25 @@ class Edit extends Validator
                 "disabled" => false
             ],
             "inputs" => [
-                "title" => [
-                    "id" => "post-form-title",
+                "name" => [
+                    "id" => "post-form-name",
                     "class" => "form-control",
-                    "placeholder" => "Titre",
+                    "placeholder" => "Nom",
                     "type" => "text",
                     "error" => "",
                     "required" => true,
-                    "label" => "Titre",
+                    "label" => "Nom",
                     "readonly" => false,
                     "attribut" => "input",
                 ],
-                "content" => [
-                    "id" => "post-form-content",
+                "description" => [
+                    "id" => "post-form-description",
                     "class" => "form-control summernote",
-                    "placeholder" => "Contenu",
+                    "placeholder" => "Description",
                     "attribut" => "textarea",
                     "type" => "",
                     "error" => "",
-                    "label" => "Contenu",
+                    "label" => "Description",
                     "required" => true,
                     "readonly" => false,
                 ]
