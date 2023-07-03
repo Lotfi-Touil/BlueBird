@@ -16,7 +16,7 @@ class PostController extends Controller{
 
     public function listAction(): void
     {
-        view('post/list', 'back', [
+        view('post/back/list', 'back', [
             'posts' => Post::all()
         ]);
     }
@@ -24,7 +24,7 @@ class PostController extends Controller{
     public function createAction(): void
     {
         $form = new Create();
-        view('post/create', 'back', [
+        view('post/back/create', 'back', [
             'form' => $form->getConfig()
         ]);
     }
@@ -34,7 +34,7 @@ class PostController extends Controller{
         $request = new PostRequest();
 
         if (!$request->createPost()) {
-            view('post/create', 'back', [
+            view('post/back/create', 'back', [
                 'errors' => $request->getErrors(),
                 'old'    => $request->getOld()
             ]);
@@ -50,7 +50,7 @@ class PostController extends Controller{
         if (!$post)
             $this->redirectToList();
 
-        view('post/show', 'back', [
+        view('post/back/show', 'back', [
             'post' => $post
         ]);
     }
@@ -62,7 +62,7 @@ class PostController extends Controller{
         if (!$post)
             $this->redirectToList();
 
-        view('post/edit', 'back', [
+        view('post/back/edit', 'back', [
             'post' => $post
         ]);
     }
@@ -78,7 +78,7 @@ class PostController extends Controller{
         $request = new PostRequest();
 
         if (!$request->updatePost($post)) {
-            view('post/edit', 'back', [
+            view('post/back/edit', 'back', [
                 'post'   => $post,
                 'errors' => $request->getErrors(),
                 'old'    => $request->getOld()
