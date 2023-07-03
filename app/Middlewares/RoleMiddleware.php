@@ -31,7 +31,7 @@ class RoleMiddleware extends Middleware
             ->join('user', 'user_role.id_user', '=', 'user.id')
             ->join('role', 'user_role.id_role', '=', 'role.id')
             ->where('user.id', $userId)
-            ->where('role.name', $this->requiredRole)
+            ->andWhere('role.name', $this->requiredRole)
             ->exists();
 
         return $isUserHasRequiredRole;

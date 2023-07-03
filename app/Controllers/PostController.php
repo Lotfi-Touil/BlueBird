@@ -3,8 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\Post;
-use App\Forms\Post\Create;
-use App\Forms\Post\Edit;
 use App\Requests\PostRequest;
 
 class PostController extends Controller{
@@ -23,10 +21,7 @@ class PostController extends Controller{
 
     public function createAction(): void
     {
-        $form = new Create();
-        view('post/back/create', 'back', [
-            'form' => $form->getConfig()
-        ]);
+        view('post/back/create', 'back');
     }
 
     public function storeAction(): void
