@@ -42,8 +42,7 @@ class Create extends Validator
                     "error" => "",
                     "required" => true,
                     "label" => "Nom",
-                    "readonly" => false,
-                    "attribut" => "input",
+                    "readonly" => false 
                 ],
                 "description" => [
                     "id" => "productor-form-description",
@@ -53,8 +52,17 @@ class Create extends Validator
                     "error" => "",
                     "required" => true,
                     "label" => "Description",
-                    "readonly" => false,
-                    "attribut" => "textarea"
+                    "readonly" => false
+                ],
+                "id_country" => [
+                    "id" => "productor-form-id_country",
+                    "class" => "form-control",
+                    "placeholder" => "Pays",
+                    "type" => "select",
+                    "error" => "",
+                    "required" => true,
+                    "label" => "Pays",
+                    "readonly" => false
                 ]
             ]
         ];

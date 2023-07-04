@@ -7,12 +7,13 @@ use App\Core\Model;
 class Productor extends Model
 {
     protected static $table = DB_PREFIX . 'productor';
-    protected static $fillable = ['name', 'description'];
+    protected static $fillable = ['name', 'description', 'id_country'];
 
     protected $id;
 
     protected $name;
     protected $description;
+    protected $id_country;
 
     public function getId() {
         return $this->id;
@@ -32,5 +33,13 @@ class Productor extends Model
 
     public function setDescription($description) {
         $this->description = $description;
+    }
+
+    public function getIdCountry() {
+        return $this->id_country;
+    }
+
+    public function setIdCountry($id_country) {
+        $this->id_country = $id_country;
     }
 }

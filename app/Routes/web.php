@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 use App\Controllers\AccountController;
 use App\Controllers\MainController;
@@ -9,6 +9,7 @@ use App\Controllers\PostController;
 use App\Controllers\ProductorController;
 
 use App\Middlewares\AuthMiddleware;
+use App\Middlewares\ProductorMiddleware;
 use App\Middlewares\RoleMiddleware;
 
 $router = \App\Core\Router::getInstance();

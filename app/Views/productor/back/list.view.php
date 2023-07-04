@@ -13,26 +13,37 @@
                 </div>
                 <div class="table-responsive">
                     <?php if ($productors) : ?>
+                        <p class="pb-2 px-3">Affichage de <strong><?= count($productors);?></strong> maisons de production</p>
                         <table class="table">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
-                                    <th class="d-none d-sm-table-cell">Nom</th>
-                                    <th class="d-none d-sm-table-cell">description</th>
-                                    <th class="d-table-cell">Action</th>
+                                    <th class="d-table-cell">Nom</th>
+                                    <th class="d-none d-sm-table-cell">Description</th>
+                                    <th class="d-none d-sm-table-cell">Pays</th>
+                                    <th class="d-none d-sm-table-cell">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($productors as $productor): ?>
                                 <tr>
-                                    <td class="d-table-cell"><?= $productor->id ?></td>
-                                    <td class="d-none d-sm-table-cell"><?= $productor->name ?></td>
-                                    <td class="d-none d-sm-table-cell"><?= $productor->description ?></td>
-                                    <td class="d-table-cell">
-                                        <!-- Boutons d'action -->
-                                        <a href="/admin/productor/show/<?= $productor->id ?>" class="btn btn-secondary btn-sm"><i class="fa fa-eye"></i></a>
-                                        <a href="/admin/productor/edit/<?= $productor->id ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                        <a href="/admin/productor/delete/<?= $productor->id ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                    <td class="d-table-cell"><?= $productor['productor_id']  ?? 'NULL' ?></td>
+                                    <td class="d-table-cell"><?= $productor['productor_name'] ?? 'NULL' ?></td>
+                                    <td class="d-none d-sm-table-cell text-truncate" style="max-width:250px"><?=  $productor["description"] ?? 'NULL' ?></td>
+                                    <td class="d-none d-sm-table-cell" title="<?= $productor['country_name']?>"><span class="country <?= 'fi fi-' . strtolower($productor['iso']) ?? 'NULL' ?>"></span></td>
+                                    <td class="d-none d-sm-table-cell">
+                                        <a href="/admin/productor/show/<?=  $productor['productor_id'] ?>" class="btn btn-secondary btn-sm">
+                                            <i class="fa fa-eye"></i>
+                                            <span class="sr-only">Cliquer pour voir : <?=$productor["productor_name"]?></span>
+                                        </a>
+                                        <a href="/admin/productor/edit/<?=  $productor['productor_id'] ?>" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-edit"></i>
+                                            <span class="sr-only">Cliquer pour modifier : <?=$productor["name"]?></span>
+                                        </a>
+                                        <a href="/admin/productor/delete/<?=  $productor['productor_id'] ?>" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i>
+                                            <span class="sr-only">Cliquer pour supprimer : <?=$productor["name"]?></span>
+                                        </a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>

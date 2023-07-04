@@ -22,39 +22,47 @@ class Edit extends Validator
     public function initConfig(): void
     {
         $this->config = [
-            "config" => [
+                        "config" => [
                 "method" => $this->method,
-                "action" => "update",
-                "id" => "post-form",
+                "action" => "store",
+                "id" => "productor-form",
                 "class" => "form",
                 "enctype" => "multipart/form-data",
-                "submit" => "Enregistrer",
-                "type" => "submit",
-                "name" => "Modifier",
-                "disabled" => false
+                "submit" => "Ajouter",
+                "name" => "Ajouter",
+                "disabled" => false,
+                "type" => "submit"
             ],
             "inputs" => [
                 "name" => [
-                    "id" => "post-form-name",
+                    "id" => "productor-form-name",
                     "class" => "form-control",
                     "placeholder" => "Nom",
                     "type" => "text",
                     "error" => "",
                     "required" => true,
                     "label" => "Nom",
-                    "readonly" => false,
-                    "attribut" => "input",
+                    "readonly" => false 
                 ],
                 "description" => [
-                    "id" => "post-form-description",
+                    "id" => "productor-form-description",
                     "class" => "form-control summernote",
                     "placeholder" => "Description",
-                    "attribut" => "textarea",
-                    "type" => "",
+                    "type" => "textarea",
                     "error" => "",
-                    "label" => "Description",
                     "required" => true,
-                    "readonly" => false,
+                    "label" => "Description",
+                    "readonly" => false
+                ],
+                "id_country" => [
+                    "id" => "productor-form-id_country",
+                    "class" => "form-control",
+                    "placeholder" => "Pays",
+                    "type" => "select",
+                    "error" => "",
+                    "required" => true,
+                    "label" => "Pays",
+                    "readonly" => false
                 ]
             ]
         ];

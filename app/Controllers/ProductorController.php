@@ -2,12 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Core\QueryBuilder;
 use App\Models\Productor;
 use App\Forms\Productor\Create;
 use App\Forms\Productor\Edit;
+use App\Models\Country;
 use App\Requests\ProductorRequest;
 
-class PostController extends Controller{
+class ProductorController extends Controller{
 
     public function __construct()
     {
@@ -16,16 +18,40 @@ class PostController extends Controller{
 
     public function listAction(): void
     {
+        $productors = QueryBuilder::table('productor')
+            ->select(
+                'productor.id AS productor_id',
+                'productor.name AS productor_name',
+                'productor.*',
+                'country.id AS country_id',
+                'country.name AS country_name',
+                'country.*',
+                )
+            ->join('country', 'productor.id_country', '=', 'country.id')
+            ->orderBy('productor.name')
+            ->get();
+
         view('productor/back/list', 'back', [
-            'productors' => Productor::all()
+            'productors' => $productors
         ]);
     }
 
     public function createAction(): void
     {
+        $country = QueryBuilder::table('country')
+        ->select(
+            'country.name AS country_name',
+            'country.id AS country_id', 
+            )
+        ->get();
+
+        $options = Country::all();
+        
         $form = new Create();
         view('productor/back/create', 'back', [
-            'form' => $form->getConfig()
+            'form' => $form->getConfig(),
+            'country' => $country,
+            'options' => $options
         ]);
     }
 
@@ -45,8 +71,19 @@ class PostController extends Controller{
 
     public function showAction($id): void
     {
-        $productor = Productor::find($id);
-
+        $productor = QueryBuilder::table('productor')
+            ->select(
+                'productor.id AS productor_id',
+                'productor.name AS productor_name',
+                'productor.*',
+                'country.id AS country_id',
+                'country.name AS country_name',
+                'country.*',
+                )
+            ->join('country', 'productor.id_country', '=', 'country.id')
+            ->where('productor.id', $id)
+            ->first();
+        
         if (!$productor)
             $this->redirectToList();
 
@@ -57,31 +94,57 @@ class PostController extends Controller{
 
     public function editAction($id): void
     {
-        $productor = Productor::find($id);
+        $productor = QueryBuilder::table('productor')
+            ->select(
+                'productor.id AS productor_id',
+                'productor.name AS productor_name',
+                'productor.*',
+                'country.id AS country_id',
+                'country.*',
+                )
+            ->join('country', 'productor.id_country', '=', 'country.id')
+            ->where('productor.id', $id)
+            ->first();
+
+        $options = Country::all();
 
         if (!$productor)
             $this->redirectToList();
 
         view('productor/back/edit', 'back', [
-            'productor' => $productor
+            'productor' => $productor,
+            'options'   => $options
         ]);
     }
 
     public function updateAction($id): void
     {
-        $productor = Productor::find($id);
+        $productor = QueryBuilder::table('productor')
+            ->select(
+                'productor.id AS productor_id',
+                'productor.name AS productor_name',
+                'productor.*',
+                'country.id AS country_id',
+                'country.*',
+                )
+            ->join('country', 'productor.id_country', '=', 'country.id')
+            ->where('productor.id', $id)
+            ->first();
 
         if (!$productor) {
             $this->redirectToList();
         }
 
+        $options = Country::all();
+
         $request = new ProductorRequest();
 
         if (!$request->updateProductor($productor)) {
             view('productor/back/edit', 'back', [
-                'productor'   => $productor,
-                'errors' => $request->getErrors(),
-                'old'    => $request->getOld()
+                'productor' => $productor,
+                'options'   => $options,
+                'errors'    => $request->getErrors(),
+                'old'       => $request->getOld()
             ]);
         }
 
