@@ -42,7 +42,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="/admin/page/list">
             <i class="fas fa-fw fa-paper-plane"></i>
             <span>Pages</span>
         </a>
