@@ -54,6 +54,13 @@
             <span>Articles</span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/productor/list">
+            <i class="fas fa-fw fa-camera"></i>
+            <span>Maisons de Production</span>
+        </a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
 
