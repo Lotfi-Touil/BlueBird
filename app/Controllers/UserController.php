@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controllers;
-
+use App\Requests\UserRequest;
+use App\Core\View;
 use App\Models\User;
 
 class UserController extends Controller
@@ -13,33 +14,78 @@ class UserController extends Controller
         ]);
     }
 
-    // TODO
     public function createAction(): void
     {
-        $this->redirectToList();
+        view('user/back/create', 'back');
     }
 
-    // TODO
     public function storeAction(): void
     {
+        $request = new UserRequest();
+
+        if (!$request->createUser()) {
+            view('user/back/create', 'back', [
+                'errors' => $request->getErrors(),
+                'old'    => $request->getOld()
+            ]);
+        }
+
         $this->redirectToList();
     }
 
-    // TODO
     public function showAction($id): void
     {
-        $this->redirectToList();
+        $user = User::find($id);
+
+        if (!$user)
+            $this->redirectToList();
+
+        view('user/back/show', 'back', [
+            'user' => $user
+        ]);
     }
 
-    // TODO
     public function editAction($id): void
     {
+        $user = User::find($id);
+
+        if (!$user)
+            $this->redirectToList();
+
+        view('user/back/edit', 'back', [
+            'user' => $user
+        ]);
+    }
+
+    public function updateAction($id): void
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            $this->redirectToList();
+        }
+
+        $request = new UserRequest();
+
+        if (!$request->updateUser($user)) {
+            view('user/back/edit', 'back', [
+                'user'   => $user,
+                'errors' => $request->getErrors(),
+                'old'    => $request->getOld()
+            ]);
+        }
+
         $this->redirectToList();
     }
 
-    // TODO
-    public function updateAction(): void
+    public function deleteAction($id): void
     {
+        $user = User::find($id);
+
+        if ($user) {
+            $user->delete();
+        }
+
         $this->redirectToList();
     }
 
