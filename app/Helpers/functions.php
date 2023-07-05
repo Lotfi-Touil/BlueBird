@@ -25,6 +25,7 @@ function onProd(): bool
 function redirectHome(): void
 {
     header('Location: /');
+    exit();
 }
 
 function cameltoSnakeCase($str): string

@@ -58,6 +58,28 @@ abstract class Model
         return null;
     }
 
+    public static function where($column, $operator, $value = null)
+    {
+        if (func_num_args() === 2) {
+            $value = $operator;
+            $operator = '=';
+        }
+
+        $pdo = self::getPDO();
+        $stmt = $pdo->prepare("SELECT * FROM " . static::$table . " WHERE $column $operator :value");
+        $stmt->bindValue(':value', $value);
+        $stmt->execute();
+        $data = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ($data) {
+            $model = new static();
+            $model->fill($data);
+            return $model;
+        }
+
+        return null;
+    }
+
     protected function fill(array $data)
     {
         foreach ($data as $key => $value) {
@@ -92,6 +114,8 @@ abstract class Model
 
         $stmt = $pdo->prepare("INSERT INTO " . static::$table . " ($fields) VALUES ($placeholders)");
         $stmt->execute($values);
+
+        return $pdo->lastInsertId();
     }
 
     public function update()

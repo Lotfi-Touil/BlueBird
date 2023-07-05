@@ -99,6 +99,13 @@ class FormRequest extends AFormRequest
                     }
                     break;
 
+                case 'same':
+                    $otherField = $ruleParams[0];
+                    if ($value !== $this->getRequest()->getPost($otherField)) {
+                        $fieldErrors[] = 'Le champ ' . $field . ' ne correspond pas au champ ' . $otherField . '.';
+                    }
+                    break;
+
                 default:
                     $fieldErrors[] = 'Une erreur est survenue';
                     break;
@@ -113,14 +120,19 @@ class FormRequest extends AFormRequest
         return $this->errors;
     }
 
-    private function setOldInput($data): void
+    public function addError($field, $error): void
     {
-        $_SESSION['old_input'] = $data;
+        $this->errors[$field] = [$error];
     }
 
     public function getOld()
     {
         return isset($_SESSION['old_input']) ? $_SESSION['old_input'] : [];
+    }
+
+    public function setOldInput($data): void
+    {
+        $_SESSION['old_input'] = $data;
     }
 
 }

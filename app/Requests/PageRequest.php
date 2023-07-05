@@ -39,10 +39,10 @@ class PageRequest extends FormRequest
             return false;
         }
 
-        $post = new Page();
-        $post->setTitle($validatedData['title']);
-        $post->setContent($validatedData['content']);
-        $post->create();
+        $page = new Page();
+        $page->setTitle($validatedData['title']);
+        $page->setContent($validatedData['content']);
+        $page->create();
 
         return true;
     }
