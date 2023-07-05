@@ -43,8 +43,8 @@ $router->get('/admin/page/edit/{id}', PageController::class, 'edit')->middleware
 /**
  * POST
  */
-$router->post('/login', AuthController::class, 'login');
-$router->post('/register', AuthController::class, 'register');
+$router->post('/login', AuthController::class, 'loginProcess');
+$router->post('/register', AuthController::class, 'registerProcess');
 
 $router->post('/admin/post/store', PostController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/post/update/{id}', PostController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);

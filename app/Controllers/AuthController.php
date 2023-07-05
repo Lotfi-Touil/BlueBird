@@ -2,14 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Core\QueryBuilder;
-use App\Forms\Auth\Login;
-use App\Forms\Auth\Register;
-use App\Models\User;
+use App\Requests\LoginRequest;
+use App\Requests\RegisterRequest;
 
 class AuthController extends Controller{
-
-    private array $errors = [];
  
     public function __construct()
     {
@@ -21,43 +17,27 @@ class AuthController extends Controller{
         if (isConnected())
             redirectHome();
 
-        $form = new Login();
-
-        if ($form->isSubmited() && $form->isValid()) {
-            $post = $this->getRequest()->getPost();
-            $this->connect($post);
-        }
-
-        view('Auth/login', 'front', [
-            'title'       => 'Blue Bird | Connexion',
-            'form'        => $form->getConfig(),
-            'formErrors'  => $this->errors
+        view('auth/front/login', 'front', [
+            'title' => 'Blue Bird | Connexion'
         ]);
     }
 
-    public function connect($post)
+    public function loginProcessAction()
     {
+        $post = $this->getRequest()->getPost();
+
         if (!$post)
-            return null;
-
-        $user = QueryBuilder::table('user')
-            ->select()
-            ->where('email', $post->email)
-            ->first();
-
-        if ($user && password_verify($post->password, $user['password'])) {
-            $_SESSION['login'] = $user['email'];
             redirectHome();
-        } else {
-            $this->errors[] = 'Identifiants incorrects';
-            return false;
-        }
-    }
 
-    public function logoutAction(): void
-    {
-        session_destroy();
-        redirectHome();
+        $request = new LoginRequest();
+
+        if (!$request->authenticate()) {
+            view('auth/front/login', 'front', [
+                'title' => 'Blue Bird | Connexion',
+                'errors' => $request->getErrors(),
+                'old'    => $request->getOld()
+            ]);
+        }
     }
 
     public function registerAction(): void
@@ -65,26 +45,33 @@ class AuthController extends Controller{
         if (isConnected())
             redirectHome();
 
-        $form = new Register();
-
-        if ($form->isSubmited() && $form->isValid()) {
-            $post = $this->getRequest()->getPost();
-            $user = new User();
-            $user->setFirstname($post->firstname);
-            $user->setLastname($post->lastname);
-            $user->setEmail($post->email);
-            $user->setPassword($post->password);
-            $user->setStatus(1); // TODO Lotfi : pour l'instant à 1
-            $user->create();
-
-            $this->connect($post);
-        }
-
-        view('Auth/register', 'front', [
-            'title'       => 'Blue Bird | Inscription',
-            'form'        => $form->getConfig(),
-            'formErrors'  => $this->errors
+        view('auth/front/register', 'front', [
+            'title'       => 'Blue Bird | Inscription'
         ]);
+    }
+
+    public function registerProcessAction()
+    {
+        $post = $this->getRequest()->getPost();
+
+        if (!$post)
+            redirectHome();
+
+        $request = new RegisterRequest();
+
+        if (!$request->createUser()) {
+            view('auth/front/register', 'front', [
+                'title' => 'Blue Bird | Connexion',
+                'errors' => $request->getErrors(),
+                'old'    => $request->getOld()
+            ]);
+        }
+    }
+
+    public function logoutAction(): void
+    {
+        session_destroy();
+        redirectHome();
     }
 
 }
