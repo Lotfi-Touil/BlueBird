@@ -70,6 +70,20 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="/admin/staff/list">
+            <i class="fas fa-fw fa-user-tag"></i>
+            <span>Staffs</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/job/list">
+            <i class="fas fa-fw fa-toolbox"></i>
+            <span>Métiers</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-fw fa-comment"></i>
             <span>Commentaires</span>

@@ -92,6 +92,8 @@ abstract class Model
 
         $stmt = $pdo->prepare("INSERT INTO " . static::$table . " ($fields) VALUES ($placeholders)");
         $stmt->execute($values);
+
+        return $pdo->lastInsertId();
     }
 
     public function update()
