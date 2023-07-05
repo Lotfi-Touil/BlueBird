@@ -111,9 +111,19 @@ class Router
 
     private function checkControllerValidity($controller): void
     {
+        $namespace = '';
+        $allowedNamespaces = ['Back', 'Front', 'Api'];
+
         $controllerParts = explode('\\', $controller);
-        $controllerFileName = end($controllerParts);
-        $controllerFilePath = __DIR__ . '/../Controllers/' . $controllerFileName . '.php';
+        $nbParts = count($controllerParts);
+
+        if (array_intersect($allowedNamespaces, $controllerParts)) {
+            $namespace = $controllerParts[$nbParts-2];
+            $namespace .= '/';
+        }
+
+        $controllerFileName = $controllerParts[$nbParts-1];
+        $controllerFilePath = __DIR__ . '/../Controllers/' . $namespace . $controllerFileName . '.php';
 
         if (!file_exists($controllerFilePath)) {
             throw new FileNotFoundException();
