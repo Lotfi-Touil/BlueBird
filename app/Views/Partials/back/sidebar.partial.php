@@ -64,6 +64,21 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="/admin/staff/list">
+            <i class="fas fa-fw fa-user-tag"></i>
+            <span>Staffs</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/job/list">
+            <i class="fas fa-fw fa-toolbox"></i>
+            <span>Métiers</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">
         <a class="nav-link" href="/admin/message/list">
             <i class="fas fa-fw fa-user"></i>
             <span>Contact</span>
