@@ -72,6 +72,14 @@
 
     <li class="nav-item">
         <a class="nav-link" href="/admin/comment/list">
+        <a class="nav-link" href="/admin/review/list">
+            <i class="fas fa-fw fa-star"></i>
+            <span>Notations</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#">
             <i class="fas fa-fw fa-comment"></i>
             <span>Commentaires</span>
         </a>

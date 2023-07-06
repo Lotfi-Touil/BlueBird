@@ -1,3 +1,7 @@
 <link rel="stylesheet" href="/css/backoffice/sb-admin-2.min.css">
 <link rel="stylesheet" href="/vendor/boostrap/all.css">
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Inclusion des stylesheets supplémentaires -->
+<?php foreach ($this->stylesheets as $stylesheet) : ?>
+    <link rel="stylesheet" href="<?= $stylesheet ?>">
+<?php endforeach; ?>
