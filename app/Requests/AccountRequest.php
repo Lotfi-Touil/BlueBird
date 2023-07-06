@@ -5,7 +5,7 @@ namespace App\Requests;
 use App\Models\User;
 use App\Core\FormRequest;
 
-class UserRequest extends FormRequest
+class AccountRequest extends FormRequest
 {
     protected $isCreating;
 
@@ -51,31 +51,9 @@ class UserRequest extends FormRequest
         ];
     }
 
-    public function updateAccount(User $user): bool
+    public function createAccount(): bool
     {
         $validatedData = $this->validate();
-
-        if (!$validatedData) {
-            return false;
-        }
-
-        $user->setFirstname($validatedData['firstname']);
-        $user->setLastname($validatedData['lastname']);
-        $user->setEmail($validatedData['email']);
-
-        if (isset($_POST['showPassword']) && $_POST['showPassword']) {
-            $user->setPassword($validatedData['password']);
-        }
-
-        $user->update();
-
-        return true;
-    }
-
-    public function createUser(): bool
-    {
-        $validatedData = $this->validate();
-
         if (!$validatedData) {
             return false;
         }
@@ -91,7 +69,7 @@ class UserRequest extends FormRequest
         return true;
     }
 
-    public function updateUser(User $user): bool
+    public function updateAccount(User $user): bool
     {
         $validatedData = $this->validate();
 
@@ -102,9 +80,8 @@ class UserRequest extends FormRequest
         $user->setFirstname($validatedData['firstname']);
         $user->setLastname($validatedData['lastname']);
         $user->setEmail($validatedData['email']);
-        $user->setStatus($validatedData['status']);
 
-        if (isset($_POST['showPassword']) && $_POST['showPassword']) {
+       if (isset($_POST['showPassword']) && $_POST['showPassword']) {
             $user->setPassword($validatedData['password']);
         }
 

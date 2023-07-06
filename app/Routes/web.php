@@ -21,14 +21,17 @@ use App\Controllers\Back\CommentReplyController as BackCommentReplyController;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RoleMiddleware;
 
+$router = \App\Core\Router::getInstance();
+
 /**
  * GET
  */
 
 $router->get('/', MainController::class, 'home');
 
-$router->get('/profile', FrontAccountController::class, 'profile')->middleware(AuthMiddleware::class);
-$router->get('/other', FrontAccountController::class, 'other')->middleware(AuthMiddleware::class);
+$router->get('/account/profile', FrontAccountController::class, 'show')->middleware(AuthMiddleware::class);
+$router->get('/account/setting', FrontAccountController::class, 'edit')->middleware(AuthMiddleware::class);
+
 
 $router->get('/verify-account', FrontAccountController::class, 'verifyAccount')->middleware(AuthMiddleware::class);
 $router->get('/resend-activation', FrontAccountController::class, 'resendMail')->middleware(AuthMiddleware::class);
@@ -109,6 +112,8 @@ $router->post('/admin/movie/update/{id}', BackMovieController::class, 'update')-
 
 $router->post('/admin/category-movie/store', BackCategoryMovieController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/category-movie/update/{id}', BackCategoryMovieController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
+$router->post('/account/account/update', FrontAccountController::class, 'update')->middleware(AuthMiddleware::class);
 
 $router->post('/admin/productor/store', BackProductorController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/productor/update/{id}', BackProductorController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
