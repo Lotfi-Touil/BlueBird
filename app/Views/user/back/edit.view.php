@@ -12,7 +12,7 @@
         <div class="w-75">
             <form action="/admin/user/update/<?= $user->getId() ?>" method="POST">
                 <div class="form-group">
-                    <label for="firstname">Firstname</label>
+                    <label for="firstname">Prénom</label>
                     <input type="text" id="firstname" name="firstname" class="form-control" value="<?= $old['firstname'] ?? $user->getFirstname() ?>">
                     <?php if(isset($errors['firstname'])): ?>
                         <?php foreach($errors['firstname'] as $error): ?>
@@ -21,7 +21,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-group">
-                    <label for="lastname">Lastname</label>
+                    <label for="lastname">Nom</label>
                     <input type="text" id="lastname" name="lastname" class="form-control" value="<?= $old['lastname'] ?? $user->getLastname() ?>">
                     <?php if(isset($errors['lastname'])): ?>
                         <?php foreach($errors['lastname'] as $error): ?>
@@ -39,7 +39,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-group">
-                    <label for="status">Status</label>
+                    <label for="status">Statut</label>
                     <select id="status" name="status" class="form-control">
                         <option value="0" <?= ($old['status'] ?? !$user->getStatus()) ? 'selected' : '' ?>>Inactif</option>
                         <option value="1" <?= ($old['status'] ?? $user->getStatus()) ? 'selected' : '' ?>>Actif</option>

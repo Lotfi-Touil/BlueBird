@@ -12,7 +12,7 @@
         <div class="w-75">
             <form action="/admin/user/store" method="POST">
                 <div class="form-group">
-                    <label for="firstname">Firstname</label>
+                    <label for="firstname">Prénom</label>
                     <input type="text" id="firstname" name="firstname" class="form-control" value="<?= $old->firstname ?? '' ?>">
                     <?php if(isset($errors['firstname'])): ?>
                         <?php foreach($errors['firstname'] as $error): ?>
@@ -21,7 +21,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-group">
-                    <label for="lastname">Lastname</label>
+                    <label for="lastname">Nom</label>
                     <input type="text" id="lastname" name="lastname" class="form-control" value="<?= $old->lastname ?? '' ?>">
                     <?php if(isset($errors['lastname'])): ?>
                         <?php foreach($errors['lastname'] as $error): ?>
@@ -39,7 +39,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Mot de passe</label>
                     <input type="password" id="password" name="password" class="form-control" value="<?= $old->password ?? '' ?>">
                     <?php if(isset($errors['password'])): ?>
                         <?php foreach($errors['password'] as $error): ?>
@@ -48,10 +48,10 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" value="<?= $old->confirmPassword ?? '' ?>">
-                    <?php if(isset($errors['confirmPassword'])): ?>
-                        <?php foreach($errors['confirmPassword'] as $error): ?>
+                    <label for="passwordConfirm">Confirmer le mot de passe</label>
+                    <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" value="<?= $old->passwordConfirm ?? '' ?>">
+                    <?php if(isset($errors['passwordConfirm'])): ?>
+                        <?php foreach($errors['passwordConfirm'] as $error): ?>
                             <div class="text-danger"><?= $error; ?></div>
                         <?php endforeach; ?>
                     <?php endif; ?>
