@@ -66,6 +66,18 @@ class FormRequest extends AFormRequest
                     }
                     break;
 
+                case 'date':
+                    if (strtotime($value) === false) {
+                        $fieldErrors[] = 'Le champ ' . $field . ' doit être une date valide.';
+                    }
+                    break;
+
+                case 'time':
+                    if (strtotime($value) === false) {
+                        $fieldErrors[] = 'Le champ ' . $field . ' doit être un temps valide.';
+                    }
+                    break;
+
                 case 'integer':
                     if (!filter_var($value, FILTER_VALIDATE_INT)) {
                         $fieldErrors[] = 'Le champ ' . $field . ' doit être un entier.';
