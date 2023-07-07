@@ -7,6 +7,7 @@ use App\Controllers\AuthController;
 use App\Controllers\StatController;
 use App\Controllers\UserController;
 use App\Controllers\PostController;
+use App\Controllers\Front\PostController as FrontPostController;
 use App\Controllers\PageController;
 
 use App\Middlewares\AuthMiddleware;
@@ -40,6 +41,9 @@ $router->get('/admin/post/list', PostController::class, 'list')->middleware(Auth
 $router->get('/admin/post/create', PostController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/post/show/{id}', PostController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/post/edit/{id}', PostController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
+$router->get('/post/list', FrontPostController::class,'list');
+$router->get('/post/{id}', FrontPostController::class,'show');
 
 $router->get('/admin/page/list', PageController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/page/create', PageController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
