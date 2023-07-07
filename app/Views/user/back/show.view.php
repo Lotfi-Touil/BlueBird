@@ -12,11 +12,11 @@
         <div class="w-75">
             <form>
                 <div class="form-group">
-                    <label for="firstname">Firstname</label>
+                    <label for="firstname">Prénom</label>
                     <input type="text" id="firstname" name="firstname" class="form-control" value="<?= $user->getFirstname() ?>" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="lastname">Lastname</label>
+                    <label for="lastname">Nom</label>
                     <input type="text" id="lastname" name="lastname" class="form-control" value="<?= $user->getLastname() ?>" readonly>
                 </div>
                 <div class="form-group">
@@ -24,11 +24,11 @@
                     <input type="email" id="email" name="email" class="form-control" value="<?= $user->getEmail() ?>" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Mot de passe</label>
                     <input type="password" id="password" name="password" class="form-control" value="********" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="status">Status</label>
+                    <label for="status">Statut</label>
                     <input type="text" id="status" name="status" class="form-control" value="<?= $user->getStatus() ? 'Actif' : 'Inactif' ?>" readonly>
                 </div>
             </form>

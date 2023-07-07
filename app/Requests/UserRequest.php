@@ -19,11 +19,9 @@ class UserRequest extends FormRequest
             'lastname' => 'required|string|max:60',
             'email' => 'required|string|max:100',
             'status' => 'in:0,1',
+            'password' => 'required|min:8|max:50',
+            'passwordConfirm' => 'required|same:password',
         ];
-        if ($this->$isCreating) {
-            $rules['password'] = 'required|string|max:50';
-            $rules['confirmPassword'] = 'required|string|max:50|same:password';
-        }
     
         return $rules;
     
@@ -45,17 +43,17 @@ class UserRequest extends FormRequest
             'email.max' => 'Le champ email ne doit pas dépasser 100 caractères.',
             'password.string' => 'Le champ password doit être une chaîne de caractères.',
             'password.max' => 'Le champ password ne doit pas dépasser 50 caractères.',
-            'confirmPassword.same' => 'Le champ confirmPassword doit être le même que le password',
-            'confirmPassword.string' => 'Le champ confirmPassword doit être une chaîne de caractères.',
-            'confirmPassword.max' => 'Le champ confirmPassword ne doit pas dépasser 50 caractères.',
+            'passwordConfirm.same' => 'Le champ passwordConfirm doit être le même que le password',
+            'passwordConfirm.string' => 'Le champ passwordConfirm doit être une chaîne de caractères.',
+            'passwordConfirm.max' => 'Le champ passwordConfirm ne doit pas dépasser 50 caractères.',
             'status.integer' => 'Le champ status doit être un booléen.',
         ];
     }
 
     public function createUser(): bool
     {
-        $isCreating = true;
         $validatedData = $this->validate();
+
         if (!$validatedData) {
             return false;
         }
@@ -70,7 +68,7 @@ class UserRequest extends FormRequest
     
         return true;
     }
-    
+
     public function updateUser(User $user): bool
     {   
         $isCreating = false;

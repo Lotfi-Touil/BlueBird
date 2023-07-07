@@ -18,7 +18,7 @@
                                 <th>Prénom</th>
                                 <th>Nom</th>
                                 <th>Email</th>
-                                <th>Status</th>
+                                <th>Statut</th>
                                 <th>Date de création</th>
                                 <th>Action</th>
                             </tr>
