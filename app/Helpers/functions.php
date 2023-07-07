@@ -22,6 +22,15 @@ function onProd(): bool
     return false;
 }
 
+function getBaseUrl(): string
+{
+    if (onProd()) {
+        return 'https://bluebird.lotfitouil.fr';
+    } else {
+        return 'http://localhost:8081';
+    }
+}
+
 function redirectHome(): void
 {
     header('Location: /');

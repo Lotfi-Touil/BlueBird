@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Middlewares\AccountMiddleware;
+
 class Route
 {
     private string $uri;

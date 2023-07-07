@@ -162,6 +162,96 @@ class QueryBuilder
     }
 
     /**
+     * Ajoute une clause WHERE IS NULL à la requête.
+     *
+     * @param string $field Le nom de la colonne
+     * @return self L'instance de QueryBuilder
+     */
+    public function whereNull(string $field): self
+    {
+        $field = $this->prefixColumnName($field);
+        $operator = 'IS NULL';
+
+        $this->wheres[] = compact('field', 'operator');
+        return $this;
+    }
+
+    /**
+     * Ajoute une clause WHERE IS NOT NULL à la requête.
+     *
+     * @param string $field Le nom de la colonne
+     * @return self L'instance de QueryBuilder
+     */
+    public function whereNotNull(string $field): self
+    {
+        $field = $this->prefixColumnName($field);
+        $operator = 'IS NOT NULL';
+
+        $this->wheres[] = compact('field', 'operator');
+        return $this;
+    }
+
+    /**
+     * Ajoute une clause AND WHERE IS NULL à la requête.
+     *
+     * @param string $field Le nom de la colonne
+     * @return self L'instance de QueryBuilder
+     */
+    public function andWhereNull(string $field): self
+    {
+        $field = $this->prefixColumnName($field);
+        $operator = 'IS NULL';
+
+        $this->andWheres[] = compact('field', 'operator');
+        return $this;
+    }
+
+    /**
+     * Ajoute une clause AND WHERE IS NOT NULL à la requête.
+     *
+     * @param string $field Le nom de la colonne
+     * @return self L'instance de QueryBuilder
+     */
+    public function andWhereNotNull(string $field): self
+    {
+        $field = $this->prefixColumnName($field);
+        $operator = 'IS NOT NULL';
+
+        $this->andWheres[] = compact('column', 'operator');
+        return $this;
+    }
+
+    /**
+     * Ajoute une clause OR WHERE IS NULL à la requête.
+     *
+     * @param string $column Le nom de la colonne
+     * @return self L'instance de QueryBuilder
+     */
+    public function orWhereNull(string $field): self
+    {
+        $field = $this->prefixColumnName($field);
+        $operator = 'IS NULL';
+
+        $this->orWheres[] = compact('field', 'operator');
+        return $this;
+    }
+
+    /**
+     * Ajoute une clause OR WHERE IS NOT NULL à la requête.
+     *
+     * @param string $field Le nom de la colonne
+     * @return self L'instance de QueryBuilder
+     */
+    public function orWhereNotNull(string $field): self
+    {
+        $field = $this->prefixColumnName($field);
+        $operator = 'IS NOT NULL';
+
+        $this->orWheres[] = compact('field', 'operator');
+        return $this;
+    }
+
+    /**
      * Ajoute une clause AND WHERE à la requête.
      *
      * @param $field Le champ à comparer
@@ -299,21 +389,36 @@ class QueryBuilder
             if ($this->wheres) {
                 $sql .= ' WHERE ';
                 $sql .= implode(' AND ', array_map(function ($where) {
-                    return $where['field'] . ' ' . $where['operator'] . ' ?';
+                    if (in_array($where['operator'], ['IS NULL', 'IS NOT NULL'])) {
+                        return $where['field'] . ' ' . $where['operator'];
+                    }
+                    else {
+                        return $where['field'] . ' ' . $where['operator'] . ' ?';
+                    }
                 }, $this->wheres));
             }
 
             if ($this->orWheres) {
                 $sql .= ' OR ';
                 $sql .= implode(' OR ', array_map(function ($where) {
-                    return $where['field'] . ' ' . $where['operator'] . ' ?';
+                    if (in_array($where['operator'], ['IS NULL', 'IS NOT NULL'])) {
+                        return $where['field'] . ' ' . $where['operator'];
+                    }
+                    else {
+                        return $where['field'] . ' ' . $where['operator'] . ' ?';
+                    }
                 }, $this->orWheres));
             }
 
             if ($this->andWheres) {
                 $sql .= ' AND ';
                 $sql .= implode(' AND ', array_map(function ($where) {
-                    return $where['field'] . ' ' . $where['operator'] . ' ?';
+                    if (in_array($where['operator'], ['IS NULL', 'IS NOT NULL'])) {
+                        return $where['field'] . ' ' . $where['operator'];
+                    }
+                    else {
+                        return $where['field'] . ' ' . $where['operator'] . ' ?';
+                    }
                 }, $this->andWheres));
             }
 
@@ -348,15 +453,21 @@ class QueryBuilder
 
             $values = [];
             foreach ($this->wheres as $where) {
-                $values[] = $where['value'];
+                if  (isset($where['value'])) {
+                    $values[] = $where['value'];
+                }
             }
 
             foreach ($this->orWheres as $where) {
-                $values[] = $where['value'];
+                if  (isset($where['value'])) {
+                    $values[] = $where['value'];
+                }
             }
 
             foreach ($this->andWheres as $where) {
-                $values[] = $where['value'];
+                if  (isset($where['value'])) {
+                    $values[] = $where['value'];
+                }
             }
 
             foreach ($this->havings as $having) {

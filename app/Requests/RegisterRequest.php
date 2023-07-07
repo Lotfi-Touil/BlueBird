@@ -2,6 +2,7 @@
 namespace App\Requests;
 
 use App\Core\FormRequest;
+use App\Models\EmailActivationToken;
 use App\Models\User;
 
 class RegisterRequest extends FormRequest
@@ -55,16 +56,30 @@ class RegisterRequest extends FormRequest
         $user->setFirstname($validatedData['firstname']);
         $user->setLastname($validatedData['lastname']);
         $user->setEmail($validatedData['email']);
-        $user->setPassword(password_hash($validatedData['password'], PASSWORD_DEFAULT));
-        $user->setStatus(1); // TODO Lotfi : pour l'instant à 1
-        $user->create();
+        $user->setPassword($validatedData['password']);
+        $user->setStatus(1);
+        $userId = $user->create();
 
-        if (user::where('email', $validatedData['email'])) {
-            $_SESSION['login'] = $user->getEmail();
-            redirectHome();
-        }
+        $user->setId($userId);
+
+        // Envoi du mail d'activation du compte
+        EmailActivationToken::sendActivationEmail($user);
+
+        $this->connect($userId);
 
         return true;
     }
 
+    private function connect($userId): void
+    {
+        if (!$userId)
+            return;
+
+        $user = user::find($userId);
+
+        if ($user) {
+            $_SESSION['login'] = $user->getEmail();
+            redirectHome();
+        }
+    }
 }

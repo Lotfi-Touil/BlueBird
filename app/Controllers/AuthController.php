@@ -46,7 +46,7 @@ class AuthController extends Controller{
             redirectHome();
 
         view('auth/front/register', 'front', [
-            'title'       => 'Blue Bird | Inscription'
+            'title' => 'Blue Bird | Inscription'
         ]);
     }
 

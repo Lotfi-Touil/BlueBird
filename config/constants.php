@@ -7,6 +7,9 @@ define('HTTP_NOT_FOUND', 404);
 define('HTTP_METHOD_NOT_ALLOWED', 405);
 define('HTTP_INTERNAL_SERVER_ERROR', 500);
 
-define('PUBLIC_ROUTES_FILENAME', 'routes_public.yml');
-define('USER_ROUTES_FILENAME', 'routes_user.yml');
-define('ADMIN_ROUTES_FILENAME', 'routes_admin.yml');
+define('PHPMAILER_HOST', 'smtp-mail.outlook.com');
+define('PHPMAILER_PORT', 587);
+define('PHPMAILER_PASSWORD', 'X9a@n#G2$pB8!');
+
+define('EMAIL_NO_REPLY', 'bluebird.no-reply@outlook.com');
+define('EMAIL_DEV', 'bluebird.dev@outlook.fr');

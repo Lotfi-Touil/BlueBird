@@ -4,7 +4,8 @@ namespace App\Core;
 
 use App\Exceptions\FileNotFoundException;
 use App\Exceptions\HttpException;
-use App\Middlewares\Middleware;
+use App\Models\EmailActivationToken;
+use App\Models\User;
 
 class Router
 {
@@ -67,8 +68,42 @@ class Router
         return $this;
     }
 
+    private function checkAccountVerification(): void
+    {
+        $routesBypassVerification = [
+            'verify-account',
+            'resend-activation',
+            'activate-account',
+            'logout'
+        ];
+
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $requestUri = trim($requestUri, '/');
+        $routeName = explode('/', $requestUri)[0];
+
+        if (in_array($routeName, $routesBypassVerification)) {
+            return; // bypass la redirection vers la page de vérification 
+        }
+
+        if (isConnected()) {
+            $isAccountNotVerified = QueryBuilder::table('email_activation_token')
+                ->select('user.id')
+                ->join('user', 'user.id', '=', 'email_activation_token.id_user')
+                ->where('user.email', $_SESSION['login'])
+                ->WhereNotNull('verified_at')
+                ->notExists();
+
+            if ($isAccountNotVerified) {
+                header('Location: /verify-account');
+                exit();
+            }
+        }
+    }
+
     public function resolve(): void
     {
+        $this->checkAccountVerification();
+
         $requestUri = $_SERVER['REQUEST_URI'];
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
