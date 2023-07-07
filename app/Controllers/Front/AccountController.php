@@ -1,11 +1,14 @@
 <?php
-namespace App\Controllers;
 
+namespace App\Controllers\Front;
+
+use App\Controllers\Controller;
 use App\Core\QueryBuilder;
 use App\Models\EmailActivationToken;
 use App\Models\User;
 
-class AccountController extends Controller{
+class AccountController extends Controller
+{
  
     public function __construct()
     {

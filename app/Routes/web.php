@@ -1,6 +1,7 @@
 <?php
 
-use App\Controllers\AccountController;
+use App\Controllers\Front\AccountController as FrontAccountController;
+use App\Controllers\Back\AccountController as BackAccountController;
 use App\Controllers\MainController;
 use App\Controllers\AuthController;
 use App\Controllers\StatController;
@@ -17,12 +18,12 @@ use App\Middlewares\RoleMiddleware;
 
 $router->get('/', MainController::class, 'home');
 
-$router->get('/profile', AccountController::class, 'profile')->middleware(AuthMiddleware::class);
-$router->get('/other', AccountController::class, 'other')->middleware(AuthMiddleware::class);
+$router->get('/profile', FrontAccountController::class, 'profile')->middleware(AuthMiddleware::class);
+$router->get('/other', FrontAccountController::class, 'other')->middleware(AuthMiddleware::class);
 
-$router->get('/verify-account', AccountController::class, 'verifyAccount')->middleware(AuthMiddleware::class);
-$router->get('/resend-activation', AccountController::class, 'resendMail')->middleware(AuthMiddleware::class);
-$router->get('/activate-account/{token}', AccountController::class, 'activateAccount');
+$router->get('/verify-account', FrontAccountController::class, 'verifyAccount')->middleware(AuthMiddleware::class);
+$router->get('/resend-activation', FrontAccountController::class, 'resendMail')->middleware(AuthMiddleware::class);
+$router->get('/activate-account/{token}', FrontAccountController::class, 'activateAccount');
 
 $router->get('/login', AuthController::class, 'login');
 $router->get('/logout', AuthController::class, 'logout')->middleware(AuthMiddleware::class);
