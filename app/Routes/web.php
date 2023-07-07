@@ -11,8 +11,6 @@ use App\Controllers\PageController;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RoleMiddleware;
 
-$router = \App\Core\Router::getInstance();
-
 /**
  * GET
  */
@@ -21,6 +19,10 @@ $router->get('/', MainController::class, 'home');
 
 $router->get('/profile', AccountController::class, 'profile')->middleware(AuthMiddleware::class);
 $router->get('/other', AccountController::class, 'other')->middleware(AuthMiddleware::class);
+
+$router->get('/verify-account', AccountController::class, 'verifyAccount')->middleware(AuthMiddleware::class);
+$router->get('/resend-activation', AccountController::class, 'resendMail')->middleware(AuthMiddleware::class);
+$router->get('/activate-account/{token}', AccountController::class, 'activateAccount');
 
 $router->get('/login', AuthController::class, 'login');
 $router->get('/logout', AuthController::class, 'logout')->middleware(AuthMiddleware::class);

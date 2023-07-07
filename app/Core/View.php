@@ -64,6 +64,13 @@ class View {
     public function render()
     {
         extract($this->data);
+
+        ob_clean();
+        ob_start();
         include $this->template;
+        $content = ob_get_clean();
+
+        echo $content;
+        exit();
     }
 }
