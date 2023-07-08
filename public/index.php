@@ -13,15 +13,11 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 spl_autoload_register(function ($class) {
-    $file     = str_replace(["App\\", "\\"], ["", "/"], $class);
-
-    $fileForm = __DIR__ . '/../app/' . $file.".form.php";
-    $file     = __DIR__ . '/../app/' . $file.".php";
+    $file = str_replace(["App\\", "\\"], ["", "/"], $class);
+    $file = __DIR__ . '/../app/' . $file.".php";
 
     if (file_exists($file)) {
         include $file;
-    } else if (file_exists($fileForm)) {
-        include $fileForm;
     }
 });
     

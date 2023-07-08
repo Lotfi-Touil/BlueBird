@@ -13,8 +13,8 @@
         <div class="w-75">
             <form action="/admin/message/update/<?= $message->getId() ?>" method="POST">
                 <div class="form-group">
-                    <label for="object">Object</label>
-                    <input type="text" id="object" name="object" class="form-control" value="<?= $old->object ?? $message->getObject() ?>">
+                    <label for="object">Objet</label>
+                    <input type="text" id="object" name="object" class="form-control" value="<?= $old->object ?? $message->getObject() ?>" required>
                     <?php if (isset($errors['object'])) : ?>
                         <?php foreach ($errors['object'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <input type="text" id="message" name="message" class="form-control" value="<?= $old->message ?? $message->getMessage() ?>">
+                    <input type="text" id="message" name="message" class="form-control" value="<?= $old->message ?? $message->getMessage() ?>" required>
                     <?php if (isset($errors['message'])) : ?>
                         <?php foreach ($errors['message'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
@@ -31,8 +31,8 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-group">
-                    <label for="firstname">Firstname</label>
-                    <input type="text" id="firstname" name="firstname" class="form-control" value="<?= $old->firstname ?? $message->getFirstname() ?>">
+                    <label for="firstname">Prénom</label>
+                    <input type="text" id="firstname" name="firstname" class="form-control" value="<?= $old->firstname ?? $message->getFirstname() ?>" required>
                     <?php if (isset($errors['firstname'])) : ?>
                         <?php foreach ($errors['firstname'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
@@ -40,8 +40,8 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-group">
-                    <label for="lastname">Lastname</label>
-                    <input type="text" id="lastname" name="lastname" class="form-control" value="<?= $old->lastname ?? $message->getLastname() ?>">
+                    <label for="lastname">Nom</label>
+                    <input type="text" id="lastname" name="lastname" class="form-control" value="<?= $old->lastname ?? $message->getLastname() ?>" required>
                     <?php if (isset($errors['lastname'])) : ?>
                         <?php foreach ($errors['lastname'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" class="form-control" value="<?= $old->email ?? $message->getEmail() ?>">
+                    <input type="text" id="email" name="email" class="form-control" value="<?= $old->email ?? $message->getEmail() ?>" required>
                     <?php if (isset($errors['email'])) : ?>
                         <?php foreach ($errors['email'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
@@ -60,7 +60,7 @@
 
                 <div class="form-group">
                     <label for="id_categorie_message">Catégorie</label>
-                    <select id="id_categorie_message" name="id_categorie_message" class="form-control">
+                    <select id="id_categorie_message" name="id_categorie_message" class="form-control" required>
                         <?php foreach ($categories as $categorie) : ?>
                             <option value="<?= $categorie->id ?>" <?= $categorie->id == $message->getIdCategorieMessage() ? "selected" : "" ?>>
                                 <?= $categorie->id ?> - <?= $categorie->description ?>

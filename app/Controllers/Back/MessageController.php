@@ -53,10 +53,8 @@ class MessageController extends Controller
     {
         $message = QueryBuilder::table('message')
             ->select(
-                'message.id AS message_id',
                 'message.*',
-                'categorie_message.id AS categorie_message_id',
-                'categorie_message.*',
+                'categorie_message.description',
             )
             ->join("categorie_message", "message.id_categorie_message", "=", "categorie_message.id")
             ->where("message.id", $id)
@@ -73,9 +71,7 @@ class MessageController extends Controller
     public function editAction($id): void
     {
         $categories = CategorieMessage::all();
-
         $message = Message::find($id);
-
 
         if (!$message)
             $this->redirectToList();
@@ -100,7 +96,6 @@ class MessageController extends Controller
     public function updateAction($id): void
     {
         $categories = CategorieMessage::all();
-
         $message = Message::find($id);
 
         if (!$message) {

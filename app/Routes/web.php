@@ -32,8 +32,8 @@ $router->get('/activate-account/{token}', FrontAccountController::class, 'activa
 $router->get('/login', AuthController::class, 'login');
 $router->get('/logout', AuthController::class, 'logout')->middleware(AuthMiddleware::class);
 $router->get('/register', AuthController::class, 'register');
-$router->get('/message', FrontMessageController::class, 'create');
 
+$router->get('/message', FrontMessageController::class, 'create');
 
 $router->get('/admin/dashboard', StatController::class, 'dashboard')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
@@ -56,13 +56,16 @@ $router->get('/admin/page/list', PageController::class, 'list')->middleware(Auth
 $router->get('/admin/page/create', PageController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/page/show/{id}', PageController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/page/edit/{id}', PageController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
 /**
  * POST
  */
-$router->post('/login', AuthController::class, 'loginProcess');
+
+ $router->post('/login', AuthController::class, 'loginProcess');
 $router->post('/register', AuthController::class, 'registerProcess');
 
 $router->post('/message/home/store', FrontMessageController::class, 'store');
+
 $router->post('/admin/post/store', PostController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/post/update/{id}', PostController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/message/store', BackMessageController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
@@ -71,18 +74,18 @@ $router->post('/admin/message/update/{id}', BackMessageController::class, 'updat
 $router->post('/admin/page/store', PageController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/page/update/{id}', PageController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
-
 $router->post('/admin/user/store', UserController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/user/update/{id}', UserController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-
 
 /**
  * DELETE
  */
+
 // $router->delete('/admin/post/delete/{id}', PostController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 // TODO Lotfi : Pour l'instant en get pour avancer
 
 $router->get('/admin/post/delete/{id}', PostController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
 $router->get('/admin/user/delete/{id}', UserController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
 $router->get('/admin/message/delete/{id}', BackMessageController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);

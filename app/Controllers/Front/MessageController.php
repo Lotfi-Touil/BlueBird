@@ -40,6 +40,7 @@ class MessageController extends Controller
             ]);
         }
 
+        $_SESSION['success_message'] = "Votre message a été envoyé avec succès.";
         $this->redirectToContactPage();
     }
 

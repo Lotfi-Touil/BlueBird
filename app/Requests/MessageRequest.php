@@ -76,7 +76,7 @@ class MessageRequest extends FormRequest
         }
 
         if (!$message instanceof Message) {
-            $message = Message::find($message['id_message']);
+            $message = Message::find($message['id']);
         }
 
         $message->setObject($validatedData['object']);
