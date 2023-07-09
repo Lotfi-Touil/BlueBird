@@ -26,7 +26,11 @@ class DatabaseSetupController extends Controller
         echo json_encode(['success' => true]);
     }
 
+<<<<<<< develop
     public function getStructureAction()
+=======
+    public function getFormStructureAction()
+>>>>>>> Installeur JS : V1
     {
         $formStructure = [
             "type" => "form",

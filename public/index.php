@@ -2,12 +2,18 @@
 
 namespace App;
 
+<<<<<<< develop
 /*
+=======
+>>>>>>> Installeur JS : V1
 if (file_exists(__DIR__ . '/setup/index.html') && strpos($_SERVER['REQUEST_URI'], '/api/') !== 0) {
     header('Location: /setup/index.html');
     exit;
 }
+<<<<<<< develop
 */
+=======
+>>>>>>> Installeur JS : V1
 
 use App\Core\Router;
 use App\Errors\ErrorHandler;
