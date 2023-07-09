@@ -20,10 +20,7 @@ class ProductorController extends Controller
     {
         $productors = QueryBuilder::table('productor')
             ->select(
-                'productor.id AS id_productor',
-                'productor.name AS productor_name',
                 'productor.*',
-                'country.name AS country_name',
                 'country.iso',
             )
             ->join('country', 'productor.id_country', '=', 'country.id')

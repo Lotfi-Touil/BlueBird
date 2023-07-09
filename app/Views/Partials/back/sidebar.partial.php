@@ -48,34 +48,6 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="/admin/post/list">
-            <i class="fas fa-fw fa-file"></i>
-            <span>Articles</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="/admin/movie/list">
-            <i class="fas fa-fw fa-film"></i>
-            <span>Films</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="/admin/category-movie/list">
-            <i class="fas fa-fw fa-tags"></i>
-            <span>Catégories de film</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="/admin/productor/list">
-            <i class="fas fa-fw fa-camera"></i>
-            <span>Maisons de Production</span>
-        </a>
-    </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -102,6 +74,34 @@
         <a class="nav-link" href="#">
             <i class="fas fa-fw fa-comment"></i>
             <span>Commentaires</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/post/list">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Articles</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/movie/list">
+            <i class="fas fa-fw fa-film"></i>
+            <span>Films</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/category-movie/list">
+            <i class="fas fa-fw fa-tags"></i>
+            <span>Catégories de film</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/productor/list">
+            <i class="fas fa-fw fa-camera"></i>
+            <span>Maisons de Production</span>
         </a>
     </li>
 
