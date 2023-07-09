@@ -60,9 +60,8 @@ class ProductorRequest extends FormRequest
             return false;
         }
 
-        // Cas ou l'on passe un array au lieu d'un Model
         if (!$productor instanceof Productor) {
-            $productor = Productor::find($productor['productor_id']);
+            $productor = Productor::find($productor['id']);
         }
 
         $productor->setName($validatedData['name']);
