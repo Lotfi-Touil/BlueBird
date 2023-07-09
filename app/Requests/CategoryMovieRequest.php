@@ -52,7 +52,6 @@ class CategoryMovieRequest extends FormRequest
             return false;
         }
 
-        // Cas ou l'on passe un array au lieu d'un Model
         if (!$categoryMovie instanceof CategoryMovie) {
             $categoryMovie = CategoryMovie::find($categoryMovie['id']);
         }
