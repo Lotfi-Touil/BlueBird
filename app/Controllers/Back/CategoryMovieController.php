@@ -18,9 +18,10 @@ class CategoryMovieController extends Controller
     public function listAction(): void
     {
         $categoriesMovie = QueryBuilder::table('category_movie')
-            ->select('*')
+            ->select()
             ->orderBy('name')
             ->get();
+
         view('category-movie/back/list', 'back', [
             'categoriesMovie' => $categoriesMovie,
         ]);
@@ -41,7 +42,7 @@ class CategoryMovieController extends Controller
         $request = new CategoryMovieRequest();;
 
         if (!$request->createCategoryMovie()) {
-            view('movie/back/create', 'back', [
+            view('category-movie/back/create', 'back', [
                 'errors' => $request->getErrors(),
                 'old'    => $request->getOld(),
                 'categoriesMovie' => $categoriesMovie,

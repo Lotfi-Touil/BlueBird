@@ -69,4 +69,23 @@ class Movie extends Model
     public function setUpdatedAt($updated_at) {
         $this->updated_at = $updated_at;
     }
+
+    public static function durationToMinutes($duration): string
+    {
+        $durationParts = explode(':', $duration);
+        $hoursInMinutes = intval($durationParts[0]) * 60;
+        $minutes = intval($durationParts[1]);
+        $durationInMinutes = $hoursInMinutes + $minutes;
+
+        return $durationInMinutes;
+    }
+
+    public static function minutesToDuration($minutes): string
+    {
+        $hours = intval($minutes / 60);
+        $remainingMinutes = $minutes % 60;
+        $durationParts = [$hours, $remainingMinutes];
+
+        return implode(':', $durationParts);
+    }
 }

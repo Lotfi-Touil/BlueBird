@@ -56,16 +56,19 @@ class MovieRequest extends FormRequest
         $movie->setDescription($validatedData['description']);
         $movie->setReleaseDate($validatedData['release_date']);
         $movie->setDuration($duration);
-        $movie->setCreatedAt(date("Y-m-d H:i:s"));
-        $movie->setUpdatedAt(date("Y-m-d H:i:s"));
+        $movie->setCreatedAt(date("Y-m-d H:i:s")); // TODO : a retirer et mettre CURRENT_TIMESTAMP en BD
+        $movie->setUpdatedAt(date("Y-m-d H:i:s")); // TODO : a retirer et mettre CURRENT_TIMESTAMP en BD
         $id_movie = $movie->create();
 
-        foreach ($validatedData['ids_category_movie'] as $id_category_movie){
-            $movieCategoryMovie = new MovieCategoryMovie();
-            $movieCategoryMovie->setIdMovie($id_movie);
-            $movieCategoryMovie->setIdCategoryMovie($id_category_movie);
-            $movieCategoryMovie->create();
+        $idsCategory = [];
+        foreach ($validatedData['ids_category_movie'] as $id_category_movie) {
+            $idsCategory[] = [
+                'id_movie' => $id_movie,
+                'id_category_movie' => $id_category_movie
+            ];
         }
+
+        QueryBuilder::table('movie_category_movie')->insertMultiple($idsCategory);
 
         return true;
     }
@@ -78,33 +81,33 @@ class MovieRequest extends FormRequest
             return false;
         }
 
-        // Cas ou l'on passe un array au lieu d'un Model
         if (!$movie instanceof Movie) {
             $movie = Movie::find($movie['id']);
         }
 
-
-        $duration = intval(explode(':', $validatedData['duration'])[0]) * 60 + intval(explode(':', $validatedData['duration'])[1]);
+        $duration = Movie::durationToMinutes($validatedData['duration']);
 
         $movie->setTitle($validatedData['title']);
         $movie->setDescription($validatedData['description']);
         $movie->setReleaseDate($validatedData['release_date']);
         $movie->setDuration($duration);
-        $movie->setUpdatedAt(date("Y-m-d H:i:s"));
+        $movie->setUpdatedAt(date('Y-m-d H:i:s'));
         $movie->update();
 
         QueryBuilder::table('movie_category_movie')
             ->where('id_movie', '=', $movie->getId())
             ->delete();
 
+        $idsCategory = [];
         foreach ($validatedData['ids_category_movie'] as $id_category_movie) {
-            $movieCategoryMovie = new MovieCategoryMovie();
-            $movieCategoryMovie->setIdMovie($movie->getId());
-            $movieCategoryMovie->setIdCategoryMovie($id_category_movie);
-            $movieCategoryMovie->create();
+            $idsCategory[] = [
+                'id_movie' => $movie->getId(),
+                'id_category_movie' => $id_category_movie
+            ];
         }
-        
-        
+
+        QueryBuilder::table('movie_category_movie')->insertMultiple($idsCategory);
+
         return true;
     }
 }

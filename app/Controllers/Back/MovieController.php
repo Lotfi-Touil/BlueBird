@@ -23,6 +23,11 @@ class MovieController extends Controller
             ->select('movie.*')
             ->orderBy('movie.title')
             ->get();
+
+        foreach ($movies as &$movie) {
+            $movie['duration'] = Movie::minutesToDuration($movie['duration']);
+        }
+
         view('movie/back/list', 'back', [
             'movies' => $movies,
         ]);
