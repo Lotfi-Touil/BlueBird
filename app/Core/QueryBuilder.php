@@ -557,7 +557,6 @@ class QueryBuilder
      * Insère une ligne dans la base de données.
      *
      * @param array $data Les données à insérer
-     * @return bool Vrai si l'insertion a réussi, sinon faux
      */
     public function insert(array $data): bool
     {
@@ -574,6 +573,41 @@ class QueryBuilder
         } catch (PDOException $e) {
             throw new \App\Exceptions\DatabaseException((string)$e->getMessage(), (int)$e->getCode(), $e);
         }
+    }
+
+    /**
+     * Insère une ou plusieurs lignes dans la base de données.
+     *
+     * @param array $data Les données à insérer
+     * @return bool Vrai si l'insertion a réussi, sinon faux
+     */
+    public function insertMultiple(array $data)
+    {
+        if (empty($data)) {
+            return;
+        }
+
+        $fields = array_keys($data[0]);
+        $fields = implode(', ', $fields);
+
+        $values = [];
+        $placeholders = [];
+
+        foreach ($data as $dataSet) {
+            $rowValues = [];
+            foreach ($dataSet as $value) {
+                $rowValues[] = '?';
+                $values[] = $value;
+            }
+            $placeholders[] = '(' . implode(', ', $rowValues) . ')';
+        }
+
+        $placeholders = implode(', ', $placeholders);
+
+        $sql = "INSERT INTO ". static::$table . " ({$fields}) VALUES {$placeholders}";
+
+        $stmt = $this->getPDO()->prepare($sql);
+        $stmt->execute($values);
     }
 
     /**

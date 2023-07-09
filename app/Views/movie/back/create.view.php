@@ -21,7 +21,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-group">
-                    <label for="ids_category_movie">Catégorie.s</label>
+                    <label for="ids_category_movie">Catégories</label>
                     <select multiple name="ids_category_movie[]" id="ids_category_movie" required class="form-control">
                         <?php foreach ($categoriesMovie as $categoryMovie):?>
                             <option value="<?= $categoryMovie->id?>">
@@ -29,6 +29,7 @@
                             </option>   
                         <?php endforeach;?>
                     </select>
+                    <small id="multiSelectHelp" class="form-text text-muted">Maintenez la touche CTRL enfoncée pour sélectionner plusieurs catégories.</small>
                 </div>
                 <div class="form-row">
                     <div class="col">

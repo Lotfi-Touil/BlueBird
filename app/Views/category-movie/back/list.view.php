@@ -25,8 +25,8 @@
                             <tbody>
                                 <?php foreach ($categoriesMovie as $categoryMovie): ?>
                                 <tr>
-                                    <td class="d-table-cell"><?= $categoryMovie['id'] ?? 'NULL' ?></td>
-                                    <td class="d-table-cell"><?= $categoryMovie['name']?? 'NULL' ?></td>
+                                    <td class="d-table-cell"><?= $categoryMovie['id'] ?? '' ?></td>
+                                    <td class="d-table-cell"><?= $categoryMovie['name']?? '' ?></td>
                                     <td class="d-flex flex-column d-sm-table-cell">
                                         <a href="/admin/category-movie/show/<?=  $categoryMovie['id']?>" class="btn btn-secondary btn-sm mb-2 mb-lg-auto">
                                             <i class="fa fa-eye"></i>

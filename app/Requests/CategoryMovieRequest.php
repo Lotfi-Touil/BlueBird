@@ -38,9 +38,9 @@ class CategoryMovieRequest extends FormRequest
 
         $categoryMovie = new CategoryMovie();
         $categoryMovie->setName($validatedData['name']);
-        $categoryMovie->setCreatedAt(date("Y-m-d H:i:s"));
-        $categoryMovie->setUpdatedAt(date("Y-m-d H:i:s"));
+        $categoryMovie->setUpdatedAt(date('Y-m-d H:i:s'));
         $categoryMovie->create();
+
         return true;
     }
 

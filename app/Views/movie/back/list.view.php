@@ -20,17 +20,19 @@
                                     <th class="d-table-cell">ID</th>
                                     <th class="d-table-cell">Titre</th>
                                     <th class="d-none d-sm-table-cell">Description</th>
-                                    <th class="d-none d-sm-table-cell">Année de sortie</th>
+                                    <th class="d-none d-sm-table-cell">Date de sortie</th>
+                                    <th class="d-none d-sm-table-cell">Durée en heure</th>
                                     <th class="d-table-cell ">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($movies as $movie): ?>
                                 <tr>
-                                    <td class="d-table-cell"><?= $movie['id'] ?? 'NULL' ?></td>
-                                    <td class="d-table-cell"><?= $movie['title']?? 'NULL' ?></td>
-                                    <td class="d-none d-sm-table-cell text-truncate" style="max-width:250px"><?=  $movie['description'] ?? 'NULL' ?></td>
+                                    <td class="d-table-cell"><?= $movie['id'] ?? '' ?></td>
+                                    <td class="d-table-cell"><?= $movie['title'] ?? '' ?></td>
+                                    <td class="d-none d-sm-table-cell text-truncate" style="max-width:250px"><?=  $movie['description'] ?? '' ?></td>
                                     <td class="d-none d-sm-table-cell"><?php $date = strtotime($movie['release_date']) ; echo $release_date = date('d/m/Y', $date) ?></td>
+                                    <td class="d-table-cell"><?= $movie['duration'] ?? '' ?></td>
                                     <td class="d-flex flex-column d-sm-table-cell">
                                         <a href="/admin/movie/show/<?=  $movie['id']?>" class="btn btn-secondary btn-sm mb-2 mb-lg-auto">
                                             <i class="fa fa-eye"></i>

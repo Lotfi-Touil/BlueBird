@@ -71,7 +71,7 @@ $router->get('/admin/category-movie/show/{id}', BackCategoryMovieController::cla
  * POST
  */
 
- $router->post('/login', AuthController::class, 'loginProcess');
+$router->post('/login', AuthController::class, 'loginProcess');
 $router->post('/register', AuthController::class, 'registerProcess');
 
 $router->post('/message/home/store', FrontMessageController::class, 'store');
@@ -83,6 +83,12 @@ $router->post('/admin/message/update/{id}', BackMessageController::class, 'updat
 
 $router->post('/admin/page/store', PageController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/page/update/{id}', PageController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
+$router->post('/admin/movie/store', BackMovieController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->post('/admin/movie/update/{id}', BackMovieController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
+$router->post('/admin/category-movie/store', BackCategoryMovieController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->post('/admin/category-movie/update/{id}', BackCategoryMovieController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
 /**
  * DELETE

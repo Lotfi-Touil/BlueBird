@@ -70,9 +70,7 @@ class UserRequest extends FormRequest
     }
 
     public function updateUser(User $user): bool
-    {   
-        $isCreating = false;
-
+    {
         $validatedData = $this->validate();
 
         if (!$validatedData) {
