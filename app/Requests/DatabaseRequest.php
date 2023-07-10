@@ -4,9 +4,13 @@ namespace App\Requests;
 
 use App\Core\FormRequest;
 <<<<<<< develop
+<<<<<<< develop
 use App\Models\DatabaseModel;
 =======
 >>>>>>> Installeur JS : V1
+=======
+use App\Models\DatabaseModel;
+>>>>>>> Installeur JS : V2
 
 class DatabaseRequest extends FormRequest
 {
@@ -31,9 +35,13 @@ class DatabaseRequest extends FormRequest
             'dbName.string' => 'Le nom de la base de données doit être une chaîne de caractères.',
             'dbName.max' => 'Le nom de la base de données ne doit pas dépasser 60 caractères.',
 <<<<<<< develop
+<<<<<<< develop
             'dbName.min' => 'Le nom de la base de données doit contenir au moins 3 caractères.',
 =======
 >>>>>>> Installeur JS : V1
+=======
+            'dbName.min' => 'Le nom de la base de données doit contenir au moins 3 caractères.',
+>>>>>>> Installeur JS : V2
             'dbUser.required' => 'Le nom d\'utilisateur est requis.',
             'dbUser.string' => 'Le nom d\'utilisateur doit être une chaîne de caractères.',
             'dbUser.max' => 'Le nom d\'utilisateur ne doit pas dépasser 60 caractères.',
@@ -52,14 +60,20 @@ class DatabaseRequest extends FormRequest
         }
 
 <<<<<<< develop
+<<<<<<< develop
         return true; // TODO
 
+=======
+>>>>>>> Installeur JS : V2
         $databaseModel = new DatabaseModel($validatedData['dbName'], $validatedData['dbUser'], $validatedData['dbPassword']);
         $databaseCreated = $databaseModel->createDatabase();
     
         return $databaseCreated;
+<<<<<<< develop
 =======
         return true;
 >>>>>>> Installeur JS : V1
+=======
+>>>>>>> Installeur JS : V2
     }
 }

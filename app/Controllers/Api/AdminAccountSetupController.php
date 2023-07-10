@@ -27,10 +27,14 @@ class AdminAccountSetupController extends Controller
     }
 
 <<<<<<< develop
+<<<<<<< develop
     public function getStructureAction()
 =======
     public function getFormStructureAction()
 >>>>>>> Installeur JS : V1
+=======
+    public function getStructureAction()
+>>>>>>> Installeur JS : V2
     {
         $formStructure = [
             "type" => "form",
