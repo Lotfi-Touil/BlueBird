@@ -1,25 +1,55 @@
 import generateStructure from './DomRenderer.js';
 
-// Première étape : informations sur la base de données
+const routes = {
+  '/step1': {
+    render: renderStep1
+  },
+  '/step2': {
+    render: renderStep2,
+    onSubmit: onSubmitStep2
+  },
+  '/step3': {
+    render: renderStep3,
+    onSubmit: onSubmitStep3
+  },
+  '/step4': {
+    render: renderStep4
+  }
+};
+
 function startInstallation() {
-  // Faire un appel API pour obtenir la structure du formulaire
-  fetch('/api/installation/step1')
+  const currentPath = window.location.pathname;
+
+  if (routes.hasOwnProperty(currentPath)) {
+    routes[currentPath].render();
+  } else {
+    navigateTo('/step2');
+  }
+}
+
+function navigateTo(path) {
+  window.history.pushState({}, '', path);
+  routes[path].render();
+}
+
+function renderStep1() { }
+
+function renderStep2() {
+  fetch('/api/installation/step2')
     .then(response => response.json())
     .then(formStructure => {
       const formElement = generateStructure(formStructure);
-      formElement.addEventListener('submit', onSubmitDatabaseForm);
+      formElement.addEventListener('submit', routes['/step2'].onSubmit);
+      document.getElementById('app').innerHTML = '';
       document.getElementById('app').appendChild(formElement);
     });
 }
 
-// Gérer la soumission du formulaire de base de données
-function onSubmitDatabaseForm(event) {
+function onSubmitStep2(event) {
   event.preventDefault();
 
-  // Récupérer les données du formulaire
   const formData = new FormData(event.target);
 
-  // Envoyer les données à l'API pour la création de la base de données
   fetch('/api/installation/createDatabase', {
     method: 'POST',
     body: formData
@@ -27,44 +57,33 @@ function onSubmitDatabaseForm(event) {
     .then(response => response.json())
     .then(responseData => {
       if (responseData.success) {
-        // Si la base de données est créée avec succès, passer à la prochaine étape
-        proceedToNextStep();
+        navigateTo('/step3');
       } else {
         let errors = responseData.errors;
 
-        // Supprimer les messages d'erreur existants dans le formulaire
         clearErrorMessages();
 
-        // Afficher les nouveaux messages d'erreur
         displayErrorMessages(errors);
       }
     });
 }
 
-// Deuxième étape : informations sur l'utilisateur
-function proceedToNextStep() {
-  // Supprimer le formulaire précédent
-  const appElement = document.getElementById('app');
-  appElement.innerHTML = '';
-
-  // Faire un appel API pour obtenir la structure du formulaire
-  fetch('/api/installation/step2')
+function renderStep3() {
+  fetch('/api/installation/step3')
     .then(response => response.json())
     .then(formStructure => {
       const formElement = generateStructure(formStructure);
-      formElement.addEventListener('submit', onSubmitUserForm);
+      formElement.addEventListener('submit', routes['/step3'].onSubmit);
+      document.getElementById('app').innerHTML = '';
       document.getElementById('app').appendChild(formElement);
     });
 }
 
-// Gérer la soumission du formulaire utilisateur
-function onSubmitUserForm(event) {
+function onSubmitStep3(event) {
   event.preventDefault();
 
-  // Récupérer les données du formulaire
   const formData = new FormData(event.target);
 
-  // Envoyer les données à l'API pour la création du compte utilisateur
   fetch('/api/installation/createUser', {
     method: 'POST',
     body: formData
@@ -72,27 +91,26 @@ function onSubmitUserForm(event) {
     .then(response => response.json())
     .then(responseData => {
       if (responseData.success) {
-        // Si le compte utilisateur est créé avec succès, finir l'installation
-        finishInstallation();
+        navigateTo('/step4');
       } else {
         let errors = responseData.errors;
 
-        // Supprimer les messages d'erreur existants dans le formulaire
         clearErrorMessages();
 
-        // Afficher les nouveaux messages d'erreur
         displayErrorMessages(errors);
       }
     });
 }
 
-// Finir l'installation
-function finishInstallation() {
-  // Afficher un message de succès (à personnaliser)
-  alert('L\'installation est terminée avec succès!');
+function renderStep4() {
+  document.getElementById('app').innerHTML = '';
+
+  let element = document.createElement('p');
+  element.textContent = 'Installation terminée !';
+  element.className = 'container alert alert-success';
+  document.querySelector('#app').appendChild(element);
 }
 
-// Supprimer les messages d'erreur existants dans le formulaire
 function clearErrorMessages() {
   const formElement = document.querySelector('#app form');
   const errorElements = formElement.querySelectorAll('.form-error');
@@ -102,7 +120,6 @@ function clearErrorMessages() {
   });
 }
 
-// Afficher les nouveaux messages d'erreur dans le formulaire
 function displayErrorMessages(errors) {
   const formElement = document.querySelector('#app form');
 
@@ -114,5 +131,6 @@ function displayErrorMessages(errors) {
   });
 }
 
-// Commencer l'installation lorsque le document est prêt
+window.addEventListener('popstate', startInstallation);
+
 document.addEventListener('DOMContentLoaded', startInstallation);
