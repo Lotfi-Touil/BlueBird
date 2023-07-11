@@ -12,6 +12,7 @@ class Menu extends Model
         'slug',
         'orders',
         'id_parent',
+        'zone',
         'status'
     ];
 
@@ -21,6 +22,7 @@ class Menu extends Model
     protected $slug;
     protected $orders;
     protected $id_parent;
+    protected $zone;
     protected $status;
     protected $created_at;
     protected $updated_at;
@@ -104,6 +106,23 @@ class Menu extends Model
     {
         $this->id_parent = $id_parent;
     }
+
+    /**
+     * @return int
+     */
+    public function getZone(): int
+    {
+        return $this->zone;
+    }
+
+    /**
+     * @param int $zone
+     */
+    public function setZone(int $zone): void
+    {
+        $this->zone = $zone;
+    }
+
 
     /**
      * @return int

@@ -32,8 +32,21 @@
                 <div class="form-group">
                     <label for="orders">Orders</label>
                     <input type="text" id="orders" name="orders" class="form-control" value="<?= $old->orders ?? $menu->getOrders() ?>">
-                    <?php if (isset($errors['order'])) : ?>
+                    <?php if (isset($errors['orders'])) : ?>
                         <?php foreach ($errors['orders'] as $error) : ?>
+                            <div class="text-danger"><?= $error; ?></div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="form-group">
+                    <label for="zone">Zone</label>
+                    <select id="zone" name="zone" class="form-control">
+                        <option value="0" <?= ($old['zone'] ?? !$menu->getZone()) ? 'selected' : '' ?>>Topbar</option>
+                        <option value="1" <?= ($old['zone'] ?? $menu->getZone()) ? 'selected' : '' ?>>Sidebar</option>
+                        <option value="2" <?= ($old['zone'] ?? $menu->getZone()) ? 'selected' : '' ?>>Footer</option>
+                    </select>
+                    <?php if (isset($errors['status'])) : ?>
+                        <?php foreach ($errors['status'] as $error) : ?>
                             <div class="text-danger"><?= $error; ?></div>
                         <?php endforeach; ?>
                     <?php endif; ?>

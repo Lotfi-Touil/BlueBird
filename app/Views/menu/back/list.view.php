@@ -20,6 +20,7 @@
                                     <th class="d-none d-sm-table-cell">Titre</th>
                                     <th class="d-none d-sm-table-cell">Contenu</th>
                                     <th class="d-none d-sm-table-cell">Parent</th>
+                                    <th class="d-none d-sm-table-cell">Zone</th>
                                     <th class="d-none d-sm-table-cell">Statut</th>
                                     <th class="d-none d-sm-table-cell">Date de création</th>
                                     <th class="d-table-cell">Action</th>
@@ -32,6 +33,21 @@
                                         <td class="d-none d-sm-table-cell"><?= $menu->title ?></td>
                                         <td class="d-none d-sm-table-cell"><?= $menu->slug ?></td>
                                         <td class="d-none d-sm-table-cell"><?= $menu->id_parent ?></td>
+                                        <?php
+                                            $zoneText = '';
+                                            switch ($menu->zone) {
+                                                case 0:
+                                                    $zoneText = 'Topbar';
+                                                    break;
+                                                case 1:
+                                                    $zoneText = 'Sidebar';
+                                                    break;
+                                                case 2:
+                                                    $zoneText = 'Footer';
+                                                    break;
+                                            }
+                                        ?>
+                                        <td><?= $zoneText ?></td>
                                         <td><?= $menu->status ? 'Actif' : 'Inactif' ?></td>
                                         <td class="d-none d-sm-table-cell"><?= date('Y-m-d H:i:s', strtotime($menu->created_at)) ?></td>
                                         <td class="d-table-cell">

@@ -28,6 +28,24 @@
                     <input type="text" id="id_parent" name="id_parent" class="form-control" value="<?= $menu->getParent() ?>" readonly>
                 </div>
                 <div class="form-group">
+                    <label for="zone">Zone</label>
+                    <?php
+                        $zoneText = '';
+                        switch ($menu->getZone()) {
+                            case 0:
+                                $zoneText = 'Topbar';
+                                break;
+                            case 1:
+                                $zoneText = 'Sidebar';
+                                break;
+                            case 2:
+                                $zoneText = 'Footer';
+                                break;
+                            }
+                    ?>
+                    <input type="text" id="zone" name="zone" class="form-control" value="<?= $zoneText ?>" readonly>
+                </div>
+                <div class="form-group">
                     <label for="status">Statut</label>
                     <input type="text" id="status" name="status" class="form-control" value="<?= $menu->getStatus() ? 'Actif' : 'Inactif' ?>" readonly>
                 </div>
