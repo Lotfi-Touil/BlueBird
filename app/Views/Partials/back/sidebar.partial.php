@@ -57,6 +57,13 @@
     </div>
 
     <li class="nav-item">
+        <a class="nav-link" href="/admin/menu/list">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Menu</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="/admin/user/list">
             <i class="fas fa-fw fa-user"></i>
             <span>Comptes</span>
