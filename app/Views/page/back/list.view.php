@@ -8,7 +8,7 @@
                     <h4 class="h4 font-weight-bold text-primary">Pages</h4>
                     <a href="/admin/page/create" class="btn btn-primary btn-sm">
                         <i class="fa fa-plus"></i>
-                        <span class="d-none d-sm-inline-block">Créer un nouvelle page</span>
+                        <span class="d-none d-sm-inline-block">Créer une nouvelle page</span>
                     </a>
                 </div>
                 <div class="table-responsive">
@@ -17,8 +17,8 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
-                                    <th class="d-none d-sm-table-cell">Titre</th>
-                                    <th class="d-none d-sm-table-cell">Contenu</th>
+                                    <th class="d-none d-sm-table-cell">Titre d'en-tête</th>
+                                    <th class="d-none d-sm-table-cell">Contenu principal</th>
                                     <th class="d-none d-sm-table-cell">Date de création</th>
                                     <th class="d-table-cell">Action</th>
                                 </tr>
@@ -27,8 +27,8 @@
                                 <?php foreach ($pages as $page): ?>
                                 <tr>
                                     <td class="d-table-cell"><?= $page->id ?></td>
-                                    <td class="d-none d-sm-table-cell"><?= $page->title ?></td>
-                                    <td class="d-none d-sm-table-cell"><?= $page->content ?></td>
+                                    <td class="d-none d-sm-table-cell"><?= $page->header_title ?></td>
+                                    <td class="d-none d-sm-table-cell"><?= $page->main_content ?></td>
                                     <td class="d-none d-sm-table-cell"><?= date('Y-m-d H:i:s', strtotime($page->created_at)) ?></td>
                                     <td class="d-table-cell">
                                         <!-- Boutons d'action -->

@@ -1,15 +1,28 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Back;
 
+use App\Controllers\Controller;
+use App\Core\File;
 use App\Models\Page;
 use App\Requests\PageRequest;
 
-class PageController extends Controller{
+class PageController extends Controller
+{
 
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public function uploadImageAction(): void
+    {
+        $filepath = File::uploadImage(__DIR__ . '/../../resources/uploads/', $_FILES);
+        if ($filepath) {
+            echo json_encode(['location' => $filepath]);
+        } else {
+            echo json_encode(['error' => 'Erreur lors de l\'upload de l\'image']);
+        }
     }
 
     public function listAction(): void

@@ -46,3 +46,20 @@ function snakeToCamelCase($str): string
 {
     return str_replace('_', '', ucwords($str, '_'));
 }
+
+function generateSlug($string)
+{
+    // Remplace les caractères spéciaux et les espaces par des tirets
+    $slug = preg_replace('/[^a-zA-Z0-9-]/', '-', $string);
+
+    // Convertit en minuscules
+    $slug = strtolower($slug);
+
+    // Supprime les tirets en double
+    $slug = preg_replace('/-+/', '-', $slug);
+
+    // Supprime les tirets au début et à la fin
+    $slug = trim($slug, '-');
+
+    return $slug;
+}
