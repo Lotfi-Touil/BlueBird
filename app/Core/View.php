@@ -58,6 +58,8 @@ class View {
         if (!file_exists($file)) {
             die("Le partial ".$name." n'éxiste pas");
         }
+
+        extract($this->data);
         include __DIR__ . "/../Views/Partials/$name.partial.php";
     }
 

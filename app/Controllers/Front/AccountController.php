@@ -32,7 +32,7 @@ class AccountController extends Controller
     public function verifyAccountAction(): void
     {
         $isAccountVerified = QueryBuilder::table('email_activation_token')
-            ->select('user.id')
+            ->select(['user.id'])
             ->join('user', 'user.id', '=', 'email_activation_token.id_user')
             ->where('user.email', $_SESSION['login'])
             ->WhereNotNull('verified_at')

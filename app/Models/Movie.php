@@ -42,12 +42,20 @@ class Movie extends Model
         return $this->release_date;
     }
 
+    public function getFormattedReleaseDate() {
+        return date('d F Y', strtotime($this->release_date));
+    }
+
     public function setReleaseDate($release_date) {
         $this->release_date = $release_date;
     }
 
     public function getDuration() {
         return $this->duration;
+    }
+
+    public function getFormattedDuration() {
+        return self::minutesToDuration($this->duration);
     }
 
     public function setDuration($duration) {

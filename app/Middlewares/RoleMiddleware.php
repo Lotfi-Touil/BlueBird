@@ -24,10 +24,13 @@ class RoleMiddleware extends Middleware
     private function hasRequiredRole(): bool
     {
         // TODO : utiliser un vrai token au lieu d'un mail
-        $userId = QueryBuilder::table('user')->select('id')->where('email', $this->getTokenLogin())->getColumn('id');
+        $userId = QueryBuilder::table('user')
+            ->select(['id'])
+            ->where('email', $this->getTokenLogin())
+            ->getColumn('id');
 
         $isUserHasRequiredRole = QueryBuilder::table('user_role')
-            ->select('user_role.id')
+            ->select(['user_role.id'])
             ->join('user', 'user_role.id_user', '=', 'user.id')
             ->join('role', 'user_role.id_role', '=', 'role.id')
             ->where('user.id', $userId)

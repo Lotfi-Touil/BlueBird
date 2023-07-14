@@ -20,7 +20,7 @@ class MovieController extends Controller
     public function listAction(): void
     {
         $movies = QueryBuilder::table('movie')
-            ->select('movie.*')
+            ->select(['movie.*'])
             ->orderBy('movie.title')
             ->get();
 
@@ -64,7 +64,7 @@ class MovieController extends Controller
     {
         $movie = Movie::find($id);
         $movieCategoriesMovie = QueryBuilder::table('movie_category_movie')
-            ->select('*')
+            ->select()
             ->where('id_movie', $id)
             ->get();
 
@@ -85,7 +85,7 @@ class MovieController extends Controller
         $movie = Movie::find($id);
         $categoriesMovie = CategoryMovie::all();
         $movieCategoriesMovie = QueryBuilder::table('movie_category_movie')
-            ->select('*')
+            ->select()
             ->where('id_movie', $id)
             ->get();
         

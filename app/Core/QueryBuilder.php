@@ -77,12 +77,18 @@ class QueryBuilder
      * @param ...$fields Les colonnes à sélectionner
      * @return self L'instance de QueryBuilder
      */
-    public function select(...$fields): self
+    public function select($fields = [], $tableAliases = []): self
     {
         $prefixedFields = [];
 
         foreach ($fields as $field) {
-            $prefixedFields[] = $this->prefixColumnName($field);
+            $tableName = explode('.', explode(' ', $field)[0])[0];
+
+            if (in_array($tableName, $tableAliases)) {
+                $prefixedFields[] = $field;
+            } else {
+                $prefixedFields[] = $this->prefixColumnName($field);
+            }
         }
 
         $this->selects = array_merge($this->selects, $prefixedFields);
@@ -110,11 +116,35 @@ class QueryBuilder
      * @param string $field2 Le champ de la table à joindre
      * @return self L'instance de QueryBuilder
      */
-    public function join(string $table, string $field1, string $operator, string $field2): self
+    public function join2(string $table, string $field1, string $operator, string $field2): self
     {
         $table = self::$prefix . $table;
         $field1 = self::$prefix . $field1;
         $field2 = self::$prefix . $field2;
+        $this->joins[] = compact('table', 'field1', 'operator', 'field2');
+        return $this;
+    }
+    /**
+     * Ajoute une jointure à la requête.
+     *
+     * @param string $table La table à joindre
+     * @param string $alias L'alias de la table à joindre
+     * @param string $field1 Le champ de la table principale
+     * @param string $operator L'opérateur de comparaison
+     * @param string $field2 Le champ de la table à joindre
+     * @return self L'instance de QueryBuilder
+     */
+    public function join(string $table, string $field1, string $operator, string $field2, string $alias = ''): self
+    {
+        if ($alias) {
+            $table = self::$prefix . $table . ' AS ' . $alias;
+            $field1 = self::$prefix . $field1;
+            $field2 = $field2;
+        } else {
+            $table = self::$prefix . $table;
+            $field1 = self::$prefix . $field1;
+            $field2 = self::$prefix . $field2;
+        }
         $this->joins[] = compact('table', 'field1', 'operator', 'field2');
         return $this;
     }
@@ -278,13 +308,32 @@ class QueryBuilder
      * @param $column Le champ à préfixer
      * @return void
      */
-    private function prefixColumnName($column)
+    private function prefixColumnName2($column)
     {
         if (strpos($column, '.') === false) {
             $column = self::$table . '.' . $column;
         } else {
             $parts = explode('.', $column);
             $column = self::$prefix . $parts[0] . '.' . $parts[1];
+        }
+
+        return $column;
+    }
+
+    /**
+     * Ajoute le préfixe de la base de données au champ si nécessaire.
+     *
+     * @param $column Le champ à préfixer
+     * @return void
+     */
+    private function prefixColumnName($column)
+    {
+        if (strpos($column, '.') === false) {
+            $column = self::$table . '.' . $column;
+        } else {
+            $parts = explode('.', $column);
+            $table = $parts[0];
+            $column = self::$prefix . $table . '.' . $parts[1];
         }
 
         return $column;
@@ -397,7 +446,7 @@ class QueryBuilder
                     }
                 }, $this->wheres));
             }
-
+            
             if ($this->orWheres) {
                 $sql .= ' OR ';
                 $sql .= implode(' OR ', array_map(function ($where) {
