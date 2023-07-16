@@ -56,8 +56,10 @@ class MessageController extends Controller
                 'message.*',
                 'categorie_message.description',
             )
-            ->join("categorie_message", "message.id_categorie_message", "=", "categorie_message.id")
-            ->where("message.id", $id)
+            ->join('categorie_message', function($join) {
+                $join->on('categorie_message.id', '=', 'message.id_categorie_message');
+            })
+            ->where('message.id', $id)
             ->first();
 
         if (!$message)

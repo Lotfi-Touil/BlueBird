@@ -33,7 +33,9 @@ class AccountController extends Controller
     {
         $isAccountVerified = QueryBuilder::table('email_activation_token')
             ->select(['user.id'])
-            ->join('user', 'user.id', '=', 'email_activation_token.id_user')
+            ->join('user', function($join) {
+                $join->on('user.id', '=', 'email_activation_token.id_user');
+            })
             ->where('user.email', $_SESSION['login'])
             ->WhereNotNull('verified_at')
             ->exists();

@@ -31,8 +31,12 @@ class RoleMiddleware extends Middleware
 
         $isUserHasRequiredRole = QueryBuilder::table('user_role')
             ->select(['user_role.id'])
-            ->join('user', 'user_role.id_user', '=', 'user.id')
-            ->join('role', 'user_role.id_role', '=', 'role.id')
+            ->join('user', function($join) {
+                $join->on('user_role.id_user', '=', 'user.id');
+            })
+            ->join('role', function($join) {
+                $join->on('user_role.id_role', '=', 'role.id');
+            })
             ->where('user.id', $userId)
             ->andWhere('role.name', $this->requiredRole)
             ->exists();

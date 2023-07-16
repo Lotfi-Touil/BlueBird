@@ -82,13 +82,7 @@ class QueryBuilder
         $prefixedFields = [];
 
         foreach ($fields as $field) {
-            $tableName = explode('.', explode(' ', $field)[0])[0];
-
-            if (in_array($tableName, $tableAliases)) {
-                $prefixedFields[] = $field;
-            } else {
-                $prefixedFields[] = $this->prefixColumnName($field);
-            }
+            $prefixedFields[] = $this->prefixColumnName($field);
         }
 
         $this->selects = array_merge($this->selects, $prefixedFields);
@@ -107,46 +101,27 @@ class QueryBuilder
         return $this;
     }
 
-    /**
-     * Ajoute une jointure à la requête.
-     *
-     * @param string $table La table à joindre
-     * @param string $field1 Le champ de la table principale
-     * @param string $operator L'opérateur de comparaison
-     * @param string $field2 Le champ de la table à joindre
-     * @return self L'instance de QueryBuilder
-     */
-    public function join2(string $table, string $field1, string $operator, string $field2): self
+    public function join(string $table, ?\Closure $callback = null, ?string $alias = null, string $type = 'INNER'): self
     {
-        $table = self::$prefix . $table;
-        $field1 = self::$prefix . $field1;
-        $field2 = self::$prefix . $field2;
-        $this->joins[] = compact('table', 'field1', 'operator', 'field2');
+        $joinClause = new JoinClause($type, $table, $alias);
+
+        if ($callback) {
+            $callback($joinClause);
+        }
+
+        $this->joins[] = $joinClause;
+
         return $this;
     }
-    /**
-     * Ajoute une jointure à la requête.
-     *
-     * @param string $table La table à joindre
-     * @param string $alias L'alias de la table à joindre
-     * @param string $field1 Le champ de la table principale
-     * @param string $operator L'opérateur de comparaison
-     * @param string $field2 Le champ de la table à joindre
-     * @return self L'instance de QueryBuilder
-     */
-    public function join(string $table, string $field1, string $operator, string $field2, string $alias = ''): self
+
+    public function leftJoin(string $table, ?\Closure $callback = null, ?string $alias = null): self
     {
-        if ($alias) {
-            $table = self::$prefix . $table . ' AS ' . $alias;
-            $field1 = self::$prefix . $field1;
-            $field2 = $field2;
-        } else {
-            $table = self::$prefix . $table;
-            $field1 = self::$prefix . $field1;
-            $field2 = self::$prefix . $field2;
-        }
-        $this->joins[] = compact('table', 'field1', 'operator', 'field2');
-        return $this;
+        return $this->join($table, $callback, $alias, 'LEFT');
+    }
+
+    public function rightJoin(string $table, ?\Closure $callback = null, ?string $alias = null): self
+    {
+        return $this->join($table, $callback, $alias, 'RIGHT');
     }
 
     /**
@@ -308,24 +283,6 @@ class QueryBuilder
      * @param $column Le champ à préfixer
      * @return void
      */
-    private function prefixColumnName2($column)
-    {
-        if (strpos($column, '.') === false) {
-            $column = self::$table . '.' . $column;
-        } else {
-            $parts = explode('.', $column);
-            $column = self::$prefix . $parts[0] . '.' . $parts[1];
-        }
-
-        return $column;
-    }
-
-    /**
-     * Ajoute le préfixe de la base de données au champ si nécessaire.
-     *
-     * @param $column Le champ à préfixer
-     * @return void
-     */
     private function prefixColumnName($column)
     {
         if (strpos($column, '.') === false) {
@@ -431,8 +388,23 @@ class QueryBuilder
             $sql .= ' FROM ' .  self::$table;
 
             foreach ($this->joins as $join) {
-                $sql .= ' JOIN ' . $join['table'];
-                $sql .= ' ON ' . $join['field1'] . ' ' . $join['operator'] . ' ' . $join['field2'];
+                $sql .= ' ' . $join->getJoinType() . ' JOIN ' . $join->getTable();
+
+                if ($join->getAlias()) {
+                    $sql .= ' AS ' . $join->getAlias();
+                }
+
+                $onClauses = $join->getOnClauses();
+                if (!empty($onClauses)) {
+                    $sql .= ' ON ';
+
+                    $firstOnClause = array_shift($onClauses);
+                    $sql .= $firstOnClause['column1'] . ' ' . $firstOnClause['operator'] . ' ' . $firstOnClause['column2'];
+
+                    foreach ($onClauses as $onClause) {
+                        $sql .= ' AND ' . $onClause['column1'] . ' ' . $onClause['operator'] . ' ' . $onClause['column2'];
+                    }
+                }
             }
 
             if ($this->wheres) {

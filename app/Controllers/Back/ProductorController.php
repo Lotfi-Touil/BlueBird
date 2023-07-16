@@ -23,7 +23,9 @@ class ProductorController extends Controller
                 'productor.*',
                 'country.iso',
             )
-            ->join('country', 'productor.id_country', '=', 'country.id')
+            ->join('country', function($join) {
+                $join->on('productor.id_country', '=', 'country.id');
+            })
             ->orderBy('productor.name')
             ->get();
 
@@ -66,7 +68,9 @@ class ProductorController extends Controller
                 'productor.*',
                 'country.*',
             )
-            ->join('country', 'productor.id_country', '=', 'country.id')
+            ->join('country', function($join) {
+                $join->on('productor.id_country', '=', 'country.id');
+            })
             ->where('productor.id', $id)
             ->first();
 
