@@ -15,7 +15,8 @@ use App\Controllers\Back\MovieController AS BackMovieController;
 use App\Controllers\Back\CategoryMovieController AS BackCategoryMovieController;
 use App\Controllers\Back\ProductorController AS BackProductorController;
 use App\Controllers\Front\CommentController as FrontCommentController;
-use App\Controllers\Front\CommentReplyController as FrontCommentReplyController;
+use App\Controllers\Back\CommentController as BackCommentController;
+use App\Controllers\Back\CommentReplyController as BackCommentReplyController;
 
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RoleMiddleware;
@@ -50,6 +51,14 @@ $router->get('/admin/post/list', PostController::class, 'list')->middleware(Auth
 $router->get('/admin/post/create', PostController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/post/show/{id}', PostController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/post/edit/{id}', PostController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
+$router->get('/admin/comment/list', BackCommentController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/comment/show/{id}', BackCommentController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/comment/edit/{id}', BackCommentController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
+$router->get('/admin/comment-reply/list', BackCommentReplyController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/comment-reply/show/{id}', BackCommentReplyController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/comment-reply/edit/{id}', BackCommentReplyController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
 $router->get('/admin/message/list', BackMessageController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/message/create', BackMessageController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
@@ -104,8 +113,11 @@ $router->post('/admin/category-movie/update/{id}', BackCategoryMovieController::
 $router->post('/admin/productor/store', BackProductorController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/productor/update/{id}', BackProductorController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
-$router->post('/comment/store', FrontCommentController::class, 'store')->middleware(AuthMiddleware::class);
-$router->post('/comment/reply/store', FrontCommentReplyController::class, 'store')->middleware(AuthMiddleware::class);
+$router->post('/comment/store', FrontCommentController::class, 'storeComment')->middleware(AuthMiddleware::class);
+$router->post('/comment/reply/store', FrontCommentController::class, 'storeReply')->middleware(AuthMiddleware::class);
+
+$router->post('/admin/comment/update/{id}', BackCommentController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->post('/admin/comment-reply/update/{id}', BackCommentReplyController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
 /**
  * DELETE
@@ -121,3 +133,5 @@ $router->get('/admin/page/delete/{id}', PageController::class, 'delete')->middle
 $router->get('/admin/movie/delete/{id}', BackMovieController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/category-movie/delete/{id}', BackCategoryMovieController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/productor/delete/{id}', BackProductorController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/comment/delete/{id}', BackCommentController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/comment-reply/delete/{id}', BackCommentReplyController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);

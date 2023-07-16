@@ -7,14 +7,14 @@ use App\Core\Model;
 class Comment extends Model
 {
     protected static $table = DB_PREFIX . 'comment';
-    protected static $fillable = ['entity', 'id_entity', 'id_user', 'content', 'status', 'created_at', 'updated_at'];
+    protected static $fillable = ['entity', 'id_entity', 'id_user', 'content', 'id_status', 'created_at', 'updated_at'];
 
     protected $id;
     protected $entity;
     protected $id_entity;
     protected $id_user;
     protected $content;
-    protected $status;
+    protected $id_status;
     protected $created_at;
     protected $updated_at;
 
@@ -109,11 +109,11 @@ class Comment extends Model
         $this->updated_at = $updated_at;
     }
 
-    public function getStatus() {
-        return $this->status;
+    public function getIdStatus() {
+        return $this->id_status;
     }
 
-    public function setStatus($status) {
-        $this->status = $status;
+    public function setIdStatus($id_status) {
+        $this->id_status = $id_status;
     }
 }

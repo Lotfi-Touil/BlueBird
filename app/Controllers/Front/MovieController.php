@@ -47,38 +47,35 @@ class MovieController extends Controller
 
     private function getCommentsByIdMovie($idMovie): array
     {
-        $alias = [
-            'user_comment',
-            'user_reply'
-        ];
-
         $commentRows = QueryBuilder::table('comment')
             ->select([
                 'comment.id AS id_comment',
-                'comment.status AS comment_status',
+                'comment.id_status AS id_comment_status',
                 'comment.*',
                 'comment_reply.id AS id_reply',
-                'comment_reply.status AS reply_status',
+                'comment_reply.id_status AS id_reply_status',
                 'comment_reply.content AS reply_content',
                 'comment_reply.created_at AS reply_date',
                 'user_comment.firstname AS firstname_comment',
                 'user_comment.lastname AS lastname_comment',
                 'user_reply.firstname AS firstname_reply',
                 'user_reply.lastname AS lastname_reply'
-            ], $alias)
+            ], ['user_comment', 'user_reply'])
             ->join('user', function ($join) {
                 $join->on('user_comment.id', '=', 'comment.id_user');
             }, 'user_comment')
             ->leftJoin('comment_reply', function ($join) {
                 $join->on('comment_reply.id_comment', '=', 'comment.id');
-                $join->on('comment_reply.status', '=', 1, false);
+                $join->on('comment_reply.id_status', '=', ID_COMMENT_STATUS_ACTIF, false);
             })
             ->leftJoin('user', function ($join) {
                 $join->on('user_reply.id', '=', 'comment_reply.id_user');
             }, 'user_reply')
             ->where('entity', 'movie')
             ->andWhere('id_entity', $idMovie)
-            ->andWhere('comment.status', 1)
+            ->andWhere('comment.id_status', 1)
+            ->orderBy('comment.created_at', 'DESC')
+            ->orderBy('comment_reply.created_at')
             ->get();
 
         $comments = [];
@@ -91,7 +88,7 @@ class MovieController extends Controller
                 $comment = new Comment();
                 $comment->setId($row['id_comment']);
                 $comment->setContent($row['content']);
-                $comment->setStatus($row['comment_status']);
+                $comment->setIdStatus($row['id_comment_status']);
                 $comment->setCreatedAt($row['created_at']);
                 $comment->setUsername($row['firstname_comment'] . ' ' . $row['lastname_comment']);
 
@@ -103,7 +100,7 @@ class MovieController extends Controller
                 $reply = new CommentReply();
                 $reply->setId($row['id_reply']);
                 $reply->setContent($row['reply_content']);
-                $reply->setStatus($row['reply_status']);
+                $reply->setIdStatus($row['id_reply_status']);
                 $reply->setCreatedAt($row['reply_date']);
                 $reply->setUsername($row['firstname_reply'] . ' ' . $row['lastname_reply']);
 

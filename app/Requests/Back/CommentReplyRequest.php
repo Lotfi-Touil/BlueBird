@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Requests;
+namespace App\Requests\Back;
 
 use App\Core\FormRequest;
 use App\Models\CommentReply;
@@ -15,9 +15,8 @@ class CommentReplyRequest extends FormRequest
     protected function rules(): array
     {
         return [
-            'content' => 'required|string|min:3|max:100',
-            'id_user' => 'required',
-            'id_comment' => 'required'
+            'content'   => 'required|string|min:3|max:100',
+            'id_status' => 'required'
         ];
     }
 
@@ -28,12 +27,11 @@ class CommentReplyRequest extends FormRequest
             'content.string' => 'Le commentaire doit être une chaîne de caractères.',
             'content.min' => 'Le commentaire doit comporter au minimum 3 caractères.',
             'content.max' => 'Le commentaire ne doit pas dépasser 100 caractères.',
-            'id_user.required' => 'Une erreur est survenue.',
-            'id_comment.required' => 'Une erreur est survenue.',
+            'id_status.required' => 'Le statut est requis.'
         ];
     }
 
-    public function addCommentReply(): bool
+    public function updateCommentReply($comment): bool
     {
         $validatedData = $this->validate();
 
@@ -41,14 +39,14 @@ class CommentReplyRequest extends FormRequest
             return false;
         }
 
-        $commentReply = new CommentReply();
-        $commentReply->setIdcomment($validatedData['id_comment']);
-        $commentReply->setIdUser($validatedData['id_user']);
-        $commentReply->setContent($validatedData['content']);
-        $commentReply->setstatus(0);
-        $commentReply->setCreatedAt(date("Y-m-d H:i:s"));
-        $commentReply->setUpdatedAt(date("Y-m-d H:i:s"));
-        $commentReply->create();
+        if (!$comment instanceof CommentReply) {
+            $comment = CommentReply::find($comment['id']);
+        }
+
+        $comment->setContent($validatedData['content']);
+        $comment->setIdStatus($validatedData['id_status']);
+        $comment->setUpdatedAt(date("Y-m-d H:i:s"));
+        $comment->update();
 
         return true;
     }

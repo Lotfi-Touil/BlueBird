@@ -47,12 +47,16 @@ class PostRequest extends FormRequest
         return true;
     }
 
-    public function updatePost(Post $post): bool
+    public function updatePost($post): bool
     {
         $validatedData = $this->validate();
 
         if (!$validatedData) {
             return false;
+        }
+
+        if (!$post instanceof Post) {
+            $post = Post::find($post['id']);
         }
 
         $post->setTitle($validatedData['title']);

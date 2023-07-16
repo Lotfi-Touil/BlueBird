@@ -71,9 +71,16 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="/admin/comment/list">
             <i class="fas fa-fw fa-comment"></i>
             <span>Commentaires</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/comment-reply/list">
+            <i class="fas fa-fw fa-reply"></i>
+            <span>Réponses commentaires</span>
         </a>
     </li>
 

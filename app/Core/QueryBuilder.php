@@ -461,7 +461,7 @@ class QueryBuilder
                     return $order['field'] . ' ' . $order['direction'];
                 }, $this->orderBy));
             }
-
+            
             if ($this->limit) {
                 $sql .= ' LIMIT ' . $this->limit;
             }

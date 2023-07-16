@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Requests;
+namespace App\Requests\Back;
 
 use App\Core\FormRequest;
 use App\Models\Comment;
@@ -16,9 +16,7 @@ class CommentRequest extends FormRequest
     {
         return [
             'content' => 'required|string|min:3|max:100',
-            'entity' => 'required|string',
-            'id_entity' => 'required',
-            'id_user' => 'required',
+            'id_status' => 'required',
         ];
     }
 
@@ -28,14 +26,11 @@ class CommentRequest extends FormRequest
             'content.required' => 'Le commentaire est requis.',
             'content.string' => 'Le commentaire doit être une chaîne de caractères.',
             'content.max' => 'Le commentaire ne doit pas dépasser 100 caractères.',
-            'entity.required' => 'Une erreur est survenue.',
-            'entity.string' => 'Une erreur est survenue.',
-            'id_user.required' => 'Une erreur est survenue.',
-            'id_comment.required' => 'Une erreur est survenue.',
+            'id_status.required' => 'Le statut est requis.',
         ];
     }
 
-    public function addComment(): bool
+    public function updateComment($comment): bool
     {
         $validatedData = $this->validate();
 
@@ -43,15 +38,14 @@ class CommentRequest extends FormRequest
             return false;
         }
 
-        $comment = new Comment();
+        if (!$comment instanceof Comment) {
+            $comment = Comment::find($comment['id']);
+        }
+
         $comment->setContent($validatedData['content']);
-        $comment->setEntity($validatedData['entity']);
-        $comment->setIdEntity($validatedData['id_entity']);
-        $comment->setIdUser($validatedData['id_user']);
-        $comment->setstatus(0);
-        $comment->setCreatedAt(date("Y-m-d H:i:s"));
+        $comment->setIdStatus($validatedData['id_status']);
         $comment->setUpdatedAt(date("Y-m-d H:i:s"));
-        $comment->create();
+        $comment->update();
 
         return true;
     }

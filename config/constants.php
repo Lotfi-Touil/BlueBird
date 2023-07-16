@@ -7,6 +7,10 @@ define('HTTP_NOT_FOUND', 404);
 define('HTTP_METHOD_NOT_ALLOWED', 405);
 define('HTTP_INTERNAL_SERVER_ERROR', 500);
 
+define('ID_COMMENT_STATUS_ACTIF', 1);
+define('ID_COMMENT_STATUS_REFUSE', 2);
+define('ID_COMMENT_STATUS_NON_TRAITE', 3);
+
 define('PHPMAILER_HOST', 'smtp-mail.outlook.com');
 define('PHPMAILER_PORT', 587);
 define('PHPMAILER_PASSWORD', 'X9a@n#G2$pB8!');
