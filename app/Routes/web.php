@@ -4,7 +4,7 @@ use App\Controllers\Front\AccountController as FrontAccountController;
 use App\Controllers\Back\AccountController as BackAccountController;
 use App\Controllers\MainController;
 use App\Controllers\AuthController;
-use App\Controllers\StatController;
+use App\Controllers\Back\StatController as BackStatController;
 use App\Controllers\UserController;
 use App\Controllers\PostController;
 use App\Controllers\PageController;
@@ -40,7 +40,7 @@ $router->get('/register', AuthController::class, 'register');
 
 $router->get('/message', FrontMessageController::class, 'create');
 
-$router->get('/admin/dashboard', StatController::class, 'dashboard')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/dashboard', BackStatController::class, 'dashboard')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
 $router->get('/admin/user/list', UserController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/user/create', UserController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
