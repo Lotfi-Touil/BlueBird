@@ -7,6 +7,7 @@
         <title><?= $title ?? 'Blue bird' ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="<?= $description ?? 'Découvrez Blue Bird, une plateforme géniale !' ?>">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- Inclusion des assets -->
         <?php $this->partial('assets'); ?>
         <link rel="stylesheet" href="/css/datatables/datatables.min.css">
