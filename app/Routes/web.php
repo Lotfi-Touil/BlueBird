@@ -9,6 +9,7 @@ use App\Controllers\Back\StatController as BackStatController;
 use App\Controllers\UserController;
 use App\Controllers\PostController;
 use App\Controllers\PageController;
+use App\Controllers\Front\ForgotPasswordController;
 use App\Controllers\Front\MessageController as FrontMessageController;
 use App\Controllers\Back\MessageController as BackMessageController;
 use App\Controllers\Front\MovieController AS FrontMovieController;
@@ -21,6 +22,7 @@ use App\Controllers\Back\CommentReplyController as BackCommentReplyController;
 
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RoleMiddleware;
+use App\Models\ForgotPassword;
 
 /**
  * GET
@@ -38,6 +40,9 @@ $router->get('/activate-account/{token}', FrontAccountController::class, 'activa
 $router->get('/login', AuthController::class, 'login');
 $router->get('/logout', AuthController::class, 'logout')->middleware(AuthMiddleware::class);
 $router->get('/register', AuthController::class, 'register');
+
+$router->get( '/forgot-password', ForgotPasswordController::class, 'index');
+$router->get( '/forgot-password/{token}', ForgotPasswordController::class, 'edit');
 
 $router->get('/message', FrontMessageController::class, 'create');
 
@@ -96,6 +101,8 @@ $router->get('/admin/productor/show/{id}', BackProductorController::class, 'show
 
 $router->post('/login', AuthController::class, 'loginProcess');
 $router->post('/register', AuthController::class, 'registerProcess');
+$router->post('/forgot-password/store/', ForgotPasswordController::class, 'store');
+$router->post('/forgot-password/update/{token}', ForgotPasswordController::class, 'update');
 
 $router->post('/message/home/store', FrontMessageController::class, 'store');
 
