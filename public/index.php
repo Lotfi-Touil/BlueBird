@@ -20,6 +20,7 @@ use App\Errors\ErrorHandler;
 
 require __DIR__ . '/../app/Helpers/functions.php';
 require __DIR__ . '/../config/config.php';
+require __DIR__ . '/website.config.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
