@@ -48,8 +48,8 @@ class FormRequest extends AFormRequest
             $ruleParams = isset($ruleParts[1]) ? explode(',', $ruleParts[1]) : [];
 
             switch ($ruleName) {
-                case 'required':
-                    if (empty($value)) {
+                case 'required':                    $cleanedValue = strip_tags(html_entity_decode(trim($value)));
+                    if (empty($cleanedValue)) {
                         $fieldErrors[] = 'Le champ ' . $field . ' est requis.';
                     }
                     break;
