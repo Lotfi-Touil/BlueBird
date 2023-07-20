@@ -4,6 +4,9 @@ namespace App\Controllers;
 use App\Requests\UserRequest;
 use App\Core\View;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\UserRole;
+use App\Core\QueryBuilder;
 
 class UserController extends Controller
 {
@@ -56,12 +59,27 @@ class UserController extends Controller
     public function editAction($id): void
     {
         $user = User::find($id);
+        
+        $roles = QueryBuilder::table('role')
+            ->select()
+            ->join('user_role', function($join) {
+                $join->on('role.id', '=', 'user_role.id_role');
+            })
+            ->where('id_user', $id)
+            ->where('id_role', '!=', '1')
+            ->get();
 
-        if (!$user)
+        // $userRoles = array_values(array_column($userRoles, 'id_role'));
+        if (!$user) {
             $this->redirectToList();
+        }
+
+        echo '<pre>';
+        die(var_dump($roles));
 
         view('user/back/edit', 'back', [
-            'user' => $user
+            'user' => $user,
+            'roles' => $roles,
         ]);
     }
 
