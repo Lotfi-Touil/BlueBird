@@ -12,7 +12,7 @@
                     </a>
                 </div>
                 <?php if ($users) : ?>
-                    <table class="table">
+                    <table class="table display dataTable mt-4 " id="user-list">
                         <thead class="thead-light">
                             <tr>
                                 <th>Prénom</th>
@@ -40,6 +40,16 @@
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
+                        <tfoot class="thead-light">
+                            <tr>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Statut</th>
+                                <th>Date de création</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 <?php endif; ?>
             </div>

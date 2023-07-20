@@ -7,11 +7,18 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+
+
     public function listAction()
     {
+        $scripts =  [
+            '/js/datatables/datatables.min.js',
+            '/js/datatables/index.js',
+        ];
+
         view('user/back/list', 'back', [
             'users' => User::all()
-        ]);
+        ], $scripts);
     }
 
     public function createAction(): void

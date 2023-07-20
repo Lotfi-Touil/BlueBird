@@ -9,6 +9,10 @@
         <meta name="description" content="<?= $description ?? 'Découvrez Blue Bird, une plateforme géniale !' ?>">
         <!-- Inclusion des assets -->
         <?php $this->partial('assets'); ?>
+        <link rel="stylesheet" href="/css/datatables/datatables.min.css">
+        <!-- Inclusion des scripts nécéssaires -->
+        <script src="/vendor/jquery/jquery.min.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
 
