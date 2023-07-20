@@ -14,9 +14,15 @@ class PostController extends Controller{
 
     public function listAction(): void
     {
+        $scripts =  [
+            '/js/datatables/datatables.min.js',
+            '/js/datatables/index.js',
+            '/js/datatables/post-list.js',
+        ];
+        
         view('post/back/list', 'back', [
             'posts' => Post::all()
-        ]);
+        ], $scripts);
     }
 
     public function createAction(): void

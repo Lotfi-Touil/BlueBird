@@ -13,8 +13,7 @@
                 </div>
                 <div class="table-responsive">
                     <?php if ($categoriesMovie) : ?>
-                        <p class="pb-2 px-3">Affichage de <strong><?= count($categoriesMovie);?></strong> catégories de films</p>
-                        <table class="table">
+                        <table class="table" id="category-movie-list">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
@@ -44,6 +43,13 @@
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <tfoot class="thead-light">
+                                <tr>
+                                    <th class="d-table-cell">ID</th>
+                                    <th class="d-table-cell">Nom</th>
+                                    <th class="d-table-cell ">Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     <?php endif; ?>
                 </div>

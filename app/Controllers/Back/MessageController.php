@@ -20,9 +20,15 @@ class MessageController extends Controller
 
     public function listAction(): void
     {
+        $scripts =  [
+            '/js/datatables/datatables.min.js',
+            '/js/datatables/index.js',
+            '/js/datatables/message-list.js',
+        ];
+
         view('message/back/list', 'back', [
             'messages' => Message::all()
-        ]);
+        ], $scripts);
     }
 
     public function createAction(): void

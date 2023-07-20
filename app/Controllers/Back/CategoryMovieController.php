@@ -17,6 +17,11 @@ class CategoryMovieController extends Controller
 
     public function listAction(): void
     {
+        $scripts =  [
+            '/js/datatables/datatables.min.js',
+            '/js/datatables/index.js',
+            '/js/datatables/category-movie-list.js',
+        ];
         $categoriesMovie = QueryBuilder::table('category_movie')
             ->select()
             ->orderBy('name')
@@ -24,7 +29,7 @@ class CategoryMovieController extends Controller
 
         view('category-movie/back/list', 'back', [
             'categoriesMovie' => $categoriesMovie,
-        ]);
+        ], $scripts);
     }
 
     public function createAction(): void

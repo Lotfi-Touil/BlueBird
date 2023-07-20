@@ -18,6 +18,12 @@ class ProductorController extends Controller
 
     public function listAction(): void
     {
+        $scripts =  [
+            '/js/datatables/datatables.min.js',
+            '/js/datatables/index.js',
+            '/js/datatables/productor-list.js',
+        ];
+
         $productors = QueryBuilder::table('productor')
             ->select(
                 'productor.*',
@@ -31,7 +37,7 @@ class ProductorController extends Controller
 
         view('productor/back/list', 'back', [
             'productors' => $productors
-        ]);
+        ], $scripts);
     }
 
     public function createAction(): void
