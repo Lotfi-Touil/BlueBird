@@ -13,8 +13,7 @@
                 </div>
                 <div class="table-responsive">
                     <?php if ($productors) : ?>
-                        <p class="pb-2 px-3">Affichage de <strong><?= count($productors);?></strong> maisons de production</p>
-                        <table class="table">
+                        <table class="table display dataTable mt-4 " id="productor-list">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
@@ -48,6 +47,15 @@
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="d-table-cell">ID</th>
+                                    <th class="d-table-cell">Nom</th>
+                                    <th class="d-none d-sm-table-cell">Description</th>
+                                    <th class="d-none d-sm-table-cell">Pays</th>
+                                    <th class="d-table-cell ">Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     <?php endif; ?>
                 </div>

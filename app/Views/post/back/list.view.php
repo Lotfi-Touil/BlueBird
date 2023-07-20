@@ -13,7 +13,7 @@
                 </div>
                 <div class="table-responsive">
                     <?php if ($posts) : ?>
-                        <table class="table">
+                        <table class="table display dataTable mt-4 " id="post-list">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
@@ -39,6 +39,15 @@
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <tfoot class="thead-light">
+                                <tr>
+                                    <th class="d-table-cell">ID</th>
+                                    <th class="d-none d-sm-table-cell">Titre</th>
+                                    <th class="d-none d-sm-table-cell">Contenu</th>
+                                    <th class="d-none d-sm-table-cell">Date de création</th>
+                                    <th class="d-table-cell">Action</th>
+                                </tr>
+                        </tfoot>
                         </table>
                     <?php endif; ?>
                 </div>

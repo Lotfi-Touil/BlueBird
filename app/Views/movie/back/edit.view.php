@@ -21,8 +21,6 @@
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-                <pre>
-                </pre>
                 <div class="form-group">
                     <label for="ids_category_movie">Catégories</label>
                     <select multiple name="ids_category_movie[]" id="ids_category_movie" class="form-control" required>
