@@ -6,7 +6,8 @@ import generateStructure from './DomRenderer.js';
 >>>>>>> Installeur JS : V2
 const routes = {
   '/step1': {
-    render: renderStep1
+    render: renderStep1,
+    onSubmit: onSubmitStep1
   },
   '/step2': {
     render: renderStep2,
@@ -28,7 +29,7 @@ function startInstallation() {
   if (routes.hasOwnProperty(currentPath)) {
     routes[currentPath].render();
   } else {
-    navigateTo('/step2');
+    navigateTo('/step1');
   }
 }
 
@@ -37,7 +38,25 @@ function navigateTo(path) {
   routes[path].render();
 }
 
-function renderStep1() { }
+function renderStep1() {
+  fetch('/api/installation/step1')
+    .then(response => response.json())
+    .then(formStructure => {
+      const formElement = generateStructure(formStructure);
+      formElement.addEventListener('submit', routes['/step1'].onSubmit);
+      const appElement = document.getElementById('app');
+      while (appElement.firstChild) {
+        appElement.removeChild(appElement.firstChild);
+      }
+      appElement.appendChild(formElement);
+    });
+}
+
+function onSubmitStep1(event) {
+  event.preventDefault();
+
+  navigateTo('/step2');
+}
 
 function renderStep2() {
   fetch('/api/installation/step2')
