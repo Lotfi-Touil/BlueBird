@@ -11,7 +11,7 @@ abstract class Model
     protected static $table;
     protected static $fillable = [];
 
-    private static $db_dsn       = 'pgsql:host=db;dbname=bluebird;port=5432';
+    private static $db_dsn       = 'pgsql:host='.DB_HOST.';dbname='.DB_DATABASE.';port='.DB_PORT;
     private static $db_username  = DB_USERNAME;
     private static $db_password  = DB_PASSWORD;
 

@@ -113,6 +113,102 @@ class DatabaseSetupController extends Controller
                     "attributes" => ["class" => "form-group"],
                     "children" => [
                         [
+                            "type" => "label",
+                            "attributes" => [
+                                "for" => "dbPasswordConfirm",
+                                "class" => "form-label"
+                            ],
+                            "children" => ["Confirmer le Mot de passe"]
+                        ],
+                        [
+                            "type" => "input",
+                            "attributes" => [
+                                "class" => "form-control",
+                                "type" => "password",
+                                "id" => "dbPasswordConfirm",
+                                "name" => "dbPasswordConfirm",
+                                "class" => "form-control"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "div",
+                    "attributes" => ["class" => "form-group"],
+                    "children" => [
+                        [
+                            "type" => "label",
+                            "attributes" => [
+                                "for" => "dbHost",
+                                "class" => "form-label"
+                            ],
+                            "children" => ["Hôte de la base de données"]
+                        ],
+                        [
+                            "type" => "input",
+                            "attributes" => [
+                                "class" => "form-control",
+                                "type" => "text",
+                                "id" => "dbHost",
+                                "name" => "dbHost",
+                                "class" => "form-control"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "div",
+                    "attributes" => ["class" => "form-group"],
+                    "children" => [
+                        [
+                            "type" => "label",
+                            "attributes" => [
+                                "for" => "dbPort",
+                                "class" => "form-label"
+                            ],
+                            "children" => ["Port de la base de données"]
+                        ],
+                        [
+                            "type" => "input",
+                            "attributes" => [
+                                "class" => "form-control",
+                                "type" => "text",
+                                "id" => "dbPort",
+                                "name" => "dbPort",
+                                "class" => "form-control"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "div",
+                    "attributes" => ["class" => "form-group"],
+                    "children" => [
+                        [
+                            "type" => "label",
+                            "attributes" => [
+                                "for" => "tablePrefix",
+                                "class" => "form-label"
+                            ],
+                            "children" => ["Préfixe des tables"]
+                        ],
+                        [
+                            "type" => "input",
+                            "attributes" => [
+                                "class" => "form-control",
+                                "type" => "text",
+                                "id" => "tablePrefix",
+                                "name" => "tablePrefix",
+                                "class" => "form-control"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "div",
+                    "attributes" => ["class" => "form-group"],
+                    "children" => [
+                        [
                             "type" => "input",
                             "attributes" => [
                                 "type" => "submit",
