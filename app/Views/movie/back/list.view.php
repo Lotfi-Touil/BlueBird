@@ -14,7 +14,7 @@
                 <div class="table-responsive">
                     <?php if ($movies) : ?>
                         <p class="pb-2 px-3">Affichage de <strong><?= count($movies);?></strong> films</p>
-                        <table class="table">
+                        <table class="table display dataTable mt-4 " id="movie-list">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
@@ -50,6 +50,16 @@
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <tfoot class="thead-light">
+                                <tr>
+                                    <th class="d-table-cell">ID</th>
+                                    <th class="d-table-cell">Titre</th>
+                                    <th class="d-none d-sm-table-cell">Description</th>
+                                    <th class="d-none d-sm-table-cell">Date de sortie</th>
+                                    <th class="d-none d-sm-table-cell">Durée en heure</th>
+                                    <th class="d-table-cell ">Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     <?php endif; ?>
                 </div>
