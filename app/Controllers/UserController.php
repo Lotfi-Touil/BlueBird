@@ -59,45 +59,49 @@ class UserController extends Controller
     public function editAction($id): void
     {
         $user = User::find($id);
-        
+
         $roles = QueryBuilder::table('role')
             ->select()
-            ->join('user_role', function($join) {
-                $join->on('role.id', '=', 'user_role.id_role');
-            })
-            ->where('id_user', $id)
-            ->where('id_role', '!=', '1')
+            ->where('id', '<>', '1')
             ->get();
 
-        // $userRoles = array_values(array_column($userRoles, 'id_role'));
+        $userRoles = QueryBuilder::table('user_role')
+            ->select()
+            ->join('role', function($join) {
+                $join->on('role.id', '=', 'user_role.id_role');
+            })
+            ->where('user_role.id_user', $id)
+            ->where('user_role.id_role', '<>', '1')
+            ->get();
+        
+        $userRoles = array_values(array_column($userRoles, 'id_role'));
+
         if (!$user) {
             $this->redirectToList();
         }
 
-        echo '<pre>';
-        die(var_dump($roles));
-
         view('user/back/edit', 'back', [
             'user' => $user,
             'roles' => $roles,
+            'userRoles' => $userRoles,
         ]);
     }
 
     public function updateAction($id): void
     {
-        $user = User::find($id);
-
+        $user = User::find($id); 
+        $request = new UserRequest();
+       
         if (!$user) {
             $this->redirectToList();
         }
-
-        $request = new UserRequest();
-
+        
         if (!$request->updateUser($user)) {
+            die(var_dump($request->getErrors()));
             view('user/back/edit', 'back', [
                 'user'   => $user,
                 'errors' => $request->getErrors(),
-                'old'    => $request->getOld()
+                'old'    => $request->getOld(),
             ]);
         }
 
