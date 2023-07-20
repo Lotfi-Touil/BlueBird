@@ -26,7 +26,15 @@ class AdminAccountSetupController extends Controller
         echo json_encode(['success' => true]); // ou false en cas d'échec
     }
 
+<<<<<<< develop
+<<<<<<< develop
     public function getStructureAction()
+=======
+    public function getFormStructureAction()
+>>>>>>> Installeur JS : V1
+=======
+    public function getStructureAction()
+>>>>>>> Installeur JS : V2
     {
         $formStructure = [
             "type" => "form",
@@ -105,4 +113,8 @@ class AdminAccountSetupController extends Controller
         echo json_encode($formStructure);
     }
 
+<<<<<<< develop
 }
+=======
+}
+>>>>>>> Installeur JS : V1

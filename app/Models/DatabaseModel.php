@@ -73,4 +73,8 @@ class DatabaseModel
             throw new \App\Exceptions\DatabaseException((string)$e->getMessage(), (int)$e->getCode(), $e);
         }
     }
+<<<<<<< develop
 }
+=======
+}
+>>>>>>> Installeur JS : V2

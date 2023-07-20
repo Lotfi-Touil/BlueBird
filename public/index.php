@@ -2,18 +2,25 @@
 
 namespace App;
 
+<<<<<<< develop
 /*
+=======
+>>>>>>> Installeur JS : V1
 if (file_exists(__DIR__ . '/setup/index.html') && strpos($_SERVER['REQUEST_URI'], '/api/') !== 0) {
     header('Location: /setup/index.html');
     exit;
 }
+<<<<<<< develop
 */
+=======
+>>>>>>> Installeur JS : V1
 
 use App\Core\Router;
 use App\Errors\ErrorHandler;
 
 require __DIR__ . '/../app/Helpers/functions.php';
 require __DIR__ . '/../config/config.php';
+require __DIR__ . '/website.config.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();

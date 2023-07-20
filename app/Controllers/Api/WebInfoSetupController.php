@@ -3,9 +3,8 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\Controller;
-use App\Requests\DatabaseRequest;
 
-class DatabaseSetupController extends Controller
+class WebInfoSetupController extends Controller
 {
  
     public function __construct()
@@ -13,28 +12,27 @@ class DatabaseSetupController extends Controller
         parent::__construct();
     }
 
-    public function createDatabaseAction()
+    public function setWebInfoAction()
     {
+        $post = $this->getRequest()->getPost();
+
+        $title = $post->title;
+        $description = $post->description;
+        
+        $fileContent = '<?php' . PHP_EOL .
+                       'define("WEBSITE_TITLE", "' . $title . '");' . PHP_EOL .
+                       'define("WEBSITE_DESCRIPTION", "' . $description . '");' . PHP_EOL;
+    
+        $fileName = 'website.config.php';
+    
+        file_put_contents($fileName, $fileContent);
+        chmod($fileName, 0666);
+
         header('Content-Type: application/json');
-
-        $request = new DatabaseRequest();;
-        if (!$request->createDatabase()) {
-            echo json_encode(['success' => false, 'errors' => array_values($request->getErrors())]);
-            return;
-        }
-
-        echo json_encode(['success' => true]);
+        echo json_encode(['success' => true]); // ou false en cas d'échec
     }
 
-<<<<<<< develop
-<<<<<<< develop
     public function getStructureAction()
-=======
-    public function getFormStructureAction()
->>>>>>> Installeur JS : V1
-=======
-    public function getStructureAction()
->>>>>>> Installeur JS : V2
     {
         $formStructure = [
             "type" => "form",
@@ -51,19 +49,18 @@ class DatabaseSetupController extends Controller
                         [
                             "type" => "label",
                             "attributes" => [
-                                "for" => "dbName",
+                                "for" => "title",
                                 "class" => "form-label"
                             ],
-                            "children" => ["Nom de la base de données"]
+                            "children" => ["Titre"]
                         ],
                         [
                             "type" => "input",
                             "attributes" => [
                                 "class" => "form-control",
                                 "type" => "text",
-                                "id" => "dbName",
-                                "name" => "dbName",
-                                "class" => "form-control"
+                                "id" => "title",
+                                "name" => "title"
                             ]
                         ]
                     ]
@@ -75,43 +72,17 @@ class DatabaseSetupController extends Controller
                         [
                             "type" => "label",
                             "attributes" => [
-                                "for" => "dbUser",
+                                "for" => "description",
                                 "class" => "form-label"
                             ],
-                            "children" => ["Nom d'utilisateur de la base de données"]
+                            "children" => ["Description"]
                         ],
                         [
-                            "type" => "input",
+                            "type" => "textarea",
                             "attributes" => [
                                 "class" => "form-control",
-                                "type" => "text",
-                                "id" => "dbUser",
-                                "name" => "dbUser",
-                                "class" => "form-control"
-                            ]
-                        ]
-                    ]
-                ],
-                [
-                    "type" => "div",
-                    "attributes" => ["class" => "form-group"],
-                    "children" => [
-                        [
-                            "type" => "label",
-                            "attributes" => [
-                                "for" => "dbPassword",
-                                "class" => "form-label"
-                            ],
-                            "children" => ["Mot de passe de la base de données"]
-                        ],
-                        [
-                            "type" => "input",
-                            "attributes" => [
-                                "class" => "form-control",
-                                "type" => "password",
-                                "id" => "dbPassword",
-                                "name" => "dbPassword",
-                                "class" => "form-control"
+                                "id" => "description",
+                                "name" => "description"
                             ]
                         ]
                     ]
@@ -124,7 +95,7 @@ class DatabaseSetupController extends Controller
                             "type" => "input",
                             "attributes" => [
                                 "type" => "submit",
-                                "value" => "Suivant",
+                                "value" => "Terminer",
                                 "class" => "btn btn-primary"
                             ]
                         ]
