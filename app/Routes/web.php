@@ -17,6 +17,7 @@ use App\Controllers\Back\ProductorController AS BackProductorController;
 use App\Controllers\Front\CommentController as FrontCommentController;
 use App\Controllers\Back\CommentController as BackCommentController;
 use App\Controllers\Back\CommentReplyController as BackCommentReplyController;
+use App\Controllers\ReviewController;
 
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\RoleMiddleware;
@@ -70,23 +71,6 @@ $router->get('/admin/page/create', PageController::class, 'create')->middleware(
 $router->get('/admin/page/show/{id}', PageController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/page/edit/{id}', PageController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
-$router->get('/admin/movie/list', BackMovieController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->get('/admin/movie/create', BackMovieController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->get('/admin/movie/edit/{id}', BackMovieController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->get('/admin/movie/show/{id}', BackMovieController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-
-$router->get('/movie/show/{id}', FrontMovieController::class, 'show');
-
-$router->get('/admin/category-movie/list', BackCategoryMovieController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->get('/admin/category-movie/create', BackCategoryMovieController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->get('/admin/category-movie/edit/{id}', BackCategoryMovieController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->get('/admin/category-movie/show/{id}', BackCategoryMovieController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-
-$router->get('/admin/productor/list', BackProductorController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->get('/admin/productor/create', BackProductorController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->get('/admin/productor/edit/{id}', BackProductorController::class, 'edit')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->get('/admin/productor/show/{id}', BackProductorController::class, 'show')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-
 /**
  * POST
  */
@@ -104,21 +88,6 @@ $router->post('/admin/message/update/{id}', BackMessageController::class, 'updat
 $router->post('/admin/page/store', PageController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/page/update/{id}', PageController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
-$router->post('/admin/movie/store', BackMovieController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->post('/admin/movie/update/{id}', BackMovieController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-
-$router->post('/admin/category-movie/store', BackCategoryMovieController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->post('/admin/category-movie/update/{id}', BackCategoryMovieController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-
-$router->post('/admin/productor/store', BackProductorController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->post('/admin/productor/update/{id}', BackProductorController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-
-$router->post('/comment/store', FrontCommentController::class, 'storeComment')->middleware(AuthMiddleware::class);
-$router->post('/comment/reply/store', FrontCommentController::class, 'storeReply')->middleware(AuthMiddleware::class);
-
-$router->post('/admin/comment/update/{id}', BackCommentController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-$router->post('/admin/comment-reply/update/{id}', BackCommentReplyController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
-
 /**
  * DELETE
  */
@@ -135,3 +104,5 @@ $router->get('/admin/category-movie/delete/{id}', BackCategoryMovieController::c
 $router->get('/admin/productor/delete/{id}', BackProductorController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/comment/delete/{id}', BackCommentController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/comment-reply/delete/{id}', BackCommentReplyController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
+$router->get('/admin/review/delete/{id}', ReviewController::class, 'delete')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);

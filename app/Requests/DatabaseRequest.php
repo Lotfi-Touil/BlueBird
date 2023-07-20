@@ -45,8 +45,6 @@ class DatabaseRequest extends FormRequest
             return false;
         }
 
-        return true; // TODO
-
         $databaseModel = new DatabaseModel($validatedData['dbName'], $validatedData['dbUser'], $validatedData['dbPassword']);
         $databaseCreated = $databaseModel->createDatabase();
     
