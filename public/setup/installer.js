@@ -59,8 +59,11 @@ function renderStep2() {
     .then(formStructure => {
       const formElement = generateStructure(formStructure);
       formElement.addEventListener('submit', routes['/step2'].onSubmit);
-      document.getElementById('app').innerHTML = '';
-      document.getElementById('app').appendChild(formElement);
+      const appElement = document.getElementById('app');
+      while (appElement.firstChild) {
+        appElement.removeChild(appElement.firstChild);
+      }
+      appElement.appendChild(formElement);
     });
 }
 

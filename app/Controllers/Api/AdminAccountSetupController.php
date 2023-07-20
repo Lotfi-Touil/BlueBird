@@ -26,7 +26,7 @@ class AdminAccountSetupController extends Controller
         echo json_encode(['success' => true]); // ou false en cas d'échec
     }
 
-    public function getStructureAction()
+    public function getFormStructureAction()
     {
         $formStructure = [
             "type" => "form",
