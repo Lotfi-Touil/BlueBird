@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 /*
 if (file_exists(__DIR__ . '/setup/index.html') && strpos($_SERVER['REQUEST_URI'], '/api/') !== 0) {
     header('Location: /setup/index.html');
