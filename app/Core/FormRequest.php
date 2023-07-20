@@ -7,11 +7,13 @@ use App\Requests\Abstract\AFormRequest;
 class FormRequest extends AFormRequest
 {
     private array $rules;
+    private array $messages;
     private array $errors;
 
-    public function __construct(array $rules)
+    public function __construct(array $rules, array $messages)
     {
         $this->rules  = $rules;
+        $this->messages  = $messages;
         $this->errors = [];
 
         parent::__construct();
@@ -51,71 +53,71 @@ class FormRequest extends AFormRequest
                 case 'required':
                     $cleanedValue = strip_tags(html_entity_decode(trim($value)));
                     if (empty($cleanedValue)) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' est requis.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'string':
                     if (!is_string($value)) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' doit être une chaîne de caractères.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'numeric':
                     if (!is_numeric($value)) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' doit être numérique.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'date':
                     if (strtotime($value) === false) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' doit être une date valide.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'time':
                     if (strtotime($value) === false) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' doit être un temps valide.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'integer':
                     if (!filter_var($value, FILTER_VALIDATE_INT)) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' doit être un entier.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'email':
                     if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' doit être une adresse email valide.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'max':
                     $maxLength = intval($ruleParams[0]);
                     if (strlen($value) > $maxLength) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' ne doit pas dépasser ' . $maxLength . ' caractères.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'min':
                     $minLength = intval($ruleParams[0]);
                     if (strlen($value) < $minLength) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' doit contenir au moins ' . $minLength . ' caractères.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'in':
                     $allowedValues = array_slice($ruleParams, 0);
                     if (!in_array($value, $allowedValues)) {
-                        $fieldErrors[] = 'La valeur du champ ' . $field . ' n\'est pas valide.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 
                 case 'same':
                     $otherField = $ruleParams[0];
                     if ($value !== $this->getRequest()->getPost($otherField)) {
-                        $fieldErrors[] = 'Le champ ' . $field . ' ne correspond pas au champ ' . $otherField . '.';
+                        $fieldErrors[] = $this->messages[$field . ".$rule"];
                     }
                     break;
 

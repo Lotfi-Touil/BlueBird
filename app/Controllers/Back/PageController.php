@@ -3,9 +3,9 @@
 namespace App\Controllers\Back;
 
 use App\Controllers\Controller;
-use App\Core\File;
-use App\Models\Page;
-use App\Requests\PageRequest;
+use App\Core\UploadedFile;
+use App\Models\TemplateOne;
+use App\Requests\TemplateOneRequest;
 
 class PageController extends Controller
 {
@@ -15,37 +15,56 @@ class PageController extends Controller
         parent::__construct();
     }
 
-    public function uploadImageAction(): void
-    {
-        $filepath = File::uploadImage(__DIR__ . '/../../resources/uploads/', $_FILES);
-        if ($filepath) {
-            echo json_encode(['location' => $filepath]);
-        } else {
-            echo json_encode(['error' => 'Erreur lors de l\'upload de l\'image']);
-        }
-    }
-
     public function listAction(): void
     {
-        view('page/back/list', 'back', [
-            'pages' => Page::all()
+        view('template-one/back/list', 'back', [
+            'pages' => TemplateOne::all()
         ]);
     }
 
     public function createAction(): void
     {
-        view('page/back/create', 'back');
+        view('template-one/back/create', 'back');
     }
 
     public function storeAction(): void
     {
-        $request = new PageRequest();
+        $request = new TemplateOneRequest();
 
-        if (!$request->createPage()) {
-            view('page/back/create', 'back', [
+        $imageFields = ['about_img', 'main_bloc_img', 'bloc_one_img', 'bloc_two_img'];
+        $uploadedFiles = [];
+
+        foreach ($imageFields as $fieldName) {
+            if (isset($_FILES[$fieldName]) && $_FILES[$fieldName]['error'] === UPLOAD_ERR_OK) {
+                $uploadedFile = new UploadedFile($_FILES[$fieldName]);
+
+                $allowedExtensions = ['png', 'jpg', 'jpeg'];
+                $fileExtension = pathinfo($uploadedFile->getName(), PATHINFO_EXTENSION);
+
+                if (in_array(strtolower($fileExtension), $allowedExtensions)) {
+                    $uniqueFileName = uniqid() . '.' . $fileExtension;
+                    $uploadPath = __DIR__ . '/../../../public/resources/uploads/template-one/' . $uniqueFileName;
+
+                    if (move_uploaded_file($uploadedFile->getTmpName(), $uploadPath)) {
+                        $request->editPostRequest($fieldName, $uniqueFileName);
+                        $uploadedFiles[$fieldName] = $uploadPath;
+                    } else {
+                        $request->addError($fieldName, 'Une erreur est survenue lors de l\'enregistrement.');
+                        return;
+                    }
+                } else {
+                    $request->addError($fieldName, 'Une erreur est survenue lors de l\'enregistrement.');
+                    return;
+                }
+            }
+        }
+
+        if (!$request->createTemplateOne()) {
+            view('template-one/back/create', 'back', [
                 'errors' => $request->getErrors(),
                 'old'    => $request->getOld()
             ]);
+            return;
         }
 
         $this->redirectToList();
@@ -53,40 +72,40 @@ class PageController extends Controller
 
     public function showAction($id): void
     {
-        $page = Page::find($id);
+        $page = TemplateOne::find($id);
 
         if (!$page)
             $this->redirectToList();
 
-        view('page/back/show', 'back', [
+        view('template-one/back/show', 'back', [
             'page' => $page
         ]);
     }
 
     public function editAction($id): void
     {
-        $page = Page::find($id);
+        $page = TemplateOne::find($id);
 
         if (!$page)
             $this->redirectToList();
 
-        view('page/back/edit', 'back', [
+        view('template-one/back/edit', 'back', [
             'page' => $page
         ]);
     }
 
     public function updateAction($id): void
     {
-        $page = Page::find($id);
+        $page = TemplateOne::find($id);
 
         if (!$page) {
             $this->redirectToList();
         }
 
-        $request = new PageRequest();
+        $request = new TemplateOneRequest();
 
-        if (!$request->updatePage($page)) {
-            view('page/back/edit', 'back', [
+        if (!$request->updateTemplateOne($page)) {
+            view('template-one/back/edit', 'back', [
                 'page'   => $page,
                 'errors' => $request->getErrors(),
                 'old'    => $request->getOld()
@@ -98,7 +117,7 @@ class PageController extends Controller
 
     public function deleteAction($id): void
     {
-        $page = Page::find($id);
+        $page = TemplateOne::find($id);
 
         if ($page) {
             $page->delete();

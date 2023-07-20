@@ -26,7 +26,7 @@ abstract class Model
                 );
                 self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             } catch (\PDOException $e) {
-                throw new \App\Exceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
+                throw new \App\Erépondxceptions\DatabaseException($e->getMessage(), $e->getCode(), $e);
             }
         }
 

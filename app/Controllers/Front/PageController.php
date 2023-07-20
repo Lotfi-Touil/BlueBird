@@ -3,8 +3,9 @@
 namespace App\Controllers\Front;
 
 use App\Controllers\Controller;
+use App\Exceptions\HttpException;
 use App\Models\Page;
-use App\Requests\PageRequest;
+use App\Models\TemplateOne;
 
 class PageController extends Controller
 {
@@ -14,4 +15,16 @@ class PageController extends Controller
         parent::__construct();
     }
 
+    public function showAction($slug): void
+    {
+        $page = TemplateOne::where('slug', $slug);
+
+        if (!$page) {
+            throw new HttpException('Page Not Found', 404);
+        }
+
+        view('template-one/front/show', 'template-one', [
+            'page' => $page
+        ]);
+    }
 }

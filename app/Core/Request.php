@@ -21,4 +21,8 @@ class Request
         return $this->postData;
     }
 
+    public function setPost($key, $val)
+    {
+        $this->postData[$key] = $val;
+    }
 }
