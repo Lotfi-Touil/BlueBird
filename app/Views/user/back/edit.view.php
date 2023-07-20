@@ -41,8 +41,8 @@
                 <div class="form-group">
                     <label for="status">Statut</label>
                     <select id="status" name="status" class="form-control">
-                        <option value="0" <?= (isset($old['status']) && !$old['status']) || (!$old && !$user->getStatus()) ? 'selected' : '' ?>>Inactif</option>
-                        <option value="1" <?= (isset($old['status']) && $old['status']) || (!$old && $user->getStatus()) ? 'selected' : '' ?>>Actif</option>
+                        <option value="0" <?= ($old['status'] ?? $user->getStatus()) ? 'selected' : '' ?>>Inactif</option>
+                        <option value="1" <?= ($old['status'] ?? $user->getStatus()) ? 'selected' : '' ?>>Actif</option>
                     </select>
                     <?php if (isset($errors['status'])) : ?>
                         <?php foreach ($errors['status'] as $error) : ?>
@@ -54,8 +54,8 @@
                     <label for="id_roles">Rôle</label>
                     <select id="id_roles" name="id_roles[]" class="form-control" multiple required>
                         <?php foreach ($roles as $role) : ?>
-                            <option value="<?= $role->id ?>" <?= in_array($role->id, $userRoles) ? 'selected' : '';?>>
-                                <?= $role->name ?>
+                            <option value="<?= $role['id'] ?>" <?= $role['id'] == $userRoles ? 'selected' : ''; ?>>
+                                <?= $role['name'] ?>
                             </option>
                         <?php endforeach; ?>
                     </select>

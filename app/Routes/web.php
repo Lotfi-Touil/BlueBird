@@ -134,6 +134,10 @@ $router->post('/comment/reply/store', FrontCommentController::class, 'storeReply
 $router->post('/admin/comment/update/{id}', BackCommentController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->post('/admin/comment-reply/update/{id}', BackCommentReplyController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
+
+$router->post('/admin/user/store', UserController::class, 'store')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->post('/admin/user/update/{id}', UserController::class, 'update')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+
 /**
  * DELETE
  */
