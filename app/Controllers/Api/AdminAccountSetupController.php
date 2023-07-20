@@ -3,6 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\Controller;
+use App\Requests\AdminAccountSetupRequest;
 
 class AdminAccountSetupController extends Controller
 {
@@ -14,15 +15,14 @@ class AdminAccountSetupController extends Controller
 
     public function createUserAction()
     {
-        $post = $this->getRequest()->getPost();
-
-        $username = $post->adminUsername;
-        $password = $post->adminPassword;
-
-        // Ici, ajoutez le code pour créer le compte utilisateur avec les informations reçues.
-        // ...
-
         header('Content-Type: application/json');
+
+        $request = new AdminAccountSetupRequest();;
+        if (!$request->createUser()) {
+            echo json_encode(['success' => false, 'errors' => array_values($request->getErrors())]);
+            return;
+        }
+
         echo json_encode(['success' => true]); // ou false en cas d'échec
     }
 
@@ -43,18 +43,18 @@ class AdminAccountSetupController extends Controller
                         [
                             "type" => "label",
                             "attributes" => [
-                                "for" => "adminUsername",
+                                "for" => "lastname",
                                 "class" => "form-label"
                             ],
-                            "children" => ["Nom d'utilisateur"]
+                            "children" => ["Nom"]
                         ],
                         [
                             "type" => "input",
                             "attributes" => [
                                 "class" => "form-control",
                                 "type" => "text",
-                                "id" => "adminUsername",
-                                "name" => "adminUsername",
+                                "id" => "lastname",
+                                "name" => "lastname",
                                 "class" => "form-control"
                             ]
                         ]
@@ -67,7 +67,55 @@ class AdminAccountSetupController extends Controller
                         [
                             "type" => "label",
                             "attributes" => [
-                                "for" => "adminPassword",
+                                "for" => "firstname",
+                                "class" => "form-label"
+                            ],
+                            "children" => ["Prénom"]
+                        ],
+                        [
+                            "type" => "input",
+                            "attributes" => [
+                                "class" => "form-control",
+                                "type" => "text",
+                                "id" => "firstname",
+                                "name" => "firstname",
+                                "class" => "form-control"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "div",
+                    "attributes" => ["class" => "form-group"],
+                    "children" => [
+                        [
+                            "type" => "label",
+                            "attributes" => [
+                                "for" => "email",
+                                "class" => "form-label"
+                            ],
+                            "children" => ["Email"]
+                        ],
+                        [
+                            "type" => "input",
+                            "attributes" => [
+                                "class" => "form-control",
+                                "type" => "email",
+                                "id" => "email",
+                                "name" => "email",
+                                "class" => "form-control"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "div",
+                    "attributes" => ["class" => "form-group"],
+                    "children" => [
+                        [
+                            "type" => "label",
+                            "attributes" => [
+                                "for" => "password",
                                 "class" => "form-label"
                             ],
                             "children" => ["Mot de passe"]
@@ -77,8 +125,32 @@ class AdminAccountSetupController extends Controller
                             "attributes" => [
                                 "class" => "form-control",
                                 "type" => "password",
-                                "id" => "adminPassword",
-                                "name" => "adminPassword",
+                                "id" => "password",
+                                "name" => "password",
+                                "class" => "form-control"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "div",
+                    "attributes" => ["class" => "form-group"],
+                    "children" => [
+                        [
+                            "type" => "label",
+                            "attributes" => [
+                                "for" => "passwordConfirm",
+                                "class" => "form-label"
+                            ],
+                            "children" => ["Confirmer"]
+                        ],
+                        [
+                            "type" => "input",
+                            "attributes" => [
+                                "class" => "form-control",
+                                "type" => "password",
+                                "id" => "passwordConfirm",
+                                "name" => "passwordConfirm",
                                 "class" => "form-control"
                             ]
                         ]
@@ -92,7 +164,7 @@ class AdminAccountSetupController extends Controller
                             "type" => "input",
                             "attributes" => [
                                 "type" => "submit",
-                                "value" => "Terminer",
+                                "value" => "Suivant",
                                 "class" => "btn btn-primary"
                             ]
                         ]

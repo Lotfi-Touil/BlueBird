@@ -175,6 +175,18 @@ class EmailActivationToken extends Model
         return $randomBody;
     }
 
+    public static function verifyTokenSetup(User $user)
+    {
+        if (!$user) {
+            return;
+        }
+
+        $EAT = self::where('id_user', $user->getId());
+        if($EAT){
+            $EAT->setVerifiedAt(date('Y-m-d H:i:s'));
+        }
+    }
+
     public function isVerified()
     {
         return !is_null($this->getVerifiedAt());

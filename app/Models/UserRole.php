@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
+use App\Models\User;
 
 class UserRole extends Model
 {
@@ -39,4 +40,18 @@ class UserRole extends Model
         $this->id_role = $id_role;
     }
 
+    public static function addUserRoleSetup($user)
+    {
+        if (!$user) {
+            return;
+        }
+
+        $AURS = self::where('id_user', $user->getId());
+
+        die(var_dump($user));
+        if($AURS){
+            $AURS->setIdRole(1);
+            $AURS->setIdUser($user);
+        }
+    }
 }
