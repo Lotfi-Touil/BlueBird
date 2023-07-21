@@ -109,6 +109,15 @@ class Router
         $requestUri = $_SERVER['REQUEST_URI'];
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
+        $ignoredUris = [
+            '/sitemap.xml',
+            '/favicon.ico',
+        ];
+
+        if (in_array($requestUri, $ignoredUris)) {
+            return;
+        }
+
         foreach ($this->routes as $route) {
             if ($route->match($requestUri, $requestMethod)) {
                 $params      = $route->getParams();

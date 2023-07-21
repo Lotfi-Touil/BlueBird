@@ -2,6 +2,7 @@
 
 use App\Controllers\Front\AccountController as FrontAccountController;
 use App\Controllers\Back\AccountController as BackAccountController;
+use App\Controllers\UtilsController;
 use App\Controllers\MainController;
 use App\Controllers\AuthController;
 use App\Controllers\Back\StatController as BackStatController;
@@ -41,6 +42,8 @@ $router->get('/register', AuthController::class, 'register');
 $router->get('/message', FrontMessageController::class, 'create');
 
 $router->get('/admin/dashboard', BackStatController::class, 'dashboard')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/utils/list', UtilsController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
+$router->get('/admin/utils/generate-sitemap', UtilsController::class, 'generateSitemap')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 
 $router->get('/admin/user/list', UserController::class, 'list')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);
 $router->get('/admin/user/create', UserController::class, 'create')->middleware(AuthMiddleware::class)->middleware(RoleMiddleware::class, ['admin']);

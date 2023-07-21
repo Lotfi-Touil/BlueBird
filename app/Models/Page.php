@@ -7,12 +7,13 @@ use App\Core\Model;
 class Page extends Model
 {
     protected static $table = DB_PREFIX . 'page';
-    protected static $fillable = ['title', 'content'];
+    protected static $fillable = ['title', 'content', 'slug'];
 
     protected $id;
 
     protected $title;
     protected $content;
+    protected $slug;
 
     public function getId() {
         return $this->id;
@@ -32,5 +33,13 @@ class Page extends Model
 
     public function setContent($content) {
         $this->content = $content;
+    }
+
+    public function getSlug() {
+        return $this->slug;
+    }
+
+    public function setSlug($slug) {
+        $this->slug = $slug;
     }
 }
