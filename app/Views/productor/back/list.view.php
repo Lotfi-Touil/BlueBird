@@ -27,8 +27,8 @@
                             <tbody>
                                 <?php foreach ($productors as $productor): ?>
                                 <tr>
-                                    <td class="d-table-cell"><?= $productor['id']  ?? 'NULL' ?></td>
-                                    <td class="d-table-cell"><?= $productor['name'] ?? 'NULL' ?></td>
+                                    <td class="d-table-cell"><?= $productor['id_productor']  ?? 'NULL' ?></td>
+                                    <td class="d-table-cell"><?= $productor['productor_name'] ?? 'NULL' ?></td>
                                     <td class="d-none d-sm-table-cell text-truncate" style="max-width:250px"><?=  $productor['description'] ?? 'NULL' ?></td>
                                     <td class="d-none d-sm-table-cell"><?= $productor['iso'] ?? 'NULL' ?></td>
                                     <td class="d-flex flex-column d-sm-table-cell">
