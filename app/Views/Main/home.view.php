@@ -1,2 +1,4 @@
-<h1>Welcome</h1>
-<h2> <?= $isConnected ? 'Tu est connecté !' : '' ?></h2>
+<?php $this->partial('home/welcome'); ?>
+<?php $this->partial('home/about-us'); ?>
+<?php $this->partial('home/movie'); ?>
+<?php $this->partial('home/articles'); ?>
