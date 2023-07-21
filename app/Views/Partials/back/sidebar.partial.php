@@ -35,7 +35,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link" href="/admin/utils/list">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Utilitaires</span>
         </a>
