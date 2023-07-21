@@ -18,6 +18,11 @@ class View {
     {
         $this->data[$key] = $value;
     }
+    
+    public function assignToTemplate(String $key, $value): void
+    {
+        $this->templateData[$key] = $value;
+    }
 
     public function addScript(String $scriptPath): void
     {
@@ -51,6 +56,7 @@ class View {
             die("Le template ".$this->view." n'éxiste pas");
         }
     }
+    
 
     public function partial(String $name, array $config = [], array $errors = []) {
         $file = __DIR__ . "/../Views/Partials/$name.partial.php";
@@ -58,7 +64,6 @@ class View {
         if (!file_exists($file)) {
             die("Le partial ".$name." n'éxiste pas");
         }
-
         extract($this->data);
         include __DIR__ . "/../Views/Partials/$name.partial.php";
     }

@@ -79,7 +79,6 @@
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-
                 <div class="form-group" id="confirmPasswordField" style="display: none;">
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" value="" placeholder="********">

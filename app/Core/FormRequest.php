@@ -3,6 +3,8 @@
 namespace App\Core;
 
 use App\Requests\Abstract\AFormRequest;
+use App\Models\Menu;
+use App\Core\QueryBuilder;
 
 class FormRequest extends AFormRequest
 {
@@ -118,6 +120,16 @@ class FormRequest extends AFormRequest
                     }
                     break;
 
+                case 'unique':
+                    $table = $ruleParams[0];
+                    $value = $this->getRequest()->getPost($field);
+                    if (!empty($value)) {
+                        if (!$this->isValueUnique($table, $field, $value)) {
+                            $fieldErrors[] = 'La valeur du champ ' . $field . ' est déjà utilisée par un autre menu !';
+                        }
+                    }
+                    break;
+
                 default:
                     $fieldErrors[] = 'Une erreur est survenue';
                     break;
@@ -125,6 +137,17 @@ class FormRequest extends AFormRequest
         }
 
         return $fieldErrors;
+    }
+
+    private function isValueUnique($table, $field, $value)
+    {
+        $uniquePk = $this->uniquePk ?? 0;
+        $isUnique = QueryBuilder::table($table)
+            ->select()
+            ->where($field, $value)
+            ->andWhere('id', '!=', $uniquePk)
+            ->notExists();
+        return $isUnique;
     }
 
     public function getErrors(): array
