@@ -14,9 +14,14 @@ class PageController extends Controller{
 
     public function listAction(): void
     {
+        $scripts =  [
+            '/js/datatables/datatables.min.js',
+            '/js/datatables/page-list.js',
+        ];
+
         view('page/back/list', 'back', [
             'pages' => Page::all()
-        ]);
+        ], $scripts);
     }
 
     public function createAction(): void

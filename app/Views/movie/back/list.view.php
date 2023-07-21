@@ -30,7 +30,7 @@
                                 <tr>
                                     <td class="d-table-cell"><?= $movie['id'] ?? '' ?></td>
                                     <td class="d-table-cell"><?= $movie['title'] ?? '' ?></td>
-                                    <td class="d-none d-sm-table-cell text-truncate" style="max-width:250px"><?=  $movie['description'] ?? '' ?></td>
+                                    <td class="d-none d-sm-table-cell truncated-message"><?=  $movie['description'] ?? '' ?></td>
                                     <td class="d-none d-sm-table-cell"><?php $date = strtotime($movie['release_date']) ; echo $release_date = date('d/m/Y', $date) ?></td>
                                     <td class="d-table-cell"><?= $movie['duration'] ?? '' ?></td>
                                     <td class="d-flex flex-column d-sm-table-cell">

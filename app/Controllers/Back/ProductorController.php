@@ -20,7 +20,6 @@ class ProductorController extends Controller
     {
         $scripts =  [
             '/js/datatables/datatables.min.js',
-            '/js/datatables/index.js',
             '/js/datatables/productor-list.js',
         ];
 

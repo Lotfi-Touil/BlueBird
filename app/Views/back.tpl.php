@@ -28,5 +28,6 @@
 
         <!-- Inclusion des scripts -->
         <?php $this->partial('scripts'); ?>
+        <script src="/js/tables/index.js"></script>
     </body>
 </html>

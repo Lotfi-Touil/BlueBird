@@ -11,7 +11,7 @@
                         <span class="d-none d-sm-inline-block">Créer un nouvel article</span>
                     </a>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive p-3">
                     <?php if ($posts) : ?>
                         <table class="table display dataTable mt-4 " id="post-list">
                             <thead class="thead-light">
@@ -28,10 +28,9 @@
                                 <tr>
                                     <td class="d-table-cell"><?= $post->id ?></td>
                                     <td class="d-none d-sm-table-cell"><?= $post->title ?></td>
-                                    <td class="d-none d-sm-table-cell"><?= $post->content ?></td>
+                                    <td class="d-none d-sm-table-cell truncated-message"><?= $post->content ?></td>
                                     <td class="d-none d-sm-table-cell"><?= date('Y-m-d H:i:s', strtotime($post->created_at)) ?></td>
                                     <td class="d-table-cell">
-                                        <!-- Boutons d'action -->
                                         <a href="/admin/post/show/<?= $post->id ?>" class="btn btn-secondary btn-sm"><i class="fa fa-eye"></i></a>
                                         <a href="/admin/post/edit/<?= $post->id ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
                                         <a href="/admin/post/delete/<?= $post->id ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>

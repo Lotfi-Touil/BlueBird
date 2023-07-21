@@ -8,8 +8,8 @@
                     <h4 class="h4 font-weight-bold text-primary">Commentaires</h4>
                 </div>
                 <?php if ($comments) : ?>
-                    <div class="table-responsive">
-                        <table class="table ml-md-">
+                    <div class="table-responsive p-3">
+                        <table class="table display dataTable mt-4 " id="comment-list">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">#</th>
@@ -36,6 +36,16 @@
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <tfoot class="thead-light">
+                                <tr>
+                                    <th class="d-table-cell">#</th>
+                                    <th>Utilisateur</th>
+                                    <th>Commentaire</th>
+                                    <th>Statut</th>
+                                    <th>Date</th>
+                                    <th class="d-table-cell">Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 <?php endif; ?>

@@ -11,7 +11,7 @@
                         <span class="d-none d-sm-inline-block">Créer une nouvelle maison de production</span>
                     </a>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive p-3">
                     <?php if ($productors) : ?>
                         <table class="table display dataTable mt-4 " id="productor-list">
                             <thead class="thead-light">
@@ -28,7 +28,7 @@
                                 <tr>
                                     <td class="d-table-cell"><?= $productor['id']  ?? 'NULL' ?></td>
                                     <td class="d-table-cell"><?= $productor['name'] ?? 'NULL' ?></td>
-                                    <td class="d-none d-sm-table-cell text-truncate" style="max-width:250px"><?=  $productor['description'] ?? 'NULL' ?></td>
+                                    <td class="d-none d-sm-table-cell truncated-message"><?=  $productor['description'] ?? 'NULL' ?></td>
                                     <td class="d-none d-sm-table-cell"><?= $productor['iso'] ?? 'NULL' ?></td>
                                     <td class="d-flex flex-column d-sm-table-cell">
                                         <a href="/admin/productor/show/<?=  $productor['id'] ?>" class="btn btn-secondary btn-sm mb-2 mb-lg-auto">
@@ -47,7 +47,7 @@
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
-                            <tfoot>
+                            <tfoot class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
                                     <th class="d-table-cell">Nom</th>

@@ -18,6 +18,11 @@ class CommentReplyController extends Controller
 
     public function listAction(): void
     {
+        $scripts =  [
+            '/js/datatables/datatables.min.js',
+            '/js/datatables/comment-reply-list.js',
+        ];
+
         $comments = QueryBuilder::table('comment_reply')
             ->select([
                 'comment_reply.*',
@@ -36,7 +41,7 @@ class CommentReplyController extends Controller
 
         view('comment-reply/back/list', 'back', [
             'comments' => $comments
-        ]);
+        ], $scripts);
     }
 
     public function showAction($id): void

@@ -11,9 +11,9 @@
                         <span class="d-none d-sm-inline-block">Créer un nouvelle page</span>
                     </a>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive p-3">
                     <?php if ($pages) : ?>
-                        <table class="table">
+                        <table class="table display dataTable mt-4 " id="page-list">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="d-table-cell">ID</th>
@@ -31,7 +31,6 @@
                                     <td class="d-none d-sm-table-cell"><?= $page->content ?></td>
                                     <td class="d-none d-sm-table-cell"><?= date('Y-m-d H:i:s', strtotime($page->created_at)) ?></td>
                                     <td class="d-table-cell">
-                                        <!-- Boutons d'action -->
                                         <a href="/admin/page/show/<?= $page->id ?>" class="btn btn-secondary btn-sm"><i class="fa fa-eye"></i></a>
                                         <a href="/admin/page/edit/<?= $page->id ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
                                         <a href="/admin/page/delete/<?= $page->id ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
@@ -39,6 +38,15 @@
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
+                            <tfoot class="thead-light">
+                                <tr>
+                                    <th class="d-table-cell">ID</th>
+                                    <th class="d-none d-sm-table-cell">Titre</th>
+                                    <th class="d-none d-sm-table-cell">Contenu</th>
+                                    <th class="d-none d-sm-table-cell">Date de création</th>
+                                    <th class="d-table-cell">Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     <?php endif; ?>
                 </div>

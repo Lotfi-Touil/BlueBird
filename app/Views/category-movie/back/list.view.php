@@ -11,7 +11,7 @@
                         <span class="d-none d-sm-inline-block">Créer une Catégorie de film</span>
                     </a>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive p-3">
                     <?php if ($categoriesMovie) : ?>
                         <table class="table" id="category-movie-list">
                             <thead class="thead-light">

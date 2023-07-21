@@ -17,6 +17,11 @@ class CommentController extends Controller
 
     public function listAction(): void
     {
+        $scripts =  [
+            '/js/datatables/datatables.min.js',
+            '/js/datatables/comment-list.js',
+        ];
+
         $comments = QueryBuilder::table('comment')
             ->select([
                 'comment.*',
@@ -35,7 +40,7 @@ class CommentController extends Controller
 
         view('comment/back/list', 'back', [
             'comments' => $comments
-        ]);
+        ],$scripts);
     }
 
     public function showAction($id): void

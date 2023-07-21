@@ -19,7 +19,6 @@ class CategoryMovieController extends Controller
     {
         $scripts =  [
             '/js/datatables/datatables.min.js',
-            '/js/datatables/index.js',
             '/js/datatables/category-movie-list.js',
         ];
         $categoriesMovie = QueryBuilder::table('category_movie')
