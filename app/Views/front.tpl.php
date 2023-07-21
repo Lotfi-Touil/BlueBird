@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?? 'Blue bird' ?></title>
+    <title><?= $title ?? WEBSITE_TITLE ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?= $description ?? 'Découvrez Blue Bird, une plateforme géniale !' ?>">
+    <meta name="description" content="<?= $description ?? WEBSITE_DESCRIPTION ?>">
     <!-- Inclusion des assets -->
     <?php $this->partial('assets'); ?>
     <!-- Inclusion des scripts nécéssaires -->

@@ -8,7 +8,6 @@ use App\Controllers\Api\WebInfoSetupController;
 /**
  * API
  */
-
 $router->get('/api/installation/step1', StartSetupController::class, 'getStructure');
  
 $router->get('/api/installation/step2', DatabaseSetupController::class, 'getStructure');

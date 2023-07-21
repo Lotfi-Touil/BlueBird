@@ -104,5 +104,4 @@ class AdminAccountSetupController extends Controller
         header('Content-Type: application/json');
         echo json_encode($formStructure);
     }
-
 }
